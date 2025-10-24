@@ -49,6 +49,7 @@ class TemplateRenderer:
         # 配置Jinja2环境，添加常用的filters
         self.env = Environment()
         # 添加常用的内置filters
+        self.env.filters['default'] = lambda x, default_value='': x if x is not None and x != '' else default_value
         self.env.filters['upper'] = lambda x: str(x).upper() if x else ''
         self.env.filters['lower'] = lambda x: str(x).lower() if x else ''
         self.env.filters['capitalize'] = lambda x: str(x).capitalize() if x else ''
@@ -254,6 +255,9 @@ class TemplateRenderer:
 
     def _render_string(self, template_str: str, context: ConversionContext) -> str:
         """渲染字符串"""
+        # 预处理模板字符串，修复Jinja2语法兼容性问题
+        template_str = self._preprocess_template(template_str)
+
         # 检查是否是特殊变量（以__开头）
         special_var_match = re.search(r'\{\{\s*\__(\w+)\s*\}\}', template_str)
         if special_var_match:
@@ -370,3 +374,34 @@ class TemplateRenderer:
         result = re.sub(r'\{\{\s*([^}]+?)\s*\}\}', replace_filtered_var, result)
 
         return result
+
+    def _preprocess_template(self, template_str: str) -> str:
+        """
+        预处理模板字符串，修复Jinja2语法兼容性问题
+
+        Args:
+            template_str: 原始模板字符串
+
+        Returns:
+            str: 处理后的模板字符串
+        """
+        import re
+
+        # 添加调试信息
+        original_str = template_str
+
+        # 将 default 'value' 或 default "value" 替换为 default('value')
+        def replace_default_syntax(match):
+            var_expr = match.group(0)
+            # 将 default 'value' 或 default "value" 替换为 default('value')
+            result = re.sub(r"default\s+['\"]([^'\"]*)['\"]", r'default("\1")', var_expr)
+            return result
+
+        # 使用正则表达式替换所有default过滤器语法
+        template_str = re.sub(r"\{\{\s*([^}]+default\s+['\"][^'\"]*['\"][^}]*)\}\}", replace_default_syntax, template_str)
+
+        # 如果字符串有变化，记录调试信息
+        if template_str != original_str:
+            logger.debug(f"Preprocessed template: {original_str} -> {template_str}")
+
+        return template_str
