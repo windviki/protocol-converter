@@ -11,7 +11,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
-    from core.converter import ConversionContext
+    from models.types import ConversionContext
 except ImportError:
     # 如果导入失败，定义一个简单的替代
     class ConversionContext:
