@@ -136,10 +136,11 @@ class ProtocolMatcher:
 
             # 检查模板中的所有字段在数据中都存在
             for key, template_value in template.items():
-                # 如果模板值是Jinja2变量字符串，跳过匹配检查
+                # 如果模板值是Jinja2变量字符串或占位符，跳过匹配检查
                 if isinstance(template_value, str) and (
                     template_value.strip().startswith('{{') or
-                    template_value.strip().startswith('{%')):
+                    template_value.strip().startswith('{%') or
+                    template_value.strip().startswith('__JINJA_PLACEHOLDER_')):
                     continue
 
                 # 检查字段是否存在

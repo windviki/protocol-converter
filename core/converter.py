@@ -26,26 +26,35 @@ class ProtocolConverter:
         self.converter_functions = converter_functions or {}
         self.renderer = TemplateRenderer(self.converter_functions)
 
-    def load_protocol(self, protocol_id: str, protocol_family: str, template_content: Dict[str, Any]):
+    def load_protocol(self, protocol_id: str, protocol_family: str,
+                   template_content: Dict[str, Any] = None, template: ProtocolTemplate = None):
         """加载协议模板"""
-        # 提取模板中的变量
-        variables = self._extract_template_variables(template_content)
-        special_variables = self._extract_special_variables(template_content)
+        if template is not None:
+            # 使用提供的ProtocolTemplate对象
+            protocol = template
+        else:
+            # 从template_content创建ProtocolTemplate
+            if template_content is None:
+                raise ValueError("Either template_content or template must be provided")
 
-        # 解析数组标记
-        array_markers = ArrayMarkerParser.parse_array_markers(template_content)
+            # 提取模板中的变量
+            variables = self._extract_template_variables(template_content)
+            special_variables = self._extract_special_variables(template_content)
 
-        protocol = ProtocolTemplate(
-            protocol_id=protocol_id,
-            protocol_family=protocol_family,
-            template_content=template_content,
-            variables=variables,
-            special_variables=special_variables,
-            array_markers=array_markers
-        )
+            # 解析数组标记
+            array_markers = ArrayMarkerParser.parse_array_markers(template_content)
+
+            protocol = ProtocolTemplate(
+                protocol_id=protocol_id,
+                protocol_family=protocol_family,
+                template_content=template_content,
+                variables=variables,
+                special_variables=special_variables,
+                array_markers=array_markers
+            )
 
         self.matcher.add_protocol(protocol)
-        logger.info(f"Loaded protocol: {protocol_id} with {len(array_markers)} array markers")
+        logger.info(f"Loaded protocol: {protocol_id} with {len(protocol.array_markers)} array markers")
 
     def convert(self, source_protocol: str, target_protocol: str,
                 source_json: Dict[str, Any]) -> ConversionResult:
