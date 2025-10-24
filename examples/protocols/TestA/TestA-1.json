@@ -1,0 +1,5 @@
+{
+  "domain": "test",
+  "action": "PROCESS",
+  "items": "{{ items }}"
+}

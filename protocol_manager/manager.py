@@ -41,12 +41,12 @@ class ProtocolManager:
             try:
                 self._load_single_protocol(file_path)
                 result['loaded_files'] += 1
-                print(f"✓ 加载成功: {file_path}")
+                print(f"[OK] 加载成功: {file_path}")
             except Exception as e:
                 result['failed_files'] += 1
                 error_msg = f"加载失败 {file_path}: {e}"
                 result['errors'].append(error_msg)
-                print(f"✗ {error_msg}")
+                print(f"[ERROR] {error_msg}")
         
         return result
     

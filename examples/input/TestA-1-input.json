@@ -1,0 +1,21 @@
+{
+  "domain": "test",
+  "action": "PROCESS",
+  "items": [
+    {
+      "name": "item1",
+      "value": 100,
+      "type": "primary"
+    },
+    {
+      "name": "item2",
+      "value": 200,
+      "type": "secondary"
+    },
+    {
+      "name": "item3",
+      "value": 150,
+      "type": "primary"
+    }
+  ]
+}

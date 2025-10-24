@@ -1,0 +1,6 @@
+{
+  "operation": "transform",
+  "item_names": "{% for item in items %}{{ item.name }}{% if not loop.last %}, {% endif %}{% endfor %}",
+  "item_count": "{{ items | length }}",
+  "primary_items": "{% for item in items %}{% if item.type == 'primary' %}{{ item.name }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}"
+}

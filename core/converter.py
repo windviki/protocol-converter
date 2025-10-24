@@ -52,14 +52,14 @@ class ProtocolMatcher:
             匹配的协议ID，如果没有匹配则返回None
         """
         # 获取该协议族的所有协议
-        family_protocols = {pid: p for pid, p in self.protocols.items() 
+        family_protocols = {pid: p for pid, p in self.protocols.items()
                           if p.protocol_family == protocol_family}
-        
+
         for protocol_id, protocol in family_protocols.items():
             if self._is_match(protocol.template_content, json_data):
                 logger.info(f"Matched protocol: {protocol_id}")
                 return protocol_id
-        
+
         return None
     
     def _is_match(self, template: Dict[str, Any], data: Dict[str, Any]) -> bool:
@@ -73,9 +73,13 @@ class ProtocolMatcher:
         """
         # 检查所有模板中的字段在数据中都存在
         for key, template_value in template.items():
+            # 如果模板值是Jinja2变量字符串，跳过匹配检查
+            if isinstance(template_value, str) and template_value.strip().startswith('{{') and template_value.strip().endswith('}}'):
+                continue
+
             if key not in data:
                 return False
-            
+
             # 递归检查嵌套结构
             if isinstance(template_value, dict) and isinstance(data[key], dict):
                 if not self._is_match(template_value, data[key]):
@@ -86,7 +90,10 @@ class ProtocolMatcher:
                     if isinstance(template_value[0], dict) and isinstance(data[key][0], dict):
                         if not self._is_match(template_value[0], data[key][0]):
                             return False
-        
+                    # 如果模板值是字符串且包含Jinja2变量，跳过匹配检查
+                    elif isinstance(template_value[0], str) and template_value[0].strip().startswith('{{') and template_value[0].strip().endswith('}}'):
+                        continue
+
         return True
 
 
@@ -128,22 +135,37 @@ class VariableExtractor:
     
     def _extract_variable_name(self, template_str: str) -> Optional[str]:
         """从模板字符串中提取变量名"""
-        # 匹配 {{ variable_name }} 格式
-        match = re.search(r'\{\{\s*([^}]+)\s*\}\}', template_str)
-        if match:
-            var_name = match.group(1).strip()
+        # 使用Jinja2解析来提取变量
+        try:
+            ast = self.env.parse(template_str)
+            variables = meta.find_undeclared_variables(ast)
             # 过滤掉特殊变量（以__开头的）
-            if not var_name.startswith('__'):
-                return var_name
-        return None
+            normal_vars = [var for var in variables if not var.startswith('__')]
+            return normal_vars[0] if normal_vars else None
+        except Exception:
+            # 如果解析失败，回退到正则表达式方法
+            match = re.search(r'\{\{\s*([^}|]+)\s*(?:\|[^}]+)?\}\}', template_str)
+            if match:
+                var_name = match.group(1).strip()
+                # 过滤掉特殊变量（以__开头的）
+                if not var_name.startswith('__'):
+                    return var_name
+            return None
 
 
 class TemplateRenderer:
     """模板渲染器"""
-    
+
     def __init__(self, converter_functions: Dict[str, callable]):
         self.converter_functions = converter_functions
+        # 配置Jinja2环境，添加常用的filters
         self.env = Environment()
+        # 添加常用的内置filters
+        self.env.filters['upper'] = lambda x: str(x).upper() if x else ''
+        self.env.filters['lower'] = lambda x: str(x).lower() if x else ''
+        self.env.filters['capitalize'] = lambda x: str(x).capitalize() if x else ''
+        self.env.filters['length'] = lambda x: len(x) if hasattr(x, '__len__') else 0
+        self.env.filters['sum'] = lambda x, attribute=None: sum(getattr(item, attribute, item) for item in x) if attribute else sum(x)
     
     def render(self, template: Dict[str, Any], variables: Dict[str, Any], 
                source_protocol: str, target_protocol: str, source_json: Dict[str, Any]) -> Dict[str, Any]:
@@ -321,8 +343,12 @@ class ProtocolConverter:
         """从列表中提取变量"""
         for item in data:
             if isinstance(item, str):
-                ast = self.renderer.env.parse(item)
-                variables.update(meta.find_undeclared_variables(item))
+                try:
+                    ast = self.renderer.env.parse(item)
+                    variables.update(meta.find_undeclared_variables(ast))
+                except Exception:
+                    # 如果解析失败，跳过该项
+                    pass
             elif isinstance(item, dict):
                 self._extract_variables_from_dict(item, variables)
             elif isinstance(item, list):
