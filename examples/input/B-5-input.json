@@ -5,29 +5,41 @@
     "routes": [
       {
         "road_name": "天山西路",
-        "district": "长宁区",
-        "city": "上海市",
-        "coordinates": {
-          "latitude": 31.2204,
-          "longitude": 121.4256
+        "address_info": {
+          "district": "长宁区",
+          "city": "上海市"
         },
-        "nearest_landmark": "虹桥商务区",
-        "traffic_level": "moderate",
-        "estimated_time": "15分钟",
-        "distance": "6.2公里"
+        "location": {
+          "coordinates": {
+            "latitude": 31.2204,
+            "longitude": 121.4256
+          },
+          "landmark": "虹桥商务区"
+        },
+        "traffic_info": {
+          "congestion_level": "moderate",
+          "estimated_time": "15分钟",
+          "distance": "6.2公里"
+        }
       },
       {
         "road_name": "仙霞路",
-        "district": "长宁区",
-        "city": "上海市",
-        "coordinates": {
-          "latitude": 31.2204,
-          "longitude": 121.4256
+        "address_info": {
+          "district": "长宁区",
+          "city": "上海市"
         },
-        "nearest_landmark": "友谊商城",
-        "traffic_level": "heavy",
-        "estimated_time": "10分钟",
-        "distance": "4.3公里"
+        "location": {
+          "coordinates": {
+            "latitude": 31.2204,
+            "longitude": 121.4256
+          },
+          "landmark": "友谊商城"
+        },
+        "traffic_info": {
+          "congestion_level": "heavy",
+          "estimated_time": "10分钟",
+          "distance": "4.3公里"
+        }
       }
     ],
     "navigation_options": {

@@ -8,29 +8,50 @@ from jinja2 import Environment, FileSystemLoader, meta
 def extract_variables_from_template(template_content: str) -> Tuple[Set[str], Set[str]]:
     """
     从Jinja2模板中提取变量
-    
+
     Args:
         template_content: Jinja2模板内容
-        
+
     Returns:
         Tuple[普通变量集合, 特殊变量集合]
     """
     env = Environment()
-    parsed_content = env.parse(template_content)
-    
-    # 提取所有变量
-    variables = meta.find_undeclared_variables(parsed_content)
-    
+
+    try:
+        parsed_content = env.parse(template_content)
+        # 提取所有变量
+        variables = meta.find_undeclared_variables(parsed_content)
+    except Exception as e:
+        # 如果Jinja2解析失败，使用正则表达式提取变量
+        import re
+        variables = set()
+
+        # 提取 {{ variable }} 格式的变量
+        simple_vars = re.findall(r'\{\{\s*([^}|]+?)\s*(?:\|[^}]*)?\}\}', template_content)
+        variables.update(simple_vars)
+
+        # 提取 {% if variable %} 格式的变量
+        if_vars = re.findall(r'\{%\s*if\s+([^%]+?)\s*%\}', template_content)
+        for if_var in if_vars:
+            # 简单处理：提取第一个标识符
+            first_id = re.findall(r'\b(\w+)\b', if_var)
+            if first_id:
+                variables.add(first_id[0])
+
+        # 提取 {% for item in items %} 格式的变量
+        for_vars = re.findall(r'\{%\s*for\s+\w+\s+in\s+(\w+)\s*%\}', template_content)
+        variables.update(for_vars)
+
     # 分离普通变量和特殊变量（以__开头的变量）
     normal_vars = set()
     special_vars = set()
-    
+
     for var in variables:
         if var.startswith('__'):
             special_vars.add(var)
         else:
             normal_vars.add(var)
-    
+
     return normal_vars, special_vars
 
 
@@ -132,11 +153,11 @@ def preprocess_json_content(content: str) -> str:
     processed_content = content
 
     # 使用占位符策略，避免引号嵌套问题
-    # 1. 保护所有Jinja2语法
+    # 1. 保护所有Jinja2语法，包括嵌套的引号
     jinja2_patterns = [
-        r'\{\{[^}]*\}\}',
-        r'\{%[^%]*%\}',
-        r'\{#[^#]*#\}'
+        r'\{\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}\}',
+        r'\{%[^%]*(?:\{[^%]*\}[^%]*)*%\}',
+        r'\{#[^#]*(?:\{[^#]*\}[^#]*)*#\}'
     ]
 
     protected_parts = []
@@ -146,7 +167,7 @@ def preprocess_json_content(content: str) -> str:
             return f'__JINJA2_PLACEHOLDER_{len(protected_parts)-1}__'
         processed_content = re.sub(pattern, protect_func, processed_content, flags=re.DOTALL)
 
-    # 2. 处理所有剩余的单引号为双引号
+    # 2. 处理所有剩余的单引号为双引号，但避免处理已经是双引号的情况
     processed_content = re.sub(r"'([^']*)'", r'"\1"', processed_content)
 
     # 3. 恢复Jinja2语法，保持内部的单引号不变

@@ -11,7 +11,7 @@
         "priority": "{% if urgency == 'high' %}PRIORITY{% else %}NORMAL{% endif %}",
         "estimated_time": "{{ estimated_time | default 'unknown' }}",
         "distance": "{{ distance | default 'unknown' }}",
-        "coordinates": "{{ coordinates | default {} }}"
+        "coordinates": "{{ coordinates | default '{}' }}"
       }
     ],
     "avoid_tolls": "{{ avoid_tolls }}",

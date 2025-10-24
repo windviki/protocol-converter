@@ -15,7 +15,7 @@
           "is_main_road": "{% if road_name in main_roads %}true{% else %}false{% endif %}"
         },
         "location": {
-          "coordinates": "{{ coordinates | default {} }}",
+          "coordinates": "{{ coordinates | default '{}' }}",
           "landmark": "{{ nearest_landmark | default '未知地点' }}"
         },
         "traffic_info": {
@@ -34,7 +34,7 @@
     ],
     "navigation_options": {
       "vehicle": "{{ vehicle_type | default 'car' }}",
-      "avoid_tolls": "{{ avoid_tolls | default false }}",
+      "avoid_tolls": "{{ avoid_tolls | default 'false' }}",
       "route_preference": "{{ route_preference | default 'fastest' }}",
       "urgency": "{{ urgency | default 'normal' }}"
     },

@@ -27,15 +27,15 @@
             }
           },
           "geographic": {
-            "coordinates": "{{ coordinates | default {} }}",
+            "coordinates": "{{ coordinates | default '{}' }}",
             "landmark": {
               "nearest": "{{ nearest_landmark | default '未知' }}",
               "distance": "{{ landmark_distance | default '未知' }}",
               "direction": "{{ landmark_direction | default '未知' }}"
             },
             "bounds": {
-              "north_east": "{{ bounds_ne | default {} }}",
-              "south_west": "{{ bounds_sw | default {} }}"
+              "north_east": "{{ bounds_ne | default '{}' }}",
+              "south_west": "{{ bounds_sw | default '{}' }}"
             }
           },
           "traffic": {

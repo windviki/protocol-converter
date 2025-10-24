@@ -337,8 +337,20 @@ def run_comprehensive_tests():
     finally:
         # 清理临时目录
         if os.path.exists(temp_dir):
-            shutil.rmtree(temp_dir)
-            logger.info(f"已清理临时目录: {temp_dir}")
+            try:
+                shutil.rmtree(temp_dir)
+                logger.info(f"已清理临时目录: {temp_dir}")
+            except PermissionError as e:
+                logger.warning(f"无法删除临时目录（文件可能被锁定）: {temp_dir}")
+                logger.warning(f"错误信息: {e}")
+                # 在Windows上，尝试延迟删除
+                import time
+                time.sleep(1)
+                try:
+                    shutil.rmtree(temp_dir)
+                    logger.info(f"延迟删除成功: {temp_dir}")
+                except:
+                    logger.warning(f"跳过临时目录清理，请手动删除: {temp_dir}")
 
 
 if __name__ == "__main__":

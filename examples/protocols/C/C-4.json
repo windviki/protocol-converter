@@ -42,7 +42,7 @@
       "name": "NAVIGATION_PARAMS",
       "value": {
         "vehicle": "{{ vehicle_type | default 'car' }}",
-        "avoid_tolls": "{{ avoid_tolls | default false }}",
+        "avoid_tolls": "{{ avoid_tolls | default 'false' }}",
         "urgency": "{{ urgency | default 'normal' }}",
         "route_preference": "{{ route_preference | default 'fastest' }}"
       },

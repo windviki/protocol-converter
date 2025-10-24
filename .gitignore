@@ -5,7 +5,16 @@ build/
 dist/
 wheels/
 *.egg-info
+
 *.db
+logs/
+*.log
+*.pid
+*.seed
+*.sqlite
+*.sqlite3
+*.sqlite3-journal
+*.sqlite-journal
 
 # Virtual environments
 .venv
