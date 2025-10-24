@@ -43,7 +43,8 @@ class ConversionResult:
 
 @dataclass
 class ConversionContext:
-    """转换上下文，为转换函数提供额外的信息"""
+    """转换上下文，为转换函数提供完整的信息"""
+    # 基础转换信息
     source_protocol: str
     target_protocol: str
     source_json: Dict[str, Any]
@@ -55,9 +56,95 @@ class ConversionContext:
     array_total: Optional[int] = None  # 数组总长度
     current_element: Optional[Dict[str, Any]] = None  # 当前数组元素的数据
 
-    # 其他可能的上下文信息
-    render_depth: int = 0  # 渲染深度
+    # 渲染层级信息
+    render_depth: int = 0  # 当前渲染深度
     parent_path: Optional[str] = None  # 父级路径
+    current_path: Optional[str] = None  # 当前字段路径
+
+    # 协议信息
+    source_protocol_id: Optional[str] = None  # 源协议ID
+    target_protocol_id: Optional[str] = None  # 目标协议ID
+    protocol_family: Optional[str] = None  # 协议族
+
+    # 数据统计信息
+    total_input_items: int = 0  # 输入数据中的项目总数
+    processed_items: int = 0  # 已处理的项目数量
+    is_last_item: bool = False  # 是否为最后一个项目
+
+    # 元数据
+    timestamp: Optional[str] = None  # 转换时间戳
+    conversion_id: Optional[str] = None  # 转换会话ID
+    debug_info: Dict[str, Any] = None  # 调试信息
+
+    def __post_init__(self):
+        """初始化后处理"""
+        if self.debug_info is None:
+            self.debug_info = {}
+
+        # 设置协议族信息
+        if self.source_protocol and not self.protocol_family:
+            self.protocol_family = self.source_protocol
+
+        # 统计输入项目数量
+        self._count_input_items()
+
+        # 设置时间戳
+        import datetime
+        if not self.timestamp:
+            self.timestamp = datetime.datetime.now().isoformat()
+
+        # 生成转换ID
+        import uuid
+        if not self.conversion_id:
+            self.conversion_id = f"conv_{uuid.uuid4().hex[:12]}"
+
+        # 判断是否为最后一个项目
+        if self.array_index is not None and self.array_total is not None:
+            self.is_last_item = (self.array_index == self.array_total - 1)
+
+    def _count_input_items(self):
+        """统计输入数据中的项目数量"""
+        if isinstance(self.source_json, dict):
+            # 查找最大的数组
+            for value in self.source_json.values():
+                if isinstance(value, list):
+                    self.total_input_items = max(self.total_input_items, len(value))
+
+    def get_variable(self, name: str, default: Any = None) -> Any:
+        """安全获取变量值"""
+        return self.variables.get(name, default)
+
+    def get_source_field(self, field_path: str, default: Any = None) -> Any:
+        """从源数据中获取字段值"""
+        parts = field_path.split('.')
+        current = self.source_json
+        for part in parts:
+            if isinstance(current, dict) and part in current:
+                current = current[part]
+            else:
+                return default
+        return current
+
+    def is_array_context(self) -> bool:
+        """判断是否在数组上下文中"""
+        return self.array_index is not None
+
+    def get_progress_info(self) -> Dict[str, Any]:
+        """获取处理进度信息"""
+        current = self.array_index + 1 if self.array_index is not None else 0
+        total = self.array_total or self.total_input_items
+        percentage = (current / total * 100) if total > 0 else 0
+
+        return {
+            "current": current,
+            "total": total,
+            "percentage": percentage,
+            "is_last": self.is_last_item
+        }
+
+    def add_debug_info(self, key: str, value: Any):
+        """添加调试信息"""
+        self.debug_info[key] = value
 
 
 class ArrayMarkerParser:
@@ -317,12 +404,12 @@ class VariableExtractor:
 
 
 class ConverterFunctionAdapter:
-    """转换函数适配器，处理新旧函数签名"""
+    """转换函数调用器，统一使用ConversionContext签名"""
 
     @staticmethod
     def call_converter_function(func: Callable, context: ConversionContext) -> Any:
         """
-        调用转换函数，自动适配新旧签名
+        调用转换函数，统一使用ConversionContext签名
 
         Args:
             func: 转换函数
@@ -331,40 +418,16 @@ class ConverterFunctionAdapter:
         Returns:
             函数执行结果
         """
-        import inspect
-
-        # 检查函数签名
-        sig = inspect.signature(func)
-        params = list(sig.parameters.keys())
-
-        # 新签名：支持context参数
-        if len(params) >= 5 and 'context' in params:
-            return func(
-                context.source_protocol,
-                context.target_protocol,
-                context.source_json,
-                context.variables,
-                context
+        try:
+            # 统一使用新的ConversionContext签名
+            return func(context)
+        except TypeError as e:
+            # 提供更好的错误信息
+            raise ValueError(
+                f"Converter function {func.__name__} must accept a single ConversionContext parameter. "
+                f"Error: {e}. "
+                f"Expected signature: func(context: ConversionContext) -> Any"
             )
-        # 旧签名：4个参数
-        elif len(params) == 4:
-            return func(
-                context.source_protocol,
-                context.target_protocol,
-                context.source_json,
-                context.variables
-            )
-        else:
-            # 尝试用旧签名调用，如果失败则报错
-            try:
-                return func(
-                    context.source_protocol,
-                    context.target_protocol,
-                    context.source_json,
-                    context.variables
-                )
-            except TypeError as e:
-                raise ValueError(f"Unsupported function signature for {func.__name__}: {e}")
 
 
 class TemplateRenderer:
@@ -384,7 +447,8 @@ class TemplateRenderer:
     
     def render(self, template: Dict[str, Any], variables: Dict[str, Any],
                source_protocol: str, target_protocol: str, source_json: Dict[str, Any],
-               array_markers: List[ArrayMarker] = None) -> Dict[str, Any]:
+               array_markers: List[ArrayMarker] = None,
+               source_protocol_id: str = None, target_protocol_id: str = None) -> Dict[str, Any]:
         """
         渲染模板
         Args:
@@ -394,9 +458,21 @@ class TemplateRenderer:
             target_protocol: 目标协议
             source_json: 源JSON数据
             array_markers: 数组标记列表
+            source_protocol_id: 源协议ID
+            target_protocol_id: 目标协议ID
         Returns:
             渲染后的JSON数据
         """
+        # 创建基础转换上下文
+        context = ConversionContext(
+            source_protocol=source_protocol,
+            target_protocol=target_protocol,
+            source_json=source_json,
+            variables=variables,
+            source_protocol_id=source_protocol_id,
+            target_protocol_id=target_protocol_id
+        )
+
         # 深拷贝模板以避免修改原始模板
         result = json.loads(json.dumps(template))
 
@@ -404,32 +480,26 @@ class TemplateRenderer:
         if array_markers:
             for marker in array_markers:
                 if marker.is_dynamic:
-                    self._render_dynamic_array(result, marker, variables, source_protocol, target_protocol, source_json)
+                    self._render_dynamic_array(result, marker, context)
 
         # 常规渲染
-        self._render_dict(result, variables, source_protocol, target_protocol, source_json)
+        self._render_dict(result, context)
         return result
 
-    def _render_dynamic_array(self, result: Dict[str, Any], marker: ArrayMarker,
-                             variables: Dict[str, Any], source_protocol: str,
-                             target_protocol: str, source_json: Dict[str, Any]):
+    def _render_dynamic_array(self, result: Dict[str, Any], marker: ArrayMarker, base_context: ConversionContext):
         """
         渲染动态数组
 
         Args:
             result: 渲染结果
             marker: 数组标记
-            variables: 变量键值对
-            source_protocol: 源协议
-            target_protocol: 目标协议
-            source_json: 源JSON数据
+            base_context: 基础转换上下文
         """
         # 获取数组数据
-        array_data = self._get_nested_value(source_json, marker.field_path.split('.'))
+        array_data = self._get_nested_value(base_context.source_json, marker.field_path.split('.'))
         if not isinstance(array_data, list):
             # 如果指定路径没有数组数据，尝试从其他可能的路径获取
-            # 这里我们可以添加一些启发式规则
-            array_data = self._find_array_data_heuristic(source_json)
+            array_data = self._find_array_data_heuristic(base_context.source_json)
             if not isinstance(array_data, list):
                 return
 
@@ -440,34 +510,38 @@ class TemplateRenderer:
         for i, item_data in enumerate(array_data):
             # 创建该元素的变量集合
             item_variables = {}
-            for var_name in variables:
+            for var_name in base_context.variables:
                 if var_name.endswith(f"_{i}"):
                     # 提取基础变量名（去掉索引）
                     base_var_name = var_name[:-len(f"_{i}")]
-                    item_variables[base_var_name] = variables[var_name]
+                    item_variables[base_var_name] = base_context.variables[var_name]
 
             # 如果没有找到索引变量，尝试直接从变量名匹配
             if not item_variables and isinstance(item_data, dict):
                 # 从当前元素数据中提取变量
                 item_variables = self._extract_variables_from_item_data(marker.template_item, item_data)
 
-            # 创建转换上下文，包含数组信息
-            context = ConversionContext(
-                source_protocol=source_protocol,
-                target_protocol=target_protocol,
-                source_json=source_json,
+            # 创建当前元素的转换上下文
+            element_context = ConversionContext(
+                source_protocol=base_context.source_protocol,
+                target_protocol=base_context.target_protocol,
+                source_json=base_context.source_json,
                 variables=item_variables,
                 array_path=marker.field_path,
                 array_index=i,
                 array_total=array_total,
                 current_element=item_data if isinstance(item_data, dict) else None,
-                render_depth=1,
-                parent_path=marker.field_path
+                render_depth=base_context.render_depth + 1,
+                parent_path=base_context.current_path,
+                source_protocol_id=base_context.source_protocol_id,
+                target_protocol_id=base_context.target_protocol_id,
+                protocol_family=base_context.protocol_family,
+                processed_items=i
             )
 
             # 渲染该元素
             rendered_item = json.loads(json.dumps(marker.template_item))
-            self._render_dict(rendered_item, item_variables, source_protocol, target_protocol, source_json, context)
+            self._render_dict(rendered_item, element_context)
             rendered_items.append(rendered_item)
 
         # 将结果设置回输出
@@ -532,33 +606,43 @@ class TemplateRenderer:
                 return None
         return current
     
-    def _render_dict(self, data: Dict[str, Any], variables: Dict[str, Any],
-                     source_protocol: str, target_protocol: str, source_json: Dict[str, Any],
-                     context: Optional[ConversionContext] = None):
+    def _render_dict(self, data: Dict[str, Any], context: ConversionContext):
         """渲染字典"""
         for key, value in data.items():
             if isinstance(value, str):
-                data[key] = self._render_string(value, variables, source_protocol, target_protocol, source_json, context)
-            elif isinstance(value, dict):
-                self._render_dict(value, variables, source_protocol, target_protocol, source_json, context)
-            elif isinstance(value, list):
-                self._render_list(value, variables, source_protocol, target_protocol, source_json, context)
+                # 设置当前路径
+                old_path = context.current_path
+                context.current_path = f"{old_path}.{key}" if old_path else key
 
-    def _render_list(self, data: List[Any], variables: Dict[str, Any],
-                     source_protocol: str, target_protocol: str, source_json: Dict[str, Any],
-                     context: Optional[ConversionContext] = None):
+                data[key] = self._render_string(value, context)
+                context.current_path = old_path
+            elif isinstance(value, dict):
+                old_path = context.current_path
+                context.current_path = f"{old_path}.{key}" if old_path else key
+                context.render_depth += 1
+                self._render_dict(value, context)
+                context.render_depth -= 1
+                context.current_path = old_path
+            elif isinstance(value, list):
+                old_path = context.current_path
+                context.current_path = f"{old_path}.{key}" if old_path else key
+                self._render_list(value, context)
+
+    def _render_list(self, data: List[Any], context: ConversionContext):
         """渲染列表"""
         for i, item in enumerate(data):
             if isinstance(item, str):
-                data[i] = self._render_string(item, variables, source_protocol, target_protocol, source_json, context)
+                data[i] = self._render_string(item, context)
             elif isinstance(item, dict):
-                self._render_dict(item, variables, source_protocol, target_protocol, source_json, context)
+                context.render_depth += 1
+                self._render_dict(item, context)
+                context.render_depth -= 1
             elif isinstance(item, list):
-                self._render_list(item, variables, source_protocol, target_protocol, source_json, context)
+                context.render_depth += 1
+                self._render_list(item, context)
+                context.render_depth -= 1
     
-    def _render_string(self, template_str: str, variables: Dict[str, Any],
-                       source_protocol: str, target_protocol: str, source_json: Dict[str, Any],
-                       context: Optional[ConversionContext] = None) -> str:
+    def _render_string(self, template_str: str, context: ConversionContext) -> str:
         """渲染字符串"""
         # 检查是否是特殊变量（以__开头）
         special_var_match = re.search(r'\{\{\s*\__(\w+)\s*\}\}', template_str)
@@ -566,15 +650,6 @@ class TemplateRenderer:
             var_name = special_var_match.group(1)
             func_name = f"func_{var_name}"
             if func_name in self.converter_functions:
-                # 创建转换上下文（如果没提供的话）
-                if context is None:
-                    context = ConversionContext(
-                        source_protocol=source_protocol,
-                        target_protocol=target_protocol,
-                        source_json=source_json,
-                        variables=variables
-                    )
-
                 # 使用适配器调用转换函数
                 result = self.adapter.call_converter_function(
                     self.converter_functions[func_name],
@@ -585,7 +660,7 @@ class TemplateRenderer:
         # 普通变量渲染
         try:
             jinja_template = self.env.from_string(template_str)
-            return jinja_template.render(**variables)
+            return jinja_template.render(**context.variables)
         except Exception as e:
             logger.error(f"Template rendering error: {e}")
             return template_str
@@ -666,7 +741,9 @@ class ProtocolConverter:
                 source_protocol,
                 target_protocol,
                 source_json,
-                target_protocol_template.array_markers
+                target_protocol_template.array_markers,
+                source_protocol_id=matched_protocol_id,
+                target_protocol_id=target_protocol_template.protocol_id
             )
             
             return ConversionResult(

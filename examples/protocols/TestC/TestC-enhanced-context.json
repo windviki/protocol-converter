@@ -1,0 +1,41 @@
+{
+  "operation": "transform",
+  "items": [
+    "{# array_dynamic: true #}",
+    {
+      "title": "{{ name | capitalize }}",
+      "amount": "{{ value }}",
+      "category": "{% if type == 'primary' %}main{% else %}secondary{% endif %}",
+      "confidence": "{{ __sid }}",
+      "processed_at": "{{ __timestamp }}",
+      "source_protocol": "{{ domain }}",
+      "enhanced_metadata": {
+        "array_info": {
+          "index": "{{ __array_index }}",
+          "total": "{{ __array_total }}",
+          "progress": "{{ __progress }}",
+          "is_last": "{{ __is_last_item }}"
+        },
+        "conversion_info": {
+          "conversion_id": "{{ __conversion_id }}",
+          "session_id": "{{ __session_id }}",
+          "session_id_v2": "{{ __session_id_v2 }}",
+          "current_path": "{{ __current_path }}"
+        },
+        "protocol_info": {
+          "source_protocol": "{{ __source_protocol }}",
+          "target_protocol": "{{ __target_protocol }}"
+        },
+        "debug_info": {
+          "render_depth": "{{ __render_depth }}",
+          "parent_path": "{{ __parent_path }}"
+        }
+      },
+      "metadata": {
+        "original_name": "{{ name }}",
+        "original_type": "{{ type }}",
+        "processing_id": "{{ __session_id }}"
+      }
+    }
+  ]
+}
