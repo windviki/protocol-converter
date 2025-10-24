@@ -3,7 +3,19 @@ Converter functions for special variables
 """
 
 import logging
-from typing import Dict, Any
+from typing import Dict, Any, Optional
+import sys
+import os
+
+# 添加项目路径以导入ConversionContext
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+try:
+    from core.converter import ConversionContext
+except ImportError:
+    # 如果导入失败，定义一个简单的替代
+    class ConversionContext:
+        pass
 
 logger = logging.getLogger(__name__)
 
@@ -120,8 +132,9 @@ def func_timestamp(source_protocol: str, target_protocol: str,
         return now.strftime("%Y%m%d%H%M%S")
 
 
-def func_session_id(source_protocol: str, target_protocol: str, 
-                   source_json: Dict[str, Any], variables: Dict[str, Any]) -> str:
+def func_session_id(source_protocol: str, target_protocol: str,
+                   source_json: Dict[str, Any], variables: Dict[str, Any],
+                   context: Optional[ConversionContext] = None) -> str:
     """
     处理 __session_id 特殊变量的转换函数
     Args:
@@ -129,18 +142,81 @@ def func_session_id(source_protocol: str, target_protocol: str,
         target_protocol: 目标协议族
         source_json: 源JSON数据
         variables: 变量键值对
+        context: 转换上下文（可选）
     Returns:
         转换后的值
     """
     import uuid
-    
+
     logger.info(f"Converting __session_id from {source_protocol} to {target_protocol}")
-    
-    # 生成会话ID
+
+    # 如果有上下文信息且在数组中，使用索引生成不同的session_id
+    if context and context.array_index is not None:
+        base_id = f"array_item_{context.array_index}"
+        if target_protocol == "C":
+            return f"session_{base_id}_{uuid.uuid4().hex[:8]}"
+        else:
+            return f"{base_id}_{uuid.uuid4().hex[:6]}"
+
+    # 生成会话ID（原有逻辑）
     if target_protocol == "C":
         return f"session_{uuid.uuid4().hex[:16]}"
     else:
         return uuid.uuid4().hex[:8]
+
+
+def func_session_id_v2(source_protocol: str, target_protocol: str,
+                      source_json: Dict[str, Any], variables: Dict[str, Any],
+                      context: ConversionContext) -> str:
+    """
+    新版本的session_id转换函数，充分利用上下文信息
+    这个函数演示了如何使用新的上下文机制
+    """
+    import uuid
+
+    logger.info(f"Converting __session_id_v2 from {source_protocol} to {target_protocol}")
+
+    # 基础信息
+    base_info = f"{source_protocol}_to_{target_protocol}"
+
+    # 如果在数组中，包含数组信息
+    if context.array_index is not None:
+        array_info = f"idx{context.array_index}_total{context.array_total}"
+        if context.array_path:
+            array_info = f"{context.array_path}_{array_info}"
+        base_info = f"{array_info}_{base_info}"
+
+    # 生成唯一ID
+    unique_id = uuid.uuid4().hex[:12]
+
+    if target_protocol == "C":
+        return f"session_{base_info}_{unique_id}"
+    else:
+        return f"{base_info}_{unique_id}"
+
+
+def func_array_index(source_protocol: str, target_protocol: str,
+                    source_json: Dict[str, Any], variables: Dict[str, Any],
+                    context: Optional[ConversionContext] = None) -> str:
+    """
+    返回当前数组元素的索引
+    如果不在数组中，返回-1
+    """
+    if context and context.array_index is not None:
+        return str(context.array_index)
+    return "-1"
+
+
+def func_array_total(source_protocol: str, target_protocol: str,
+                    source_json: Dict[str, Any], variables: Dict[str, Any],
+                    context: Optional[ConversionContext] = None) -> str:
+    """
+    返回当前数组的总长度
+    如果不在数组中，返回0
+    """
+    if context and context.array_total is not None:
+        return str(context.array_total)
+    return "0"
 
 
 def func_device_type(source_protocol: str, target_protocol: str, 
@@ -177,6 +253,9 @@ CONVERTER_FUNCTIONS = {
     "func_priority": func_priority,
     "func_timestamp": func_timestamp,
     "func_session_id": func_session_id,
+    "func_session_id_v2": func_session_id_v2,
+    "func_array_index": func_array_index,
+    "func_array_total": func_array_total,
     "func_device_type": func_device_type,
 }
 

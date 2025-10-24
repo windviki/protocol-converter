@@ -1,0 +1,25 @@
+{
+  "operation": "transform",
+  "items": [
+    "{# array_dynamic: true #}",
+    {
+      "title": "{{ name | capitalize }}",
+      "amount": "{{ value }}",
+      "category": "{% if type == 'primary' %}main{% else %}secondary{% endif %}",
+      "confidence": "{{ __sid }}",
+      "processed_at": "{{ __timestamp }}",
+      "source_protocol": "{{ domain }}",
+      "array_info": {
+        "index": "{{ __array_index }}",
+        "total": "{{ __array_total }}",
+        "session_id": "{{ __session_id }}",
+        "session_id_v2": "{{ __session_id_v2 }}"
+      },
+      "metadata": {
+        "original_name": "{{ name }}",
+        "original_type": "{{ type }}",
+        "processing_id": "{{ __session_id }}"
+      }
+    }
+  ]
+}

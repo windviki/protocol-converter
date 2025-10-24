@@ -4,7 +4,7 @@ Core module for protocol conversion
 
 import json
 import re
-from typing import Dict, List, Any, Optional, Tuple
+from typing import Dict, List, Any, Optional, Tuple, Callable
 from jinja2 import Template, Environment, meta
 from dataclasses import dataclass
 import logging
@@ -39,6 +39,25 @@ class ConversionResult:
     matched_protocol: Optional[str] = None
     variables: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
+
+
+@dataclass
+class ConversionContext:
+    """转换上下文，为转换函数提供额外的信息"""
+    source_protocol: str
+    target_protocol: str
+    source_json: Dict[str, Any]
+    variables: Dict[str, Any]
+
+    # 数组相关信息
+    array_path: Optional[str] = None  # 当前数组路径，如 "items"
+    array_index: Optional[int] = None  # 当前元素在数组中的索引
+    array_total: Optional[int] = None  # 数组总长度
+    current_element: Optional[Dict[str, Any]] = None  # 当前数组元素的数据
+
+    # 其他可能的上下文信息
+    render_depth: int = 0  # 渲染深度
+    parent_path: Optional[str] = None  # 父级路径
 
 
 class ArrayMarkerParser:
@@ -297,11 +316,63 @@ class VariableExtractor:
             return None
 
 
+class ConverterFunctionAdapter:
+    """转换函数适配器，处理新旧函数签名"""
+
+    @staticmethod
+    def call_converter_function(func: Callable, context: ConversionContext) -> Any:
+        """
+        调用转换函数，自动适配新旧签名
+
+        Args:
+            func: 转换函数
+            context: 转换上下文
+
+        Returns:
+            函数执行结果
+        """
+        import inspect
+
+        # 检查函数签名
+        sig = inspect.signature(func)
+        params = list(sig.parameters.keys())
+
+        # 新签名：支持context参数
+        if len(params) >= 5 and 'context' in params:
+            return func(
+                context.source_protocol,
+                context.target_protocol,
+                context.source_json,
+                context.variables,
+                context
+            )
+        # 旧签名：4个参数
+        elif len(params) == 4:
+            return func(
+                context.source_protocol,
+                context.target_protocol,
+                context.source_json,
+                context.variables
+            )
+        else:
+            # 尝试用旧签名调用，如果失败则报错
+            try:
+                return func(
+                    context.source_protocol,
+                    context.target_protocol,
+                    context.source_json,
+                    context.variables
+                )
+            except TypeError as e:
+                raise ValueError(f"Unsupported function signature for {func.__name__}: {e}")
+
+
 class TemplateRenderer:
     """模板渲染器"""
 
     def __init__(self, converter_functions: Dict[str, callable]):
         self.converter_functions = converter_functions
+        self.adapter = ConverterFunctionAdapter()
         # 配置Jinja2环境，添加常用的filters
         self.env = Environment()
         # 添加常用的内置filters
@@ -356,10 +427,16 @@ class TemplateRenderer:
         # 获取数组数据
         array_data = self._get_nested_value(source_json, marker.field_path.split('.'))
         if not isinstance(array_data, list):
-            return
+            # 如果指定路径没有数组数据，尝试从其他可能的路径获取
+            # 这里我们可以添加一些启发式规则
+            array_data = self._find_array_data_heuristic(source_json)
+            if not isinstance(array_data, list):
+                return
 
         # 为每个数组元素生成渲染结果
         rendered_items = []
+        array_total = len(array_data)
+
         for i, item_data in enumerate(array_data):
             # 创建该元素的变量集合
             item_variables = {}
@@ -369,13 +446,72 @@ class TemplateRenderer:
                     base_var_name = var_name[:-len(f"_{i}")]
                     item_variables[base_var_name] = variables[var_name]
 
+            # 如果没有找到索引变量，尝试直接从变量名匹配
+            if not item_variables and isinstance(item_data, dict):
+                # 从当前元素数据中提取变量
+                item_variables = self._extract_variables_from_item_data(marker.template_item, item_data)
+
+            # 创建转换上下文，包含数组信息
+            context = ConversionContext(
+                source_protocol=source_protocol,
+                target_protocol=target_protocol,
+                source_json=source_json,
+                variables=item_variables,
+                array_path=marker.field_path,
+                array_index=i,
+                array_total=array_total,
+                current_element=item_data if isinstance(item_data, dict) else None,
+                render_depth=1,
+                parent_path=marker.field_path
+            )
+
             # 渲染该元素
             rendered_item = json.loads(json.dumps(marker.template_item))
-            self._render_dict(rendered_item, item_variables, source_protocol, target_protocol, source_json)
+            self._render_dict(rendered_item, item_variables, source_protocol, target_protocol, source_json, context)
             rendered_items.append(rendered_item)
 
         # 将结果设置回输出
         self._set_nested_value(result, marker.field_path.split('.'), rendered_items)
+
+    def _find_array_data_heuristic(self, source_json: Dict[str, Any]) -> Optional[List[Any]]:
+        """使用启发式方法查找数组数据"""
+        # 查找所有列表类型的字段
+        for key, value in source_json.items():
+            if isinstance(value, list) and len(value) > 0:
+                # 跳过只包含字符串标记的数组（如动态数组标记）
+                if not (len(value) == 1 and isinstance(value[0], str) and value[0].startswith("{#")):
+                    return value
+        return None
+
+    def _extract_variables_from_item_data(self, template_item: Dict[str, Any], item_data: Dict[str, Any]) -> Dict[str, Any]:
+        """从模板项和元素数据中提取变量"""
+        variables = {}
+        self._extract_variables_from_dict(template_item, set())
+
+        # 从模板中提取变量名，然后从item_data中获取对应的值
+        template_vars = set()
+        self._collect_template_variables(template_item, template_vars)
+
+        for var_name in template_vars:
+            if var_name in item_data:
+                variables[var_name] = item_data[var_name]
+
+        return variables
+
+    def _collect_template_variables(self, template: Any, variables: set):
+        """收集模板中的所有变量名"""
+        if isinstance(template, str):
+            try:
+                ast = self.env.parse(template)
+                variables.update(meta.find_undeclared_variables(ast))
+            except:
+                pass
+        elif isinstance(template, dict):
+            for value in template.values():
+                self._collect_template_variables(value, variables)
+        elif isinstance(template, list):
+            for item in template:
+                self._collect_template_variables(item, variables)
 
     def _set_nested_value(self, data: Dict[str, Any], path_parts: List[str], value: Any):
         """在嵌套字典中设置值"""
@@ -396,30 +532,33 @@ class TemplateRenderer:
                 return None
         return current
     
-    def _render_dict(self, data: Dict[str, Any], variables: Dict[str, Any], 
-                     source_protocol: str, target_protocol: str, source_json: Dict[str, Any]):
+    def _render_dict(self, data: Dict[str, Any], variables: Dict[str, Any],
+                     source_protocol: str, target_protocol: str, source_json: Dict[str, Any],
+                     context: Optional[ConversionContext] = None):
         """渲染字典"""
         for key, value in data.items():
             if isinstance(value, str):
-                data[key] = self._render_string(value, variables, source_protocol, target_protocol, source_json)
+                data[key] = self._render_string(value, variables, source_protocol, target_protocol, source_json, context)
             elif isinstance(value, dict):
-                self._render_dict(value, variables, source_protocol, target_protocol, source_json)
+                self._render_dict(value, variables, source_protocol, target_protocol, source_json, context)
             elif isinstance(value, list):
-                self._render_list(value, variables, source_protocol, target_protocol, source_json)
-    
-    def _render_list(self, data: List[Any], variables: Dict[str, Any], 
-                     source_protocol: str, target_protocol: str, source_json: Dict[str, Any]):
+                self._render_list(value, variables, source_protocol, target_protocol, source_json, context)
+
+    def _render_list(self, data: List[Any], variables: Dict[str, Any],
+                     source_protocol: str, target_protocol: str, source_json: Dict[str, Any],
+                     context: Optional[ConversionContext] = None):
         """渲染列表"""
         for i, item in enumerate(data):
             if isinstance(item, str):
-                data[i] = self._render_string(item, variables, source_protocol, target_protocol, source_json)
+                data[i] = self._render_string(item, variables, source_protocol, target_protocol, source_json, context)
             elif isinstance(item, dict):
-                self._render_dict(item, variables, source_protocol, target_protocol, source_json)
+                self._render_dict(item, variables, source_protocol, target_protocol, source_json, context)
             elif isinstance(item, list):
-                self._render_list(item, variables, source_protocol, target_protocol, source_json)
+                self._render_list(item, variables, source_protocol, target_protocol, source_json, context)
     
-    def _render_string(self, template_str: str, variables: Dict[str, Any], 
-                       source_protocol: str, target_protocol: str, source_json: Dict[str, Any]) -> str:
+    def _render_string(self, template_str: str, variables: Dict[str, Any],
+                       source_protocol: str, target_protocol: str, source_json: Dict[str, Any],
+                       context: Optional[ConversionContext] = None) -> str:
         """渲染字符串"""
         # 检查是否是特殊变量（以__开头）
         special_var_match = re.search(r'\{\{\s*\__(\w+)\s*\}\}', template_str)
@@ -427,10 +566,22 @@ class TemplateRenderer:
             var_name = special_var_match.group(1)
             func_name = f"func_{var_name}"
             if func_name in self.converter_functions:
-                # 调用转换函数
-                result = self.converter_functions[func_name](source_protocol, target_protocol, source_json, variables)
+                # 创建转换上下文（如果没提供的话）
+                if context is None:
+                    context = ConversionContext(
+                        source_protocol=source_protocol,
+                        target_protocol=target_protocol,
+                        source_json=source_json,
+                        variables=variables
+                    )
+
+                # 使用适配器调用转换函数
+                result = self.adapter.call_converter_function(
+                    self.converter_functions[func_name],
+                    context
+                )
                 return re.sub(r'\{\{\s*\__\w+\s*\}\}', str(result), template_str)
-        
+
         # 普通变量渲染
         try:
             jinja_template = self.env.from_string(template_str)
