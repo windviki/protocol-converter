@@ -131,51 +131,28 @@ def preprocess_json_content(content: str) -> str:
     """
     processed_content = content
 
-    # 1. 首先保护Jinja2模板语法，防止误处理
+    # 使用占位符策略，避免引号嵌套问题
+    # 1. 保护所有Jinja2语法
     jinja2_patterns = [
-        (r'\{\{[^}]*\}\}', 'JINJA2_EXPR'),
-        (r'\{%[^%]*%\}', 'JINJA2_STMT'),
-        (r'\{#[^#]*#\}', 'JINJA2_COMMENT')
+        r'\{\{[^}]*\}\}',
+        r'\{%[^%]*%\}',
+        r'\{#[^#]*#\}'
     ]
 
-    # 存储被保护的Jinja2语法
     protected_parts = []
-    for pattern, placeholder in jinja2_patterns:
+    for pattern in jinja2_patterns:
         def protect_func(match):
             protected_parts.append(match.group(0))
-            return f'__PROTECTED_{len(protected_parts)-1}__'
+            return f'__JINJA2_PLACEHOLDER_{len(protected_parts)-1}__'
         processed_content = re.sub(pattern, protect_func, processed_content, flags=re.DOTALL)
 
-    # 2. 处理JSON中的单引号字符串值
-    # 匹配 : 'value' 和 , 'value' 模式
-    processed_content = re.sub(r'([:,\[\{]\s*)\'([^\']*?)\'(?=\s*[,}\]\}])', r'\1"\2"', processed_content)
+    # 2. 处理所有剩余的单引号为双引号
+    processed_content = re.sub(r"'([^']*)'", r'"\1"', processed_content)
 
-    # 3. 恢复被保护的Jinja2语法并处理其中的单引号
-    def restore_and_process(match):
-        index = int(match.group(1))
-        original = protected_parts[index]
-
-        # 处理Jinja2语法中的单引号
-        # 处理 | default 'value'
-        original = re.sub(r"(\|\s*default\s+)'([^']*)'", r'\1"\2"', original)
-
-        # 处理过滤器参数 | filter='value'
-        original = re.sub(r"(\|\s*\w+\s*=)'([^']*)'", r'\1"\2"', original)
-
-        # 处理条件语句 {% if var == 'value' %}
-        original = re.sub(r"(\{%[^}]*)'([^']*)'([^}]*%\})", r'\1"\2"\3', original)
-
-        # 处理循环 {% for item in ['a', 'b'] %}
-        original = re.sub(r"(\{%[^}]*)\[([^\]]*)\]([^}]*%\})", lambda m:
-                         m.group(1) + '[' + re.sub(r"'([^']*)'", r'"\1"', m.group(2)) + ']' + m.group(3), original)
-
-        return original
-
-    processed_content = re.sub(r'__PROTECTED_(\d+)__', restore_and_process, processed_content)
-
-    # 4. 处理特殊的default值
-    processed_content = re.sub(r"(\|\s*default\s+)\{\}", r'\1"{}"', processed_content)
-    processed_content = re.sub(r"(\|\s*default\s+)\[\]", r'\1"[]"', processed_content)
+    # 3. 恢复Jinja2语法，保持内部的单引号不变
+    for i, original in enumerate(protected_parts):
+        # 在Jinja2内部，单引号是可以的，所以恢复原样
+        processed_content = processed_content.replace(f'__JINJA2_PLACEHOLDER_{i}__', original)
 
     return processed_content
 

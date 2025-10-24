@@ -127,9 +127,9 @@ def test_conversion(converter, protocol_manager, source_family, target_family, t
         result = converter.convert(source_family, target_family, input_data)
 
         if result.success:
-            logger.success(f"✓ 转换成功: {test_name}")
+            logger.info(f"✓ 转换成功: {test_name}")
             logger.debug(f"匹配协议: {result.matched_protocol}")
-            logger.debug(f"提取变量: {result.extracted_variables}")
+            logger.debug(f"提取变量: {result.variables}")
             logger.info(f"转换结果:\n{json.dumps(result.result, indent=2, ensure_ascii=False)}")
             return result.result
         else:
@@ -261,7 +261,7 @@ def run_comprehensive_tests():
                         converter.load_protocol(
                             protocol_id=protocol_id,
                             protocol_family=family,
-                            template_content=protocol_data['template_content']
+                            template_content=protocol_data['template']
                         )
                         logger.info(f"转换器加载协议: {protocol_id}")
                 except Exception as e:
