@@ -301,6 +301,81 @@ def func_device_type(context: ConversionContext) -> str:
         return "UNKNOWN"
 
 
+def func_primary_road(context: ConversionContext) -> str:
+    """
+    从目的地地址中提取主要道路名称
+    """
+    destination = context.get_variable("destination", "")
+    if not destination:
+        return ""
+
+    # 简单的地址解析逻辑：寻找 "路" 前面的内容
+    if "路" in destination:
+        # 寻找第一个路名
+        import re
+        match = re.search(r'([^路，,]+路)', destination)
+        if match:
+            return match.group(1)
+
+    # 如果没有找到，返回前半部分
+    if "交叉口" in destination:
+        parts = destination.split("交叉口")
+        if len(parts) >= 2:
+            return parts[0].strip()
+
+    # 默认返回整个地址
+    return destination
+
+
+def func_secondary_road(context: ConversionContext) -> str:
+    """
+    从目的地地址中提取次要道路名称
+    """
+    destination = context.get_variable("destination", "")
+    if not destination:
+        return ""
+
+    # 寻找第二个路名
+    if "路" in destination:
+        import re
+        matches = re.findall(r'([^路，,]+路)', destination)
+        if len(matches) >= 2:
+            return matches[1]
+
+    # 如果有交叉口标识，尝试提取第二部分
+    if "交叉口" in destination:
+        parts = destination.split("交叉口")
+        if len(parts) >= 2:
+            # 从第二部分中提取路名
+            second_part = parts[1].strip()
+            if "路" in second_part:
+                import re
+                match = re.search(r'([^路，,]+路)', second_part)
+                if match:
+                    return match.group(1)
+
+    return ""
+
+
+def func_full_address(context: ConversionContext) -> str:
+    """
+    构建完整地址
+    """
+    city = context.get_variable("city", "上海")
+    district = context.get_variable("district", "")
+    destination = context.get_variable("destination", "")
+
+    address_parts = []
+    if city:
+        address_parts.append(city)
+    if district:
+        address_parts.append(district)
+    if destination:
+        address_parts.append(destination)
+
+    return "".join(address_parts)
+
+
 # 转换函数字典，供系统使用
 CONVERTER_FUNCTIONS = {
     "func_sid": func_sid,
@@ -320,6 +395,9 @@ CONVERTER_FUNCTIONS = {
     "func_render_depth": func_render_depth,
     "func_parent_path": func_parent_path,
     "func_device_type": func_device_type,
+    "func_primary_road": func_primary_road,
+    "func_secondary_road": func_secondary_road,
+    "func_full_address": func_full_address,
 }
 
 

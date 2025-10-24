@@ -62,8 +62,16 @@ def setup_test_environment():
 
     # 初始化数据库
     db_path = os.path.join(temp_dir, "test.db")
-    db_manager = ProtocolDatabase(db_path)
+    # 设置数据库URL为临时数据库
+    os.environ['DATABASE_URL'] = f'sqlite:///{db_path}'
+
+    # 使用正确的数据库初始化函数
+    from database.connection import init_database
+    init_database()  # 创建数据库表
     logger.info("✓ 数据库初始化成功")
+
+    # 创建数据库管理器（用于其他操作）
+    db_manager = ProtocolDatabase(db_path)
 
     # 创建协议管理器
     protocol_manager = ProtocolManager()

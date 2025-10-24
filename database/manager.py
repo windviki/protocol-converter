@@ -21,28 +21,17 @@ class ProtocolDatabase:
     
     def init_database(self):
         """初始化数据库"""
-        with sqlite3.connect(self.db_path) as conn:
-            cursor = conn.cursor()
-            
-            # 创建协议表
-            cursor.execute('''
-                CREATE TABLE IF NOT EXISTS protocols (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    protocol_id TEXT UNIQUE NOT NULL,
-                    protocol_family TEXT NOT NULL,
-                    template_content TEXT NOT NULL,
-                    variables TEXT,
-                    special_variables TEXT,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                )
-            ''')
-            
-            # 创建索引
-            cursor.execute('CREATE INDEX IF NOT EXISTS idx_protocol_id ON protocols(protocol_id)')
-            cursor.execute('CREATE INDEX IF NOT EXISTS idx_protocol_family ON protocols(protocol_family)')
-            
-            conn.commit()
+        from models.models import Base
+        from sqlalchemy import create_engine
+        from sqlalchemy.orm import sessionmaker
+
+        # 使用SQLAlchemy创建表
+        engine = create_engine(f'sqlite:///{self.db_path}')
+        Base.metadata.create_all(engine)
+
+        # 存储引擎和会话工厂
+        self.engine = engine
+        self.SessionLocal = sessionmaker(bind=engine)
     
     def save_protocol(self, protocol_id: str, protocol_family: str, 
                      template_content: Dict[str, Any], variables: List[str], 

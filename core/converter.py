@@ -8,6 +8,8 @@ from typing import Dict, List, Any, Optional
 from jinja2 import meta
 
 from models.types import ProtocolTemplate, ConversionResult
+
+logger = logging.getLogger(__name__)
 from .matcher import ProtocolMatcher
 from .extractor import VariableExtractor, ArrayMarkerParser
 from .renderer import TemplateRenderer
@@ -125,9 +127,28 @@ class ProtocolConverter:
         """从字典中提取变量"""
         for value in data.values():
             if isinstance(value, str):
-                # 使用Jinja2解析变量
-                ast = self.renderer.env.parse(value)
-                variables.update(meta.find_undeclared_variables(ast))
+                # 检查字符串是否包含Jinja2模板语法
+                if '{{' in value or '{%' in value or '{#' in value:
+                    try:
+                        # 使用Jinja2解析变量
+                        ast = self.renderer.env.parse(value)
+                        undeclared_vars = meta.find_undeclared_variables(ast)
+                        # 只添加非特殊变量
+                        for var in undeclared_vars:
+                            if not var.startswith('__'):
+                                variables.add(var)
+                    except Exception as e:
+                        # 如果解析失败，尝试使用正则表达式提取变量
+                        logger.debug(f"Jinja2解析失败，使用正则表达式提取: {value[:50]}...")
+                        # 使用正则表达式提取 {{ variable }} 格式的变量
+                        import re
+                        pattern = r'\{\{\s*([^}]+?)\s*\}\}'
+                        matches = re.findall(pattern, value)
+                        for match in matches:
+                            # 清理变量名，移除过滤器等
+                            var_name = match.split('|')[0].split('.')[0].strip()
+                            if var_name and not var_name.startswith('__'):
+                                variables.add(var_name)
             elif isinstance(value, dict):
                 self._extract_variables_from_dict(value, variables)
             elif isinstance(value, list):
@@ -135,14 +156,24 @@ class ProtocolConverter:
 
     def _extract_variables_from_list(self, data: List[Any], variables: set):
         """从列表中提取变量"""
+        import re
         for item in data:
             if isinstance(item, str):
-                try:
-                    ast = self.renderer.env.parse(item)
-                    variables.update(meta.find_undeclared_variables(ast))
-                except Exception:
-                    # 如果解析失败，跳过该项
-                    pass
+                if '{{' in item or '{%' in item or '{#' in item:
+                    try:
+                        # 使用Jinja2解析变量
+                        ast = self.renderer.env.parse(item)
+                        undeclared_vars = meta.find_undeclared_variables(ast)
+                        variables.update(undeclared_vars)
+                    except Exception as e:
+                        # 如果解析失败，尝试使用正则表达式提取变量
+                        logger.debug(f"列表项Jinja2解析失败，使用正则表达式提取: {item[:50]}...")
+                        pattern = r'\{\{\s*([^}]+?)\s*\}\}'
+                        matches = re.findall(pattern, item)
+                        for match in matches:
+                            var_name = match.split('|')[0].split('.')[0].strip()
+                            if var_name and not var_name.startswith('__'):
+                                variables.add(var_name)
             elif isinstance(item, dict):
                 self._extract_variables_from_dict(item, variables)
             elif isinstance(item, list):

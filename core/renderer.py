@@ -273,7 +273,10 @@ class TemplateRenderer:
             return jinja_template.render(**context.variables)
         except Exception as e:
             logger.error(f"Template rendering error: {e}")
-            return template_str
+            logger.error(f"Template string: {template_str}")
+            logger.error(f"Available variables: {list(context.variables.keys())}")
+            # 尝试提供一个部分渲染的结果或者有意义的默认值
+            return self._fallback_render(template_str, context)
 
     def _extract_variables_from_dict(self, data: Dict[str, Any], variables: set):
         """从字典中提取变量"""
@@ -301,3 +304,69 @@ class TemplateRenderer:
                 self._extract_variables_from_dict(item, variables)
             elif isinstance(item, list):
                 self._extract_variables_from_list(item, variables)
+
+    def _fallback_render(self, template_str: str, context: ConversionContext) -> str:
+        """回退渲染方法，处理模板渲染失败的情况"""
+        import re
+
+        result = template_str
+
+        # 首先处理函数调用
+        def replace_func_call(match):
+            func_name = match.group(1).strip()
+            try:
+                from converters.functions import get_converter_function
+                func = get_converter_function(func_name)
+                if func:
+                    return func(context)
+                return f"[FUNC_ERROR:{func_name}]"
+            except Exception as e:
+                logger.error(f"Function call error {func_name}: {e}")
+                return f"[FUNC_ERROR:{func_name}]"
+
+        # 替换函数调用 {{ func_name() }}
+        result = re.sub(r'\{\{\s*(\w+)\(\)\s*\}\}', replace_func_call, result)
+
+        # 替换简单的变量
+        def replace_simple_var(match):
+            var_name = match.group(1).strip()
+            if var_name in context.variables:
+                return str(context.variables[var_name])
+            return f"[MISSING:{var_name}]"
+
+        result = re.sub(r'\{\{\s*([^}|]+?)\s*\}\}', replace_simple_var, result)
+
+        # 处理带过滤器的变量 - 包括默认值过滤器
+        def replace_filtered_var(match):
+            var_expr = match.group(1).strip()
+
+            # 处理默认值过滤器，如: city | default '上海'
+            if 'default' in var_expr:
+                import re
+                # 匹配 default 'value' 或 default "value"
+                default_match = re.search(r"default\s+['\"]([^'\"]*)['\"]", var_expr)
+                var_name = var_expr.split('|')[0].strip()
+
+                if var_name in context.variables and context.variables[var_name] is not None:
+                    return str(context.variables[var_name])
+                elif default_match:
+                    return default_match.group(1)
+                else:
+                    return f"[MISSING:{var_name}]"
+
+            # 处理其他过滤器
+            var_name = var_expr.split('|')[0].strip()
+            if var_name in context.variables:
+                value = context.variables[var_name]
+                # 处理一些常用过滤器
+                if '| upper' in var_expr:
+                    return str(value).upper()
+                elif '| lower' in var_expr:
+                    return str(value).lower()
+                else:
+                    return str(value)
+            return f"[MISSING:{var_name}]"
+
+        result = re.sub(r'\{\{\s*([^}]+?)\s*\}\}', replace_filtered_var, result)
+
+        return result

@@ -1245,3 +1245,445 @@
 2025-10-24 14:52:18,410 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:333 - 已清理临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_ceyqhb92
 2025-10-24 14:52:18,411 | INFO     | test_comprehensive_navigation:<module>:339 - 
 === 所有综合测试完成! ===
+2025-10-24 14:53:51,332 | INFO     | test_comprehensive_navigation:<module>:52 - 使用标准logging日志系统
+2025-10-24 14:53:51,333 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:240 - 项目根目录: C:\work\gw\protocol_converter
+2025-10-24 14:53:51,333 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:241 - Examples目录: C:\work\gw\protocol_converter\examples
+2025-10-24 14:53:51,333 | INFO     | test_comprehensive_navigation:setup_test_environment:57 - === 开始综合导航协议测试 ===
+2025-10-24 14:53:51,334 | INFO     | test_comprehensive_navigation:setup_test_environment:61 - 使用临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_gnduispj
+2025-10-24 14:53:51,337 | INFO     | test_comprehensive_navigation:setup_test_environment:66 - ✓ 数据库初始化成功
+2025-10-24 14:53:51,337 | INFO     | test_comprehensive_navigation:load_protocols:80 - 加载协议目录: C:\work\gw\protocol_converter\examples\protocols
+2025-10-24 14:53:51,386 | INFO     | test_comprehensive_navigation:load_protocols:88 - 加载结果: {'total_files': 15, 'loaded_files': 0, 'failed_files': 15, 'errors': ["加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-4.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-5.json: expected token 'end of print statement', got 'string'"]}
+2025-10-24 14:53:51,390 | ERROR    | test_comprehensive_navigation:run_comprehensive_tests:324 - 测试过程中发生错误: (sqlite3.OperationalError) no such table: protocol_families
+[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at 
+FROM protocol_families]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-24 14:53:51,431 | ERROR    | test_comprehensive_navigation:run_comprehensive_tests:326 - Traceback (most recent call last):
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: protocol_families
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\work\gw\protocol_converter\tests\test_comprehensive_navigation.py", line 248, in run_comprehensive_tests
+    load_result, protocol_manager = load_protocols(protocol_manager, examples_dir)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\tests\test_comprehensive_navigation.py", line 91, in load_protocols
+    families = protocol_manager.list_all_families()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\protocol_manager\manager.py", line 230, in list_all_families
+    families = session.query(ProtocolFamily).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: protocol_families
+[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at 
+FROM protocol_families]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-10-24 14:53:51,436 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:333 - 已清理临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_gnduispj
+2025-10-24 14:53:51,436 | ERROR    | test_comprehensive_navigation:<module>:342 - 
+=== 综合测试失败! ===
+2025-10-24 14:54:57,258 | INFO     | test_comprehensive_navigation:<module>:52 - 使用标准logging日志系统
+2025-10-24 14:54:57,258 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:240 - 项目根目录: C:\work\gw\protocol_converter
+2025-10-24 14:54:57,263 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:241 - Examples目录: C:\work\gw\protocol_converter\examples
+2025-10-24 14:54:57,263 | INFO     | test_comprehensive_navigation:setup_test_environment:57 - === 开始综合导航协议测试 ===
+2025-10-24 14:54:57,263 | INFO     | test_comprehensive_navigation:setup_test_environment:61 - 使用临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_eors7irk
+2025-10-24 14:54:57,289 | INFO     | test_comprehensive_navigation:setup_test_environment:66 - ✓ 数据库初始化成功
+2025-10-24 14:54:57,290 | INFO     | test_comprehensive_navigation:load_protocols:80 - 加载协议目录: C:\work\gw\protocol_converter\examples\protocols
+2025-10-24 14:54:57,463 | INFO     | test_comprehensive_navigation:load_protocols:88 - 加载结果: {'total_files': 15, 'loaded_files': 0, 'failed_files': 15, 'errors': ["加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-4.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-5.json: expected token 'end of print statement', got 'string'"]}
+2025-10-24 14:54:57,463 | ERROR    | test_comprehensive_navigation:run_comprehensive_tests:324 - 测试过程中发生错误: (sqlite3.OperationalError) no such table: protocol_families
+[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at 
+FROM protocol_families]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-24 14:54:57,491 | ERROR    | test_comprehensive_navigation:run_comprehensive_tests:326 - Traceback (most recent call last):
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: protocol_families
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\work\gw\protocol_converter\tests\test_comprehensive_navigation.py", line 248, in run_comprehensive_tests
+    load_result, protocol_manager = load_protocols(protocol_manager, examples_dir)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\tests\test_comprehensive_navigation.py", line 91, in load_protocols
+    families = protocol_manager.list_all_families()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\protocol_manager\manager.py", line 230, in list_all_families
+    families = session.query(ProtocolFamily).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: protocol_families
+[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at 
+FROM protocol_families]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-10-24 14:54:57,491 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:333 - 已清理临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_eors7irk
+2025-10-24 14:54:57,491 | ERROR    | test_comprehensive_navigation:<module>:342 - 
+=== 综合测试失败! ===
+2025-10-24 14:57:51,866 | INFO     | test_comprehensive_navigation:<module>:52 - 使用标准logging日志系统
+2025-10-24 14:57:51,867 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:241 - 项目根目录: C:\work\gw\protocol_converter
+2025-10-24 14:57:51,867 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:242 - Examples目录: C:\work\gw\protocol_converter\examples
+2025-10-24 14:57:51,867 | INFO     | test_comprehensive_navigation:setup_test_environment:57 - === 开始综合导航协议测试 ===
+2025-10-24 14:57:51,869 | INFO     | test_comprehensive_navigation:setup_test_environment:61 - 使用临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test__fb2but4
+2025-10-24 14:57:51,949 | INFO     | test_comprehensive_navigation:setup_test_environment:67 - ✓ 数据库初始化成功
+2025-10-24 14:57:51,949 | INFO     | test_comprehensive_navigation:load_protocols:81 - 加载协议目录: C:\work\gw\protocol_converter\examples\protocols
+2025-10-24 14:57:52,025 | INFO     | test_comprehensive_navigation:load_protocols:89 - 加载结果: {'total_files': 15, 'loaded_files': 0, 'failed_files': 15, 'errors': ["加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-4.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-5.json: expected token 'end of print statement', got 'string'"]}
+2025-10-24 14:57:52,030 | ERROR    | test_comprehensive_navigation:run_comprehensive_tests:325 - 测试过程中发生错误: (sqlite3.OperationalError) no such table: protocol_families
+[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at 
+FROM protocol_families]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-24 14:57:52,045 | ERROR    | test_comprehensive_navigation:run_comprehensive_tests:327 - Traceback (most recent call last):
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: protocol_families
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\work\gw\protocol_converter\tests\test_comprehensive_navigation.py", line 249, in run_comprehensive_tests
+    load_result, protocol_manager = load_protocols(protocol_manager, examples_dir)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\tests\test_comprehensive_navigation.py", line 92, in load_protocols
+    families = protocol_manager.list_all_families()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\protocol_manager\manager.py", line 230, in list_all_families
+    families = session.query(ProtocolFamily).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: protocol_families
+[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at 
+FROM protocol_families]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-10-24 15:04:40,454 | INFO     | test_comprehensive_navigation:<module>:52 - 使用标准logging日志系统
+2025-10-24 15:04:40,456 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:241 - 项目根目录: C:\work\gw\protocol_converter
+2025-10-24 15:04:40,456 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:242 - Examples目录: C:\work\gw\protocol_converter\examples
+2025-10-24 15:04:40,456 | INFO     | test_comprehensive_navigation:setup_test_environment:57 - === 开始综合导航协议测试 ===
+2025-10-24 15:04:40,462 | INFO     | test_comprehensive_navigation:setup_test_environment:61 - 使用临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_0k_bins_
+2025-10-24 15:04:40,701 | INFO     | test_comprehensive_navigation:setup_test_environment:67 - ✓ 数据库初始化成功
+2025-10-24 15:04:40,701 | INFO     | test_comprehensive_navigation:load_protocols:81 - 加载协议目录: C:\work\gw\protocol_converter\examples\protocols
+2025-10-24 15:04:40,830 | INFO     | test_comprehensive_navigation:load_protocols:89 - 加载结果: {'total_files': 15, 'loaded_files': 0, 'failed_files': 15, 'errors': ["加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-4.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('A', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('B', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-1.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-2.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-3.json: (sqlite3.OperationalError) no such table: protocol_families\n[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at \nFROM protocol_families \nWHERE protocol_families.name = ?\n LIMIT ? OFFSET ?]\n[parameters: ('C', 1, 0)]\n(Background on this error at: https://sqlalche.me/e/20/e3q8)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-5.json: expected token 'end of print statement', got 'string'"]}
+2025-10-24 15:04:40,837 | ERROR    | test_comprehensive_navigation:run_comprehensive_tests:325 - 测试过程中发生错误: (sqlite3.OperationalError) no such table: protocol_families
+[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at 
+FROM protocol_families]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+2025-10-24 15:04:40,863 | ERROR    | test_comprehensive_navigation:run_comprehensive_tests:327 - Traceback (most recent call last):
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: protocol_families
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\work\gw\protocol_converter\tests\test_comprehensive_navigation.py", line 249, in run_comprehensive_tests
+    load_result, protocol_manager = load_protocols(protocol_manager, examples_dir)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\tests\test_comprehensive_navigation.py", line 92, in load_protocols
+    families = protocol_manager.list_all_families()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\protocol_manager\manager.py", line 230, in list_all_families
+    families = session.query(ProtocolFamily).all()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2704, in all
+    return self._iter().all()  # type: ignore
+           ^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\query.py", line 2857, in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+                                                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2365, in execute
+    return self._execute_internal(
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2251, in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 306, in orm_execute_statement
+    result = conn.execute(
+             ^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+           ^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+  File "C:\work\gw\protocol_converter\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: protocol_families
+[SQL: SELECT protocol_families.id AS protocol_families_id, protocol_families.name AS protocol_families_name, protocol_families.description AS protocol_families_description, protocol_families.created_at AS protocol_families_created_at, protocol_families.updated_at AS protocol_families_updated_at 
+FROM protocol_families]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)
+
+2025-10-24 15:06:19,498 | INFO     | test_comprehensive_navigation:<module>:52 - 使用标准logging日志系统
+2025-10-24 15:06:19,499 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:249 - 项目根目录: C:\work\gw\protocol_converter
+2025-10-24 15:06:19,499 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:250 - Examples目录: C:\work\gw\protocol_converter\examples
+2025-10-24 15:06:19,499 | INFO     | test_comprehensive_navigation:setup_test_environment:57 - === 开始综合导航协议测试 ===
+2025-10-24 15:06:19,502 | INFO     | test_comprehensive_navigation:setup_test_environment:61 - 使用临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_f_s58jpm
+2025-10-24 15:06:32,725 | INFO     | test_comprehensive_navigation:<module>:52 - 使用标准logging日志系统
+2025-10-24 15:06:32,725 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:248 - 项目根目录: C:\work\gw\protocol_converter
+2025-10-24 15:06:32,726 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:249 - Examples目录: C:\work\gw\protocol_converter\examples
+2025-10-24 15:06:32,726 | INFO     | test_comprehensive_navigation:setup_test_environment:57 - === 开始综合导航协议测试 ===
+2025-10-24 15:06:32,728 | INFO     | test_comprehensive_navigation:setup_test_environment:61 - 使用临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_5nic4dkz
+2025-10-24 15:06:32,811 | INFO     | test_comprehensive_navigation:setup_test_environment:71 - ✓ 数据库初始化成功
+2025-10-24 15:06:32,848 | INFO     | test_comprehensive_navigation:load_protocols:88 - 加载协议目录: C:\work\gw\protocol_converter\examples\protocols
+2025-10-24 15:06:33,058 | INFO     | test_comprehensive_navigation:load_protocols:96 - 加载结果: {'total_files': 15, 'loaded_files': 10, 'failed_files': 5, 'errors': ["加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-5.json: expected token 'end of print statement', got 'string'"]}
+2025-10-24 15:06:33,062 | INFO     | test_comprehensive_navigation:load_protocols:100 - 可用协议族: ['A', 'B', 'C']
+2025-10-24 15:06:33,066 | INFO     | test_comprehensive_navigation:load_protocols:104 - 协议族 A: ['A-1', 'A-2', 'A-3', 'A-4']
+2025-10-24 15:06:33,068 | INFO     | test_comprehensive_navigation:load_protocols:104 - 协议族 B: ['B-1', 'B-2', 'B-3']
+2025-10-24 15:06:33,069 | INFO     | test_comprehensive_navigation:load_protocols:104 - 协议族 C: ['C-1', 'C-2', 'C-3']
+2025-10-24 15:06:33,076 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:274 - 转换器加载协议: A-1
+2025-10-24 15:06:33,080 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:274 - 转换器加载协议: A-2
+2025-10-24 15:06:33,084 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:274 - 转换器加载协议: A-3
+2025-10-24 15:06:33,089 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:274 - 转换器加载协议: A-4
+2025-10-24 15:06:33,095 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:274 - 转换器加载协议: B-1
+2025-10-24 15:06:33,099 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:274 - 转换器加载协议: B-2
+2025-10-24 15:06:33,103 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:274 - 转换器加载协议: B-3
+2025-10-24 15:06:33,107 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:274 - 转换器加载协议: C-1
+2025-10-24 15:06:33,112 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:274 - 转换器加载协议: C-2
+2025-10-24 15:06:33,127 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:274 - 转换器加载协议: C-3
+2025-10-24 15:06:33,128 | INFO     | test_comprehensive_navigation:load_input_data:124 - 加载输入数据: A-1
+2025-10-24 15:06:33,128 | INFO     | test_comprehensive_navigation:load_input_data:124 - 加载输入数据: A-2
+2025-10-24 15:06:33,129 | INFO     | test_comprehensive_navigation:load_input_data:124 - 加载输入数据: A-3
+2025-10-24 15:06:33,129 | INFO     | test_comprehensive_navigation:load_input_data:124 - 加载输入数据: A-4
+2025-10-24 15:06:33,130 | INFO     | test_comprehensive_navigation:load_input_data:124 - 加载输入数据: A-5
+2025-10-24 15:06:33,130 | INFO     | test_comprehensive_navigation:load_input_data:124 - 加载输入数据: B-4
+2025-10-24 15:06:33,132 | INFO     | test_comprehensive_navigation:load_input_data:124 - 加载输入数据: B-5
+2025-10-24 15:06:33,132 | INFO     | test_comprehensive_navigation:load_input_data:124 - 加载输入数据: C-3
+2025-10-24 15:06:33,133 | INFO     | test_comprehensive_navigation:load_input_data:124 - 加载输入数据: C-4
+2025-10-24 15:06:33,133 | INFO     | test_comprehensive_navigation:load_input_data:124 - 加载输入数据: C-5
+2025-10-24 15:06:33,134 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:280 - 加载了 10 个输入数据文件
+2025-10-24 15:06:33,134 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:291 - 
+--- 测试 A -> B 转换 ---
+2025-10-24 15:06:33,134 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: A -> B (A-4)
+2025-10-24 15:06:33,144 | INFO     | test_comprehensive_navigation:test_conversion:138 - ✓ 转换成功: A-4
+2025-10-24 15:06:33,145 | INFO     | test_comprehensive_navigation:test_conversion:141 - 转换结果:
+{
+  "name": "Phone_Call",
+  "slots": [
+    {
+      "name": "PERSON",
+      "value": "None",
+      "label": "O"
+    },
+    {
+      "name": "PHONE_TYPE",
+      "value": "None",
+      "label": "PHONE_TYPE_LABEL"
+    }
+  ]
+}
+2025-10-24 15:06:33,145 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: A -> B (A-5)
+2025-10-24 15:06:33,155 | INFO     | test_comprehensive_navigation:test_conversion:138 - ✓ 转换成功: A-5
+2025-10-24 15:06:33,155 | INFO     | test_comprehensive_navigation:test_conversion:141 - 转换结果:
+{
+  "name": "Phone_Call",
+  "slots": [
+    {
+      "name": "PERSON",
+      "value": "None",
+      "label": "O"
+    },
+    {
+      "name": "PHONE_TYPE",
+      "value": "None",
+      "label": "PHONE_TYPE_LABEL"
+    }
+  ]
+}
+2025-10-24 15:06:33,155 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:291 - 
+--- 测试 A -> C 转换 ---
+2025-10-24 15:06:33,155 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: A -> C (A-4)
+2025-10-24 15:06:33,163 | INFO     | test_comprehensive_navigation:test_conversion:138 - ✓ 转换成功: A-4
+2025-10-24 15:06:33,163 | INFO     | test_comprehensive_navigation:test_conversion:141 - 转换结果:
+{
+  "tao": "phone.contact.call",
+  "slots": [
+    {
+      "name": "PERSON",
+      "value": "None",
+      "label": "O"
+    },
+    {
+      "name": "PHONE_TYPE",
+      "value": "None",
+      "label": "PHONE_TYPE_UNKNOWN"
+    }
+  ]
+}
+2025-10-24 15:06:33,163 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: A -> C (A-5)
+2025-10-24 15:06:33,171 | INFO     | test_comprehensive_navigation:test_conversion:138 - ✓ 转换成功: A-5
+2025-10-24 15:06:33,172 | INFO     | test_comprehensive_navigation:test_conversion:141 - 转换结果:
+{
+  "tao": "phone.contact.call",
+  "slots": [
+    {
+      "name": "PERSON",
+      "value": "None",
+      "label": "O"
+    },
+    {
+      "name": "PHONE_TYPE",
+      "value": "None",
+      "label": "PHONE_TYPE_UNKNOWN"
+    }
+  ]
+}
+2025-10-24 15:06:33,172 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:291 - 
+--- 测试 B -> A 转换 ---
+2025-10-24 15:06:33,172 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: B -> A (B-4)
+2025-10-24 15:06:33,172 | ERROR    | test_comprehensive_navigation:test_conversion:144 - ✗ 转换失败: B-4 - No matching protocol found for B
+2025-10-24 15:06:33,172 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: B -> A (B-5)
+2025-10-24 15:06:33,172 | ERROR    | test_comprehensive_navigation:test_conversion:144 - ✗ 转换失败: B-5 - No matching protocol found for B
+2025-10-24 15:06:33,173 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:291 - 
+--- 测试 B -> C 转换 ---
+2025-10-24 15:06:33,173 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: B -> C (B-4)
+2025-10-24 15:06:33,173 | ERROR    | test_comprehensive_navigation:test_conversion:144 - ✗ 转换失败: B-4 - No matching protocol found for B
+2025-10-24 15:06:33,173 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: B -> C (B-5)
+2025-10-24 15:06:33,174 | ERROR    | test_comprehensive_navigation:test_conversion:144 - ✗ 转换失败: B-5 - No matching protocol found for B
+2025-10-24 15:06:33,174 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:291 - 
+--- 测试 C -> A 转换 ---
+2025-10-24 15:06:33,174 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: C -> A (C-4)
+2025-10-24 15:06:33,174 | ERROR    | test_comprehensive_navigation:test_conversion:144 - ✗ 转换失败: C-4 - No matching protocol found for C
+2025-10-24 15:06:33,174 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: C -> A (C-5)
+2025-10-24 15:06:33,174 | ERROR    | test_comprehensive_navigation:test_conversion:144 - ✗ 转换失败: C-5 - No matching protocol found for C
+2025-10-24 15:06:33,174 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:291 - 
+--- 测试 C -> B 转换 ---
+2025-10-24 15:06:33,174 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: C -> B (C-4)
+2025-10-24 15:06:33,174 | ERROR    | test_comprehensive_navigation:test_conversion:144 - ✗ 转换失败: C-4 - No matching protocol found for C
+2025-10-24 15:06:33,174 | INFO     | test_comprehensive_navigation:test_conversion:131 - 测试转换: C -> B (C-5)
+2025-10-24 15:06:33,174 | ERROR    | test_comprehensive_navigation:test_conversion:144 - ✗ 转换失败: C-5 - No matching protocol found for C
+2025-10-24 15:06:33,175 | INFO     | test_comprehensive_navigation:test_address_splitting_merge:154 - 
+=== 测试地址拆分和合并功能 ===
+2025-10-24 15:06:33,175 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:308 - 地址拆分合并测试用例: 2
+2025-10-24 15:06:33,175 | INFO     | test_comprehensive_navigation:test_dynamic_arrays:193 - 
+=== 测试动态数组功能 ===
+2025-10-24 15:06:33,175 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:312 - 动态数组测试用例: 1
+2025-10-24 15:06:33,175 | INFO     | test_comprehensive_navigation:test_jinja2_features:215 - 
+=== 测试Jinja2高级特性 ===
+2025-10-24 15:06:33,175 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:316 - Jinja2特性测试用例: 3
+2025-10-24 15:06:33,175 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:319 - 
+=== 测试总结 ===
+2025-10-24 15:06:33,175 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:320 - 总测试数: 4
+2025-10-24 15:06:33,175 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:321 - 成功转换: 4
+2025-10-24 15:06:33,178 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:327 - 测试结果已保存到: C:\Users\viki\AppData\Local\Temp\comprehensive_test_5nic4dkz\test_results.json
