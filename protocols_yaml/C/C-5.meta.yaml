@@ -1,0 +1,488 @@
+conversion_timestamp: '2025-10-24T17:43:27.507950'
+conversion_version: '1.0'
+family: C
+jinja_placeholders:
+  __JINJA_PLACEHOLDER_10__:
+    location: slots[0].value[1].road_data.type
+    original_content: '{% else %}'
+    type: statement
+  __JINJA_PLACEHOLDER_11__:
+    location: slots[0].value[1].road_data.type
+    original_content: '{% if __array_index == 0 %}'
+    type: statement
+  __JINJA_PLACEHOLDER_12__:
+    location: slots[0].value[1].road_data.full_address
+    original_content: '{{ city | default '''' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_13__:
+    location: slots[0].value[1].road_data.full_address
+    original_content: '{{ district | default '''' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_14__:
+    location: slots[0].value[1].road_data.full_address
+    original_content: '{{ road_name }}'
+    type: variable
+  __JINJA_PLACEHOLDER_15__:
+    location: slots[0].value[1].road_data.administrative.level
+    original_content: '{% endif %}'
+    type: statement
+  __JINJA_PLACEHOLDER_16__:
+    location: slots[0].value[1].road_data.administrative.level
+    original_content: '{% else %}'
+    type: statement
+  __JINJA_PLACEHOLDER_17__:
+    location: slots[0].value[1].road_data.administrative.level
+    original_content: '{% elif city %}'
+    type: statement
+  __JINJA_PLACEHOLDER_18__:
+    location: slots[0].value[1].road_data.administrative.level
+    original_content: '{% if district %}'
+    type: statement
+  __JINJA_PLACEHOLDER_19__:
+    location: slots[0].value[1].road_data.administrative.names.city
+    original_content: '{{ city | default '''' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_1__:
+    location: slots[0].value[0]
+    original_content: '# array_dynamic: true'
+    type: comment
+  __JINJA_PLACEHOLDER_20__:
+    location: slots[0].value[1].road_data.administrative.names.district
+    original_content: '{{ district | default '''' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_21__:
+    location: slots[0].value[1].road_data.administrative.names.province
+    original_content: '{{ province | default '''' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_22__:
+    location: slots[0].value[1].geographic.landmark.nearest
+    original_content: '{{ nearest_landmark | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_23__:
+    location: slots[0].value[1].geographic.landmark.distance
+    original_content: '{{ landmark_distance | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_24__:
+    location: slots[0].value[1].geographic.landmark.direction
+    original_content: '{{ landmark_direction | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_25__:
+    location: slots[0].value[1].traffic.current.level
+    original_content: '{{ traffic_level | default ''unknown'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_26__:
+    location: slots[0].value[1].traffic.current.description
+    original_content: '{{ traffic_desc | default ''暂无信息'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_27__:
+    location: slots[0].value[1].traffic.current.update_time
+    original_content: '{{ traffic_update | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_28__:
+    location: slots[0].value[1].traffic.estimates.duration
+    original_content: '{{ estimated_time | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_29__:
+    location: slots[0].value[1].traffic.estimates.distance
+    original_content: '{{ distance | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_2__:
+    location: slots[0].value[1].segment_id
+    original_content: '{{ __array_index }}'
+    type: variable
+  __JINJA_PLACEHOLDER_30__:
+    location: slots[0].value[1].traffic.estimates.delay
+    original_content: '{{ expected_delay | default ''0分钟'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_31__:
+    location: slots[0].value[1].traffic.alternatives[0].time
+    original_content: '{{ alt_fastest | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_32__:
+    location: slots[0].value[1].traffic.alternatives[1].time
+    original_content: '{{ alt_shortest | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_33__:
+    location: slots[0].value[1].metadata.processing.session_id
+    original_content: '{{ __session_id }}'
+    type: variable
+  __JINJA_PLACEHOLDER_34__:
+    location: slots[0].value[1].metadata.processing.conversion_id
+    original_content: '{{ __conversion_id }}'
+    type: variable
+  __JINJA_PLACEHOLDER_35__:
+    location: slots[0].value[1].metadata.processing.render_depth
+    original_content: '{{ __render_depth }}'
+    type: variable
+  __JINJA_PLACEHOLDER_36__:
+    location: slots[0].value[1].metadata.processing.current_path
+    original_content: '{{ __current_path }}'
+    type: variable
+  __JINJA_PLACEHOLDER_37__:
+    location: slots[0].value[1].metadata.processing.parent_path
+    original_content: '{{ __parent_path }}'
+    type: variable
+  __JINJA_PLACEHOLDER_38__:
+    location: slots[0].value[1].metadata.quality.confidence
+    original_content: '{{ confidence_level | default ''medium'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_39__:
+    location: slots[0].value[1].metadata.quality.source_reliability
+    original_content: '{{ source_reliability | default ''unknown'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_3__:
+    location: slots[0].value[1].segment_id
+    original_content: '{{ __session_id }}'
+    type: variable
+  __JINJA_PLACEHOLDER_40__:
+    location: slots[0].value[1].metadata.quality.last_verified
+    original_content: '{{ last_verified | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_41__:
+    location: slots[0].value[1].metadata.annotations.notes
+    original_content: '{{ segment_notes | default '''' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_42__:
+    location: slots[0].value[1].metadata.annotations.warnings
+    original_content: '{{ segment_warnings | default [] }}'
+    type: variable
+  __JINJA_PLACEHOLDER_43__:
+    location: slots[0].value[1].metadata.annotations.restrictions
+    original_content: '{{ segment_restrictions | default [] }}'
+    type: variable
+  __JINJA_PLACEHOLDER_44__:
+    location: slots[0].label
+    original_content: '{{ __sid }}'
+    type: variable
+  __JINJA_PLACEHOLDER_45__:
+    location: slots[0].metadata.element_count
+    original_content: '{{ __array_total }}'
+    type: variable
+  __JINJA_PLACEHOLDER_46__:
+    location: slots[1].value.vehicle.type
+    original_content: '{{ vehicle_type | default ''car'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_47__:
+    location: slots[1].value.vehicle.size
+    original_content: '{{ vehicle_size | default ''medium'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_48__:
+    location: slots[1].value.vehicle.special_requirements
+    original_content: '{{ vehicle_requirements | default [] }}'
+    type: variable
+  __JINJA_PLACEHOLDER_49__:
+    location: slots[1].value.preferences.route
+    original_content: '{{ route_preference | default ''fastest'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_4__:
+    location: slots[0].value[1].sequence_info.index
+    original_content: '{{ __array_index }}'
+    type: variable
+  __JINJA_PLACEHOLDER_50__:
+    location: slots[1].value.preferences.avoid_tolls
+    original_content: '{{ avoid_tolls | default false }}'
+    type: variable
+  __JINJA_PLACEHOLDER_51__:
+    location: slots[1].value.preferences.avoid_highways
+    original_content: '{{ avoid_highways | default false }}'
+    type: variable
+  __JINJA_PLACEHOLDER_52__:
+    location: slots[1].value.preferences.avoid_ferries
+    original_content: '{{ avoid_ferries | default false }}'
+    type: variable
+  __JINJA_PLACEHOLDER_53__:
+    location: slots[1].value.constraints.max_distance
+    original_content: '{{ max_distance | default ''unlimited'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_54__:
+    location: slots[1].value.constraints.max_time
+    original_content: '{{ max_time | default ''unlimited'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_55__:
+    location: slots[1].value.constraints.urgency
+    original_content: '{{ urgency | default ''normal'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_56__:
+    location: slots[1].value.constraints.priority_routes
+    original_content: '{{ priority_routes | default [] }}'
+    type: variable
+  __JINJA_PLACEHOLDER_57__:
+    location: slots[1].value.context.time_of_day
+    original_content: '{{ time_of_day | default ''unknown'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_58__:
+    location: slots[1].value.context.day_of_week
+    original_content: '{{ day_of_week | default ''unknown'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_59__:
+    location: slots[1].value.context.weather_conditions
+    original_content: '{{ weather | default ''unknown'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_5__:
+    location: slots[0].value[1].sequence_info.total
+    original_content: '{{ __array_total }}'
+    type: variable
+  __JINJA_PLACEHOLDER_60__:
+    location: slots[1].value.context.season
+    original_content: '{{ season | default ''unknown'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_61__:
+    location: slots[1].label
+    original_content: '{{ __sid }}'
+    type: variable
+  __JINJA_PLACEHOLDER_62__:
+    location: slots[2].value.conversion.source_protocol
+    original_content: '{{ __source_protocol }}'
+    type: variable
+  __JINJA_PLACEHOLDER_63__:
+    location: slots[2].value.conversion.target_protocol
+    original_content: '{{ __target_protocol }}'
+    type: variable
+  __JINJA_PLACEHOLDER_64__:
+    location: slots[2].value.conversion.conversion_id
+    original_content: '{{ __conversion_id }}'
+    type: variable
+  __JINJA_PLACEHOLDER_65__:
+    location: slots[2].value.conversion.session_id
+    original_content: '{{ __session_id }}'
+    type: variable
+  __JINJA_PLACEHOLDER_66__:
+    location: slots[2].value.conversion.timestamp
+    original_content: '{{ __timestamp }}'
+    type: variable
+  __JINJA_PLACEHOLDER_67__:
+    location: slots[2].value.conversion.processing_duration
+    original_content: '{{ processing_duration | default ''unknown'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_68__:
+    location: slots[2].value.debug.render_depth
+    original_content: '{{ __render_depth }}'
+    type: variable
+  __JINJA_PLACEHOLDER_69__:
+    location: slots[2].value.debug.current_path
+    original_content: '{{ __current_path }}'
+    type: variable
+  __JINJA_PLACEHOLDER_6__:
+    location: slots[0].value[1].sequence_info.progress
+    original_content: '{{ __progress }}'
+    type: variable
+  __JINJA_PLACEHOLDER_70__:
+    location: slots[2].value.debug.array_processing
+    original_content: '{{ __array_total > 0 }}'
+    type: variable
+  __JINJA_PLACEHOLDER_71__:
+    location: slots[2].value.debug.total_processed_items
+    original_content: '{{ __array_total }}'
+    type: variable
+  __JINJA_PLACEHOLDER_72__:
+    location: slots[2].label
+    original_content: '{{ __sid }}'
+    type: variable
+  __JINJA_PLACEHOLDER_7__:
+    location: slots[0].value[1].sequence_info.is_final
+    original_content: '{{ __is_last_item }}'
+    type: variable
+  __JINJA_PLACEHOLDER_8__:
+    location: slots[0].value[1].road_data.name
+    original_content: '{{ road_name | upper }}'
+    type: variable
+  __JINJA_PLACEHOLDER_9__:
+    location: slots[0].value[1].road_data.type
+    original_content: '{% endif %}'
+    type: statement
+original_filename: C-5.json
+protocol_id: C-5
+schema:
+  $schema: http://json-schema.org/draft-07/schema#
+  additionalProperties: true
+  description: Auto-generated schema from YAML data
+  properties:
+    slots:
+      items:
+        required:
+        - name
+        - value
+        - label
+        - metadata
+        type: object
+      minItems: 3
+      type: array
+    tao:
+      enum:
+      - navigation.multi_route.complex
+      maxLength: 30
+      minLength: 1
+      type: string
+  required:
+  - tao
+  - slots
+  title: YAML Data Schema
+  type: object
+variable_mapping:
+  regular_variables:
+  - '{{ district'
+  - '{{ nearest_landmark'
+  - '# array_dynamic: true'
+  - '{{ road_name'
+  - '{{ last_verified'
+  - '{{ segment_notes'
+  - '{{ vehicle_type'
+  - '{{ __target_protocol }}'
+  - '{{ traffic_desc'
+  - '{{ weather'
+  - '{{ __progress }}'
+  - '{{ landmark_direction'
+  - '{{ traffic_level'
+  - '{{ source_reliability'
+  - '{{ max_time'
+  - '{{ expected_delay'
+  - '{{ max_distance'
+  - '{{ urgency'
+  - '{{ estimated_time'
+  - '{{ __array_total }}'
+  - '{{ vehicle_size'
+  - '{{ __render_depth }}'
+  - '{{ confidence_level'
+  - '{{ alt_fastest'
+  - '{{ __conversion_id }}'
+  - '{{ __source_protocol }}'
+  - '{{ __is_last_item }}'
+  - '{{ processing_duration'
+  - '{{ __session_id }}'
+  - '{{ time_of_day'
+  - '{{ __sid }}'
+  - '{{ __array_index }}'
+  - '{{ province'
+  - '{{ priority_routes'
+  - '{{ avoid_ferries'
+  - '{{ distance'
+  - '{{ season'
+  - '{{ landmark_distance'
+  - '{{ __parent_path }}'
+  - '{{ __array_total > 0 }}'
+  - '{{ avoid_highways'
+  - '{{ route_preference'
+  - '{{ alt_shortest'
+  - '{{ __current_path }}'
+  - '{{ traffic_update'
+  - '{{ __timestamp }}'
+  - '{{ vehicle_requirements'
+  - '{{ segment_restrictions'
+  - '{{ day_of_week'
+  - '{{ city'
+  - '{{ avoid_tolls'
+  - '{{ segment_warnings'
+  special_variables: []
+  variable_paths:
+    '# array_dynamic: true':
+    - slots[0].value[0]
+    '{{ __array_index }}':
+    - slots[0].value[1].sequence_info.index
+    '{{ __array_total > 0 }}':
+    - slots[2].value.debug.array_processing
+    '{{ __array_total }}':
+    - slots[0].value[1].sequence_info.total
+    - slots[0].metadata.element_count
+    - slots[2].value.debug.total_processed_items
+    '{{ __conversion_id }}':
+    - slots[0].value[1].metadata.processing.conversion_id
+    - slots[2].value.conversion.conversion_id
+    '{{ __current_path }}':
+    - slots[0].value[1].metadata.processing.current_path
+    - slots[2].value.debug.current_path
+    '{{ __is_last_item }}':
+    - slots[0].value[1].sequence_info.is_final
+    '{{ __parent_path }}':
+    - slots[0].value[1].metadata.processing.parent_path
+    '{{ __progress }}':
+    - slots[0].value[1].sequence_info.progress
+    '{{ __render_depth }}':
+    - slots[0].value[1].metadata.processing.render_depth
+    - slots[2].value.debug.render_depth
+    '{{ __session_id }}':
+    - slots[0].value[1].metadata.processing.session_id
+    - slots[2].value.conversion.session_id
+    '{{ __sid }}':
+    - slots[0].label
+    - slots[1].label
+    - slots[2].label
+    '{{ __source_protocol }}':
+    - slots[2].value.conversion.source_protocol
+    '{{ __target_protocol }}':
+    - slots[2].value.conversion.target_protocol
+    '{{ __timestamp }}':
+    - slots[2].value.conversion.timestamp
+    '{{ alt_fastest':
+    - slots[0].value[1].traffic.alternatives[0].time
+    '{{ alt_shortest':
+    - slots[0].value[1].traffic.alternatives[1].time
+    '{{ avoid_ferries':
+    - slots[1].value.preferences.avoid_ferries
+    '{{ avoid_highways':
+    - slots[1].value.preferences.avoid_highways
+    '{{ avoid_tolls':
+    - slots[1].value.preferences.avoid_tolls
+    '{{ city':
+    - slots[0].value[1].road_data.administrative.names.city
+    '{{ confidence_level':
+    - slots[0].value[1].metadata.quality.confidence
+    '{{ day_of_week':
+    - slots[1].value.context.day_of_week
+    '{{ distance':
+    - slots[0].value[1].traffic.estimates.distance
+    '{{ district':
+    - slots[0].value[1].road_data.administrative.names.district
+    '{{ estimated_time':
+    - slots[0].value[1].traffic.estimates.duration
+    '{{ expected_delay':
+    - slots[0].value[1].traffic.estimates.delay
+    '{{ landmark_direction':
+    - slots[0].value[1].geographic.landmark.direction
+    '{{ landmark_distance':
+    - slots[0].value[1].geographic.landmark.distance
+    '{{ last_verified':
+    - slots[0].value[1].metadata.quality.last_verified
+    '{{ max_distance':
+    - slots[1].value.constraints.max_distance
+    '{{ max_time':
+    - slots[1].value.constraints.max_time
+    '{{ nearest_landmark':
+    - slots[0].value[1].geographic.landmark.nearest
+    '{{ priority_routes':
+    - slots[1].value.constraints.priority_routes
+    '{{ processing_duration':
+    - slots[2].value.conversion.processing_duration
+    '{{ province':
+    - slots[0].value[1].road_data.administrative.names.province
+    '{{ road_name':
+    - slots[0].value[1].road_data.name
+    '{{ route_preference':
+    - slots[1].value.preferences.route
+    '{{ season':
+    - slots[1].value.context.season
+    '{{ segment_notes':
+    - slots[0].value[1].metadata.annotations.notes
+    '{{ segment_restrictions':
+    - slots[0].value[1].metadata.annotations.restrictions
+    '{{ segment_warnings':
+    - slots[0].value[1].metadata.annotations.warnings
+    '{{ source_reliability':
+    - slots[0].value[1].metadata.quality.source_reliability
+    '{{ time_of_day':
+    - slots[1].value.context.time_of_day
+    '{{ traffic_desc':
+    - slots[0].value[1].traffic.current.description
+    '{{ traffic_level':
+    - slots[0].value[1].traffic.current.level
+    '{{ traffic_update':
+    - slots[0].value[1].traffic.current.update_time
+    '{{ urgency':
+    - slots[1].value.constraints.urgency
+    '{{ vehicle_requirements':
+    - slots[1].value.vehicle.special_requirements
+    '{{ vehicle_size':
+    - slots[1].value.vehicle.size
+    '{{ vehicle_type':
+    - slots[1].value.vehicle.type
+    '{{ weather':
+    - slots[1].value.context.weather_conditions

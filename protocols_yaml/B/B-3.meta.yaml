@@ -1,0 +1,87 @@
+conversion_timestamp: '2025-10-24T17:43:27.021114'
+conversion_version: '1.0'
+family: B
+jinja_placeholders:
+  __JINJA_PLACEHOLDER_1__:
+    location: values[0].title
+    original_content: '{{ name | capitalize }}'
+    type: variable
+  __JINJA_PLACEHOLDER_2__:
+    location: values[0].amount
+    original_content: '{{ value }}'
+    type: variable
+  __JINJA_PLACEHOLDER_3__:
+    location: values[0].category
+    original_content: '{% endif %}'
+    type: statement
+  __JINJA_PLACEHOLDER_4__:
+    location: values[0].category
+    original_content: '{% else %}'
+    type: statement
+  __JINJA_PLACEHOLDER_5__:
+    location: values[0].category
+    original_content: '{% if type == ''primary'' %}'
+    type: statement
+original_filename: B-3.json
+protocol_id: B-3
+schema:
+  $schema: http://json-schema.org/draft-07/schema#
+  additionalProperties: true
+  description: Auto-generated schema from YAML data
+  properties:
+    name:
+      enum:
+      - transform
+      maxLength: 9
+      minLength: 1
+      type: string
+    values:
+      items:
+        properties:
+          amount:
+            enum:
+            - __JINJA_PLACEHOLDER_2__
+            maxLength: 23
+            minLength: 1
+            type: string
+          category:
+            enum:
+            - __JINJA_PLACEHOLDER_5__main__JINJA_PLACEHOLDER_4__secondary__JINJA_PLACEHOLDER_3__
+            maxLength: 82
+            minLength: 1
+            type: string
+          summary:
+            enum:
+            - 只处理第一个元素
+            maxLength: 8
+            minLength: 1
+            type: string
+          title:
+            enum:
+            - __JINJA_PLACEHOLDER_1__
+            maxLength: 23
+            minLength: 1
+            type: string
+        required:
+        - title
+        - amount
+        - category
+        - summary
+        type: object
+      minItems: null
+      type: array
+  required:
+  - name
+  - values
+  title: YAML Data Schema
+  type: object
+variable_mapping:
+  regular_variables:
+  - '{{ name'
+  - '{{ value }}'
+  special_variables: []
+  variable_paths:
+    '{{ name':
+    - values[0].title
+    '{{ value }}':
+    - values[0].amount

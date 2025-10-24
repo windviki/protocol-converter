@@ -1,0 +1,11 @@
+{
+  "tao": "navigation.route.request",
+  "start_point": {
+    "latitude": 31.2304,
+    "longitude": 121.4737
+  },
+  "end_point": {
+    "latitude": 31.2204,
+    "longitude": 121.4637
+  }
+}

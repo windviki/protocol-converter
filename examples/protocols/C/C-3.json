@@ -1,7 +1,7 @@
 {
   "operation": "transform",
   "data": [
-    "{# array_dynamic: true #}",
+    {# array_dynamic: true #}
     {
       "title": "{{ name | capitalize }}",
       "amount": "{{ value }}",

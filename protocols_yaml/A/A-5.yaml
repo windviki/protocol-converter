@@ -1,0 +1,14 @@
+domain: navigation
+action: MULTI_WAYPOINT
+slots:
+  origin: {{ origin }}
+  waypoints:
+  - # array_dynamic: true
+  - name: {{ point_name | upper }}
+    type: {{ poi_type | default 'unknown' }}
+    priority: {% if urgency == 'high' %}PRIORITY{% else %}NORMAL{% endif %}
+    estimated_time: {{ estimated_time | default 'unknown' }}
+    distance: {{ distance | default 'unknown' }}
+    coordinates: '{{ coordinates | default ''{}'' }}'
+  avoid_tolls: {{ avoid_tolls }}
+  route_preference: {{ route_preference | default 'fastest' }}

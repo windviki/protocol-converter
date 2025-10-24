@@ -1,0 +1,70 @@
+conversion_timestamp: '2025-10-24T17:43:27.000804'
+conversion_version: '1.0'
+family: B
+jinja_placeholders:
+  __JINJA_PLACEHOLDER_1__:
+    location: slots[0].value
+    original_content: '{{ person }}'
+    type: variable
+  __JINJA_PLACEHOLDER_2__:
+    location: slots[1].value
+    original_content: '{{ phone_type }}'
+    type: variable
+  __JINJA_PLACEHOLDER_3__:
+    location: slots[1].label
+    original_content: '{{ __sid }}'
+    type: variable
+  __JINJA_PLACEHOLDER_4__:
+    location: slots[2].value
+    original_content: '{{ call_duration }}'
+    type: variable
+  __JINJA_PLACEHOLDER_5__:
+    location: slots[2].label
+    original_content: '{{ __priority }}'
+    type: variable
+original_filename: B-2.json
+protocol_id: B-2
+schema:
+  $schema: http://json-schema.org/draft-07/schema#
+  additionalProperties: true
+  description: Auto-generated schema from YAML data
+  properties:
+    name:
+      enum:
+      - Phone_Answer
+      maxLength: 12
+      minLength: 1
+      type: string
+    slots:
+      items:
+        required:
+        - name
+        - value
+        - label
+        type: object
+      minItems: 3
+      type: array
+  required:
+  - name
+  - slots
+  title: YAML Data Schema
+  type: object
+variable_mapping:
+  regular_variables:
+  - '{{ phone_type }}'
+  - '{{ person }}'
+  - '{{ __sid }}'
+  - '{{ __priority }}'
+  - '{{ call_duration }}'
+  special_variables: []
+  variable_paths:
+    '{{ __priority }}':
+    - slots[2].label
+    '{{ __sid }}':
+    - slots[1].label
+    '{{ call_duration }}':
+    - slots[2].value
+    '{{ person }}':
+    - slots[0].value
+    '{{ phone_type }}':
+    - slots[1].value

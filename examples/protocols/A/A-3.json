@@ -2,7 +2,7 @@
   "domain": "test",
   "action": "PROCESS",
   "items": [
-    "{# array_dynamic: true #}",
+    {# array_dynamic: true #}
     {
       "name": "{{ name }}",
       "value": "{{ value }}",

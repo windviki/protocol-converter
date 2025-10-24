@@ -1,0 +1,6 @@
+domain: telephone
+action: DIAL
+slots:
+  category: {{ phone_type }}
+  name: {{ person }}
+  raw_name: {{ person }}

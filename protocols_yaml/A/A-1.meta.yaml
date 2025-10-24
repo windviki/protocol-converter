@@ -1,0 +1,77 @@
+conversion_timestamp: '2025-10-24T17:43:26.846599'
+conversion_version: '1.0'
+family: A
+jinja_placeholders:
+  __JINJA_PLACEHOLDER_1__:
+    location: slots.category
+    original_content: '{{ phone_type }}'
+    type: variable
+  __JINJA_PLACEHOLDER_2__:
+    location: slots.name
+    original_content: '{{ person }}'
+    type: variable
+  __JINJA_PLACEHOLDER_3__:
+    location: slots.raw_name
+    original_content: '{{ person }}'
+    type: variable
+original_filename: A-1.json
+protocol_id: A-1
+schema:
+  $schema: http://json-schema.org/draft-07/schema#
+  additionalProperties: true
+  description: Auto-generated schema from YAML data
+  properties:
+    action:
+      enum:
+      - DIAL
+      maxLength: 4
+      minLength: 1
+      type: string
+    domain:
+      enum:
+      - telephone
+      maxLength: 9
+      minLength: 1
+      type: string
+    slots:
+      properties:
+        category:
+          enum:
+          - __JINJA_PLACEHOLDER_1__
+          maxLength: 23
+          minLength: 1
+          type: string
+        name:
+          enum:
+          - __JINJA_PLACEHOLDER_2__
+          maxLength: 23
+          minLength: 1
+          type: string
+        raw_name:
+          enum:
+          - __JINJA_PLACEHOLDER_3__
+          maxLength: 23
+          minLength: 1
+          type: string
+      required:
+      - category
+      - name
+      - raw_name
+      type: object
+  required:
+  - domain
+  - action
+  - slots
+  title: YAML Data Schema
+  type: object
+variable_mapping:
+  regular_variables:
+  - '{{ person }}'
+  - '{{ phone_type }}'
+  special_variables: []
+  variable_paths:
+    '{{ person }}':
+    - slots.name
+    - slots.raw_name
+    '{{ phone_type }}':
+    - slots.category

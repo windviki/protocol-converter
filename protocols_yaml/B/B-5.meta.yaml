@@ -1,0 +1,448 @@
+conversion_timestamp: '2025-10-24T17:43:27.098909'
+conversion_version: '1.0'
+family: B
+jinja_placeholders:
+  __JINJA_PLACEHOLDER_10__:
+    location: slots.routes[1].address_info.full_name
+    original_content: '{{ road_name }}'
+    type: variable
+  __JINJA_PLACEHOLDER_11__:
+    location: slots.routes[1].address_info.admin_level
+    original_content: '{% endif %}'
+    type: statement
+  __JINJA_PLACEHOLDER_12__:
+    location: slots.routes[1].address_info.admin_level
+    original_content: '{% else %}'
+    type: statement
+  __JINJA_PLACEHOLDER_13__:
+    location: slots.routes[1].address_info.admin_level
+    original_content: '{% if district %}'
+    type: statement
+  __JINJA_PLACEHOLDER_14__:
+    location: slots.routes[1].address_info.is_main_road
+    original_content: '{% endif %}'
+    type: statement
+  __JINJA_PLACEHOLDER_15__:
+    location: slots.routes[1].address_info.is_main_road
+    original_content: '{% else %}'
+    type: statement
+  __JINJA_PLACEHOLDER_16__:
+    location: slots.routes[1].address_info.is_main_road
+    original_content: '{% if road_name in main_roads %}'
+    type: statement
+  __JINJA_PLACEHOLDER_17__:
+    location: slots.routes[1].location.landmark
+    original_content: '{{ nearest_landmark | default ''未知地点'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_18__:
+    location: slots.routes[1].traffic_info.congestion_level
+    original_content: '{{ traffic_level | default ''unknown'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_19__:
+    location: slots.routes[1].traffic_info.estimated_time
+    original_content: '{{ estimated_time | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_1__:
+    location: slots.routes[0]
+    original_content: '# array_dynamic: true'
+    type: comment
+  __JINJA_PLACEHOLDER_20__:
+    location: slots.routes[1].traffic_info.distance
+    original_content: '{{ distance | default ''未知'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_21__:
+    location: slots.routes[1].metadata.processing_id
+    original_content: '{{ __session_id }}'
+    type: variable
+  __JINJA_PLACEHOLDER_22__:
+    location: slots.routes[1].metadata.processing_progress
+    original_content: '{{ __progress }}'
+    type: variable
+  __JINJA_PLACEHOLDER_23__:
+    location: slots.routes[1].metadata.conversion_id
+    original_content: '{{ __conversion_id }}'
+    type: variable
+  __JINJA_PLACEHOLDER_24__:
+    location: slots.routes[1].metadata.protocol_path
+    original_content: '{{ __current_path }}'
+    type: variable
+  __JINJA_PLACEHOLDER_25__:
+    location: slots.routes[1].metadata.is_final_segment
+    original_content: '{{ __is_last_item }}'
+    type: variable
+  __JINJA_PLACEHOLDER_26__:
+    location: slots.navigation_options.vehicle
+    original_content: '{{ vehicle_type | default ''car'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_27__:
+    location: slots.navigation_options.avoid_tolls
+    original_content: '{{ avoid_tolls | default ''false'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_28__:
+    location: slots.navigation_options.route_preference
+    original_content: '{{ route_preference | default ''fastest'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_29__:
+    location: slots.navigation_options.urgency
+    original_content: '{{ urgency | default ''normal'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_2__:
+    location: slots.routes[1].road_name
+    original_content: '{{ road_name }}'
+    type: variable
+  __JINJA_PLACEHOLDER_30__:
+    location: slots.context.session_info.session_id
+    original_content: '{{ __session_id }}'
+    type: variable
+  __JINJA_PLACEHOLDER_31__:
+    location: slots.context.session_info.conversion_timestamp
+    original_content: '{{ __timestamp }}'
+    type: variable
+  __JINJA_PLACEHOLDER_3__:
+    location: slots.routes[1].road_type
+    original_content: '{% endif %}'
+    type: statement
+  __JINJA_PLACEHOLDER_4__:
+    location: slots.routes[1].road_type
+    original_content: '{% else %}'
+    type: statement
+  __JINJA_PLACEHOLDER_5__:
+    location: slots.routes[1].road_type
+    original_content: '{% if loop.index == 1 %}'
+    type: statement
+  __JINJA_PLACEHOLDER_6__:
+    location: slots.routes[1].sequence
+    original_content: '{{ __array_index }}'
+    type: variable
+  __JINJA_PLACEHOLDER_7__:
+    location: slots.routes[1].total_segments
+    original_content: '{{ __array_total }}'
+    type: variable
+  __JINJA_PLACEHOLDER_8__:
+    location: slots.routes[1].address_info.full_name
+    original_content: '{{ city | default '''' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_9__:
+    location: slots.routes[1].address_info.full_name
+    original_content: '{{ district | default '''' }}'
+    type: variable
+original_filename: B-5.json
+protocol_id: B-5
+schema:
+  $schema: http://json-schema.org/draft-07/schema#
+  additionalProperties: true
+  description: Auto-generated schema from YAML data
+  properties:
+    action:
+      enum:
+      - NAVIGATE_TO_ROUTES
+      maxLength: 18
+      minLength: 1
+      type: string
+    domain:
+      enum:
+      - navigation
+      maxLength: 10
+      minLength: 1
+      type: string
+    slots:
+      properties:
+        context:
+          properties:
+            operation:
+              enum:
+              - intersection_navigation
+              maxLength: 23
+              minLength: 1
+              type: string
+            session_info:
+              properties:
+                conversion_timestamp:
+                  enum:
+                  - __JINJA_PLACEHOLDER_31__
+                  maxLength: 24
+                  minLength: 1
+                  type: string
+                session_id:
+                  enum:
+                  - __JINJA_PLACEHOLDER_30__
+                  maxLength: 24
+                  minLength: 1
+                  type: string
+              required:
+              - session_id
+              - conversion_timestamp
+              type: object
+            source_format:
+              enum:
+              - B-5
+              maxLength: 3
+              minLength: 1
+              type: string
+            target_protocols:
+              items:
+                maxLength: 3
+                minLength: 1
+                type: string
+              minItems: 4
+              type: array
+          required:
+          - operation
+          - source_format
+          - target_protocols
+          - session_info
+          type: object
+        navigation_options:
+          properties:
+            avoid_tolls:
+              enum:
+              - __JINJA_PLACEHOLDER_27__
+              maxLength: 24
+              minLength: 1
+              type: string
+            route_preference:
+              enum:
+              - __JINJA_PLACEHOLDER_28__
+              maxLength: 24
+              minLength: 1
+              type: string
+            urgency:
+              enum:
+              - __JINJA_PLACEHOLDER_29__
+              maxLength: 24
+              minLength: 1
+              type: string
+            vehicle:
+              enum:
+              - __JINJA_PLACEHOLDER_26__
+              maxLength: 24
+              minLength: 1
+              type: string
+          required:
+          - vehicle
+          - avoid_tolls
+          - route_preference
+          - urgency
+          type: object
+        routes:
+          items:
+            anyOf:
+            - type: object
+            - type: string
+            enum:
+            - __JINJA_PLACEHOLDER_1__
+            maxLength: 23
+            minLength: 1
+            properties:
+              address_info:
+                properties:
+                  admin_level:
+                    enum:
+                    - __JINJA_PLACEHOLDER_13__district__JINJA_PLACEHOLDER_12__city__JINJA_PLACEHOLDER_11__
+                    maxLength: 84
+                    minLength: 1
+                    type: string
+                  full_name:
+                    enum:
+                    - __JINJA_PLACEHOLDER_10____JINJA_PLACEHOLDER_9____JINJA_PLACEHOLDER_8__
+                    maxLength: 70
+                    minLength: 1
+                    type: string
+                  is_main_road:
+                    enum:
+                    - __JINJA_PLACEHOLDER_16__true__JINJA_PLACEHOLDER_15__false__JINJA_PLACEHOLDER_14__
+                    maxLength: 81
+                    minLength: 1
+                    type: string
+                required:
+                - full_name
+                - admin_level
+                - is_main_road
+                type: object
+              location:
+                properties:
+                  coordinates:
+                    enum:
+                    - '{{ coordinates | default ''{}'' }}'
+                    maxLength: 32
+                    minLength: 1
+                    type: string
+                  landmark:
+                    enum:
+                    - __JINJA_PLACEHOLDER_17__
+                    maxLength: 24
+                    minLength: 1
+                    type: string
+                required:
+                - coordinates
+                - landmark
+                type: object
+              metadata:
+                properties:
+                  conversion_id:
+                    enum:
+                    - __JINJA_PLACEHOLDER_23__
+                    maxLength: 24
+                    minLength: 1
+                    type: string
+                  is_final_segment:
+                    enum:
+                    - __JINJA_PLACEHOLDER_25__
+                    maxLength: 24
+                    minLength: 1
+                    type: string
+                  processing_id:
+                    enum:
+                    - __JINJA_PLACEHOLDER_21__
+                    maxLength: 24
+                    minLength: 1
+                    type: string
+                  processing_progress:
+                    enum:
+                    - __JINJA_PLACEHOLDER_22__
+                    maxLength: 24
+                    minLength: 1
+                    type: string
+                  protocol_path:
+                    enum:
+                    - __JINJA_PLACEHOLDER_24__
+                    maxLength: 24
+                    minLength: 1
+                    type: string
+                required:
+                - processing_id
+                - processing_progress
+                - conversion_id
+                - protocol_path
+                - is_final_segment
+                type: object
+              road_name:
+                enum:
+                - __JINJA_PLACEHOLDER_2__
+                maxLength: 23
+                minLength: 1
+                type: string
+              road_type:
+                enum:
+                - __JINJA_PLACEHOLDER_5__primary__JINJA_PLACEHOLDER_4__secondary__JINJA_PLACEHOLDER_3__
+                maxLength: 85
+                minLength: 1
+                type: string
+              sequence:
+                enum:
+                - __JINJA_PLACEHOLDER_6__
+                maxLength: 23
+                minLength: 1
+                type: string
+              total_segments:
+                enum:
+                - __JINJA_PLACEHOLDER_7__
+                maxLength: 23
+                minLength: 1
+                type: string
+              traffic_info:
+                properties:
+                  congestion_level:
+                    enum:
+                    - __JINJA_PLACEHOLDER_18__
+                    maxLength: 24
+                    minLength: 1
+                    type: string
+                  distance:
+                    enum:
+                    - __JINJA_PLACEHOLDER_20__
+                    maxLength: 24
+                    minLength: 1
+                    type: string
+                  estimated_time:
+                    enum:
+                    - __JINJA_PLACEHOLDER_19__
+                    maxLength: 24
+                    minLength: 1
+                    type: string
+                required:
+                - congestion_level
+                - estimated_time
+                - distance
+                type: object
+            required:
+            - road_name
+            - road_type
+            - sequence
+            - total_segments
+            - address_info
+            - location
+            - traffic_info
+            - metadata
+          minItems: 2
+          type: array
+      required:
+      - routes
+      - navigation_options
+      - context
+      type: object
+  required:
+  - domain
+  - action
+  - slots
+  title: YAML Data Schema
+  type: object
+variable_mapping:
+  regular_variables:
+  - '{{ __is_last_item }}'
+  - '{{ __array_total }}'
+  - '# array_dynamic: true'
+  - '{{ nearest_landmark'
+  - '{{ route_preference'
+  - '{{ __session_id }}'
+  - '{{ vehicle_type'
+  - '{{ urgency'
+  - '{{ estimated_time'
+  - '{{ __conversion_id }}'
+  - '{{ __current_path }}'
+  - '{{ __timestamp }}'
+  - '{{ __progress }}'
+  - '{{ traffic_level'
+  - '{{ __array_index }}'
+  - '{{ avoid_tolls'
+  - '{{ distance'
+  - '{{ road_name }}'
+  special_variables: []
+  variable_paths:
+    '# array_dynamic: true':
+    - slots.routes[0]
+    '{{ __array_index }}':
+    - slots.routes[1].sequence
+    '{{ __array_total }}':
+    - slots.routes[1].total_segments
+    '{{ __conversion_id }}':
+    - slots.routes[1].metadata.conversion_id
+    '{{ __current_path }}':
+    - slots.routes[1].metadata.protocol_path
+    '{{ __is_last_item }}':
+    - slots.routes[1].metadata.is_final_segment
+    '{{ __progress }}':
+    - slots.routes[1].metadata.processing_progress
+    '{{ __session_id }}':
+    - slots.routes[1].metadata.processing_id
+    - slots.context.session_info.session_id
+    '{{ __timestamp }}':
+    - slots.context.session_info.conversion_timestamp
+    '{{ avoid_tolls':
+    - slots.navigation_options.avoid_tolls
+    '{{ distance':
+    - slots.routes[1].traffic_info.distance
+    '{{ estimated_time':
+    - slots.routes[1].traffic_info.estimated_time
+    '{{ nearest_landmark':
+    - slots.routes[1].location.landmark
+    '{{ road_name }}':
+    - slots.routes[1].road_name
+    '{{ route_preference':
+    - slots.navigation_options.route_preference
+    '{{ traffic_level':
+    - slots.routes[1].traffic_info.congestion_level
+    '{{ urgency':
+    - slots.navigation_options.urgency
+    '{{ vehicle_type':
+    - slots.navigation_options.vehicle

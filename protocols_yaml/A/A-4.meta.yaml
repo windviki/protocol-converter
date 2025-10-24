@@ -1,0 +1,154 @@
+conversion_timestamp: '2025-10-24T17:43:26.889288'
+conversion_version: '1.0'
+family: A
+jinja_placeholders:
+  __JINJA_PLACEHOLDER_1__:
+    location: slots.destination
+    original_content: '{{ joined_roads }}'
+    type: variable
+  __JINJA_PLACEHOLDER_2__:
+    location: slots.poi_type
+    original_content: '{{ poi_type }}'
+    type: variable
+  __JINJA_PLACEHOLDER_3__:
+    location: slots.vehicle_type
+    original_content: '{{ vehicle_type }}'
+    type: variable
+  __JINJA_PLACEHOLDER_4__:
+    location: slots.urgency
+    original_content: '{{ urgency }}'
+    type: variable
+  __JINJA_PLACEHOLDER_5__:
+    location: slots.route_type
+    original_content: '{{ route_type }}'
+    type: variable
+  __JINJA_PLACEHOLDER_6__:
+    location: slots.coordinates.latitude
+    original_content: '{{ latitude }}'
+    type: variable
+  __JINJA_PLACEHOLDER_7__:
+    location: slots.coordinates.longitude
+    original_content: '{{ longitude }}'
+    type: variable
+  __JINJA_PLACEHOLDER_8__:
+    location: slots.coordinates.address
+    original_content: '{{ full_address }}'
+    type: variable
+original_filename: A-4.json
+protocol_id: A-4
+schema:
+  $schema: http://json-schema.org/draft-07/schema#
+  additionalProperties: true
+  description: Auto-generated schema from YAML data
+  properties:
+    action:
+      enum:
+      - ROUTE_TO
+      maxLength: 8
+      minLength: 1
+      type: string
+    domain:
+      enum:
+      - navigation
+      maxLength: 10
+      minLength: 1
+      type: string
+    slots:
+      properties:
+        coordinates:
+          properties:
+            address:
+              enum:
+              - __JINJA_PLACEHOLDER_8__
+              maxLength: 23
+              minLength: 1
+              type: string
+            latitude:
+              enum:
+              - __JINJA_PLACEHOLDER_6__
+              maxLength: 23
+              minLength: 1
+              type: string
+            longitude:
+              enum:
+              - __JINJA_PLACEHOLDER_7__
+              maxLength: 23
+              minLength: 1
+              type: string
+          required:
+          - latitude
+          - longitude
+          - address
+          type: object
+        destination:
+          enum:
+          - __JINJA_PLACEHOLDER_1__
+          maxLength: 23
+          minLength: 1
+          type: string
+        poi_type:
+          enum:
+          - __JINJA_PLACEHOLDER_2__
+          maxLength: 23
+          minLength: 1
+          type: string
+        route_type:
+          enum:
+          - __JINJA_PLACEHOLDER_5__
+          maxLength: 23
+          minLength: 1
+          type: string
+        urgency:
+          enum:
+          - __JINJA_PLACEHOLDER_4__
+          maxLength: 23
+          minLength: 1
+          type: string
+        vehicle_type:
+          enum:
+          - __JINJA_PLACEHOLDER_3__
+          maxLength: 23
+          minLength: 1
+          type: string
+      required:
+      - destination
+      - poi_type
+      - vehicle_type
+      - urgency
+      - route_type
+      - coordinates
+      type: object
+  required:
+  - domain
+  - action
+  - slots
+  title: YAML Data Schema
+  type: object
+variable_mapping:
+  regular_variables:
+  - '{{ joined_roads }}'
+  - '{{ latitude }}'
+  - '{{ poi_type }}'
+  - '{{ full_address }}'
+  - '{{ urgency }}'
+  - '{{ route_type }}'
+  - '{{ longitude }}'
+  - '{{ vehicle_type }}'
+  special_variables: []
+  variable_paths:
+    '{{ full_address }}':
+    - slots.coordinates.address
+    '{{ joined_roads }}':
+    - slots.destination
+    '{{ latitude }}':
+    - slots.coordinates.latitude
+    '{{ longitude }}':
+    - slots.coordinates.longitude
+    '{{ poi_type }}':
+    - slots.poi_type
+    '{{ route_type }}':
+    - slots.route_type
+    '{{ urgency }}':
+    - slots.urgency
+    '{{ vehicle_type }}':
+    - slots.vehicle_type

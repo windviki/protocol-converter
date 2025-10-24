@@ -1,0 +1,117 @@
+tao: navigation.multi_route.complex
+slots:
+- name: ROUTE_SEGMENTS
+  value:
+  - # array_dynamic: true
+  - segment_id: {{ __session_id }}_seg{{ __array_index }}
+    sequence_info:
+      index: {{ __array_index }}
+      total: {{ __array_total }}
+      progress: {{ __progress }}
+      is_final: {{ __is_last_item }}
+    road_data:
+      name: {{ road_name | upper }}
+      type: {% if __array_index == 0 %}PRIMARY{% else %}SECONDARY{% endif %}
+      full_address: {{ road_name }}{{ district | default '' }}{{ city | default '' }}
+      administrative:
+        level: {% if district %}district{% elif city %}city{% else %}unknown{% endif %}
+        names:
+          city: {{ city | default '' }}
+          district: {{ district | default '' }}
+          province: {{ province | default '' }}
+    geographic:
+      coordinates: '{{ coordinates | default ''{}'' }}'
+      landmark:
+        nearest: {{ nearest_landmark | default '未知' }}
+        distance: {{ landmark_distance | default '未知' }}
+        direction: {{ landmark_direction | default '未知' }}
+      bounds:
+        north_east: '{{ bounds_ne | default ''{}'' }}'
+        south_west: '{{ bounds_sw | default ''{}'' }}'
+    traffic:
+      current:
+        level: {{ traffic_level | default 'unknown' }}
+        description: {{ traffic_desc | default '暂无信息' }}
+        update_time: {{ traffic_update | default '未知' }}
+      estimates:
+        duration: {{ estimated_time | default '未知' }}
+        distance: {{ distance | default '未知' }}
+        delay: {{ expected_delay | default '0分钟' }}
+      alternatives:
+      - type: fastest
+        time: {{ alt_fastest | default '未知' }}
+      - type: shortest
+        time: {{ alt_shortest | default '未知' }}
+    metadata:
+      processing:
+        session_id: {{ __session_id }}
+        conversion_id: {{ __conversion_id }}
+        render_depth: {{ __render_depth }}
+        current_path: {{ __current_path }}
+        parent_path: {{ __parent_path }}
+      quality:
+        confidence: {{ confidence_level | default 'medium' }}
+        source_reliability: {{ source_reliability | default 'unknown' }}
+        last_verified: {{ last_verified | default '未知' }}
+      annotations:
+        notes: {{ segment_notes | default '' }}
+        warnings: {{ segment_warnings | default [] }}
+        restrictions: {{ segment_restrictions | default [] }}
+  label: {{ __sid }}
+  metadata:
+    type: dynamic_array
+    array_processing: true
+    element_count: {{ __array_total }}
+- name: NAVIGATION_CONFIG
+  value:
+    vehicle:
+      type: {{ vehicle_type | default 'car' }}
+      size: {{ vehicle_size | default 'medium' }}
+      special_requirements: {{ vehicle_requirements | default [] }}
+    preferences:
+      route: {{ route_preference | default 'fastest' }}
+      avoid_tolls: {{ avoid_tolls | default false }}
+      avoid_highways: {{ avoid_highways | default false }}
+      avoid_ferries: {{ avoid_ferries | default false }}
+    constraints:
+      max_distance: {{ max_distance | default 'unlimited' }}
+      max_time: {{ max_time | default 'unlimited' }}
+      urgency: {{ urgency | default 'normal' }}
+      priority_routes: {{ priority_routes | default [] }}
+    context:
+      time_of_day: {{ time_of_day | default 'unknown' }}
+      day_of_week: {{ day_of_week | default 'unknown' }}
+      weather_conditions: {{ weather | default 'unknown' }}
+      season: {{ season | default 'unknown' }}
+  label: {{ __sid }}
+  metadata:
+    type: navigation_config
+    complex_nested: true
+- name: SYSTEM_METADATA
+  value:
+    conversion:
+      source_protocol: {{ __source_protocol }}
+      target_protocol: {{ __target_protocol }}
+      conversion_id: {{ __conversion_id }}
+      session_id: {{ __session_id }}
+      timestamp: {{ __timestamp }}
+      processing_duration: {{ processing_duration | default 'unknown' }}
+    template:
+      template_id: C-5
+      version: '1.0'
+      features:
+      - dynamic_arrays
+      - complex_nesting
+      - conditional_rendering
+      - jinja2_filters
+      - context_variables
+    debug:
+      render_depth: {{ __render_depth }}
+      current_path: {{ __current_path }}
+      array_processing: {{ __array_total > 0 }}
+      total_processed_items: {{ __array_total }}
+  label: {{ __sid }}
+  metadata:
+    type: system
+    auto_generated: true
+    debug_info: true

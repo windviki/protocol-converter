@@ -1,0 +1,171 @@
+conversion_timestamp: '2025-10-24T17:43:27.045601'
+conversion_version: '1.0'
+family: B
+jinja_placeholders:
+  __JINJA_PLACEHOLDER_1__:
+    location: slots.intersection.primary_road
+    original_content: '{{ joined_roads += _; joined_roads | split_poi | first }}'
+    type: variable
+  __JINJA_PLACEHOLDER_2__:
+    location: slots.intersection.secondary_road
+    original_content: '{{ joined_roads += _; joined_roads | split_poi | second }}'
+    type: variable
+  __JINJA_PLACEHOLDER_3__:
+    location: slots.intersection.city
+    original_content: '{{ city | default ''上海'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_4__:
+    location: slots.intersection.district
+    original_content: '{{ district | default ''长宁区'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_5__:
+    location: slots.intersection.coordinates.latitude
+    original_content: '{{ latitude }}'
+    type: variable
+  __JINJA_PLACEHOLDER_6__:
+    location: slots.intersection.coordinates.longitude
+    original_content: '{{ longitude }}'
+    type: variable
+  __JINJA_PLACEHOLDER_7__:
+    location: slots.vehicle_type
+    original_content: '{{ vehicle_type | default ''car'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_8__:
+    location: slots.avoid_tolls
+    original_content: '{{ avoid_tolls | default ''false'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_9__:
+    location: slots.urgency
+    original_content: '{{ urgency | default ''normal'' }}'
+    type: variable
+original_filename: B-4.json
+protocol_id: B-4
+schema:
+  $schema: http://json-schema.org/draft-07/schema#
+  additionalProperties: true
+  description: Auto-generated schema from YAML data
+  properties:
+    action:
+      enum:
+      - NAVIGATE_TO_INTERSECTION
+      maxLength: 24
+      minLength: 1
+      type: string
+    domain:
+      enum:
+      - navigation
+      maxLength: 10
+      minLength: 1
+      type: string
+    slots:
+      properties:
+        avoid_tolls:
+          enum:
+          - __JINJA_PLACEHOLDER_8__
+          maxLength: 23
+          minLength: 1
+          type: string
+        intersection:
+          properties:
+            city:
+              enum:
+              - __JINJA_PLACEHOLDER_3__
+              maxLength: 23
+              minLength: 1
+              type: string
+            coordinates:
+              properties:
+                latitude:
+                  enum:
+                  - __JINJA_PLACEHOLDER_5__
+                  maxLength: 23
+                  minLength: 1
+                  type: string
+                longitude:
+                  enum:
+                  - __JINJA_PLACEHOLDER_6__
+                  maxLength: 23
+                  minLength: 1
+                  type: string
+              required:
+              - latitude
+              - longitude
+              type: object
+            district:
+              enum:
+              - __JINJA_PLACEHOLDER_4__
+              maxLength: 23
+              minLength: 1
+              type: string
+            primary_road:
+              enum:
+              - __JINJA_PLACEHOLDER_1__
+              maxLength: 23
+              minLength: 1
+              type: string
+            secondary_road:
+              enum:
+              - __JINJA_PLACEHOLDER_2__
+              maxLength: 23
+              minLength: 1
+              type: string
+          required:
+          - primary_road
+          - secondary_road
+          - city
+          - district
+          - coordinates
+          type: object
+        urgency:
+          enum:
+          - __JINJA_PLACEHOLDER_9__
+          maxLength: 23
+          minLength: 1
+          type: string
+        vehicle_type:
+          enum:
+          - __JINJA_PLACEHOLDER_7__
+          maxLength: 23
+          minLength: 1
+          type: string
+      required:
+      - intersection
+      - vehicle_type
+      - avoid_tolls
+      - urgency
+      type: object
+  required:
+  - domain
+  - action
+  - slots
+  title: YAML Data Schema
+  type: object
+variable_mapping:
+  regular_variables:
+  - '{{ district'
+  - '{{ latitude }}'
+  - '{{ vehicle_type'
+  - '{{ urgency'
+  - '{{ joined_roads += _; joined_roads'
+  - '{{ city'
+  - '{{ longitude }}'
+  - '{{ avoid_tolls'
+  special_variables: []
+  variable_paths:
+    '{{ avoid_tolls':
+    - slots.avoid_tolls
+    '{{ city':
+    - slots.intersection.city
+    '{{ district':
+    - slots.intersection.district
+    '{{ joined_roads += _; joined_roads':
+    - slots.intersection.primary_road
+    - slots.intersection.secondary_road
+    '{{ latitude }}':
+    - slots.intersection.coordinates.latitude
+    '{{ longitude }}':
+    - slots.intersection.coordinates.longitude
+    '{{ urgency':
+    - slots.urgency
+    '{{ vehicle_type':
+    - slots.vehicle_type

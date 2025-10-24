@@ -1,0 +1,182 @@
+conversion_timestamp: '2025-10-24T17:43:26.932124'
+conversion_version: '1.0'
+family: A
+jinja_placeholders:
+  __JINJA_PLACEHOLDER_10__:
+    location: slots.avoid_tolls
+    original_content: '{{ avoid_tolls }}'
+    type: variable
+  __JINJA_PLACEHOLDER_11__:
+    location: slots.route_preference
+    original_content: '{{ route_preference | default ''fastest'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_1__:
+    location: slots.origin
+    original_content: '{{ origin }}'
+    type: variable
+  __JINJA_PLACEHOLDER_2__:
+    location: slots.waypoints[0]
+    original_content: '# array_dynamic: true'
+    type: comment
+  __JINJA_PLACEHOLDER_3__:
+    location: slots.waypoints[1].name
+    original_content: '{{ point_name | upper }}'
+    type: variable
+  __JINJA_PLACEHOLDER_4__:
+    location: slots.waypoints[1].type
+    original_content: '{{ poi_type | default ''unknown'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_5__:
+    location: slots.waypoints[1].priority
+    original_content: '{% endif %}'
+    type: statement
+  __JINJA_PLACEHOLDER_6__:
+    location: slots.waypoints[1].priority
+    original_content: '{% else %}'
+    type: statement
+  __JINJA_PLACEHOLDER_7__:
+    location: slots.waypoints[1].priority
+    original_content: '{% if urgency == ''high'' %}'
+    type: statement
+  __JINJA_PLACEHOLDER_8__:
+    location: slots.waypoints[1].estimated_time
+    original_content: '{{ estimated_time | default ''unknown'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_9__:
+    location: slots.waypoints[1].distance
+    original_content: '{{ distance | default ''unknown'' }}'
+    type: variable
+original_filename: A-5.json
+protocol_id: A-5
+schema:
+  $schema: http://json-schema.org/draft-07/schema#
+  additionalProperties: true
+  description: Auto-generated schema from YAML data
+  properties:
+    action:
+      enum:
+      - MULTI_WAYPOINT
+      maxLength: 14
+      minLength: 1
+      type: string
+    domain:
+      enum:
+      - navigation
+      maxLength: 10
+      minLength: 1
+      type: string
+    slots:
+      properties:
+        avoid_tolls:
+          enum:
+          - __JINJA_PLACEHOLDER_10__
+          maxLength: 24
+          minLength: 1
+          type: string
+        origin:
+          enum:
+          - __JINJA_PLACEHOLDER_1__
+          maxLength: 23
+          minLength: 1
+          type: string
+        route_preference:
+          enum:
+          - __JINJA_PLACEHOLDER_11__
+          maxLength: 24
+          minLength: 1
+          type: string
+        waypoints:
+          items:
+            anyOf:
+            - type: object
+            - type: string
+            enum:
+            - __JINJA_PLACEHOLDER_2__
+            maxLength: 23
+            minLength: 1
+            properties:
+              coordinates:
+                enum:
+                - '{{ coordinates | default ''{}'' }}'
+                maxLength: 32
+                minLength: 1
+                type: string
+              distance:
+                enum:
+                - __JINJA_PLACEHOLDER_9__
+                maxLength: 23
+                minLength: 1
+                type: string
+              estimated_time:
+                enum:
+                - __JINJA_PLACEHOLDER_8__
+                maxLength: 23
+                minLength: 1
+                type: string
+              name:
+                enum:
+                - __JINJA_PLACEHOLDER_3__
+                maxLength: 23
+                minLength: 1
+                type: string
+              priority:
+                enum:
+                - __JINJA_PLACEHOLDER_7__PRIORITY__JINJA_PLACEHOLDER_6__NORMAL__JINJA_PLACEHOLDER_5__
+                maxLength: 83
+                minLength: 1
+                type: string
+              type:
+                enum:
+                - __JINJA_PLACEHOLDER_4__
+                maxLength: 23
+                minLength: 1
+                type: string
+            required:
+            - name
+            - type
+            - priority
+            - estimated_time
+            - distance
+            - coordinates
+          minItems: 2
+          type: array
+      required:
+      - origin
+      - waypoints
+      - avoid_tolls
+      - route_preference
+      type: object
+  required:
+  - domain
+  - action
+  - slots
+  title: YAML Data Schema
+  type: object
+variable_mapping:
+  regular_variables:
+  - '# array_dynamic: true'
+  - '{{ avoid_tolls }}'
+  - '{{ point_name'
+  - '{{ poi_type'
+  - '{{ route_preference'
+  - '{{ estimated_time'
+  - '{{ origin }}'
+  - '{{ distance'
+  special_variables: []
+  variable_paths:
+    '# array_dynamic: true':
+    - slots.waypoints[0]
+    '{{ avoid_tolls }}':
+    - slots.avoid_tolls
+    '{{ distance':
+    - slots.waypoints[1].distance
+    '{{ estimated_time':
+    - slots.waypoints[1].estimated_time
+    '{{ origin }}':
+    - slots.origin
+    '{{ poi_type':
+    - slots.waypoints[1].type
+    '{{ point_name':
+    - slots.waypoints[1].name
+    '{{ route_preference':
+    - slots.route_preference

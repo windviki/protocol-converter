@@ -1,0 +1,50 @@
+tao: navigation.route.to_intersection
+slots:
+- name: PRIMARY_ROAD
+  value: {{ primary_road }}
+  label: {{ __sid }}
+  metadata:
+    type: road
+    importance: high
+    source_field: primary_road
+- name: SECONDARY_ROAD
+  value: {{ secondary_road }}
+  label: {{ __sid }}
+  metadata:
+    type: road
+    importance: medium
+    source_field: secondary_road
+- name: LOCATION
+  value:
+    city: {{ city | default '上海' }}
+    district: {{ district | default '长宁区' }}
+    coordinates:
+      lat: {{ latitude }}
+      lng: {{ longitude }}
+  label: {{ __sid }}
+  metadata:
+    type: location
+    importance: high
+    is_nested: true
+- name: NAVIGATION_PARAMS
+  value:
+    vehicle: {{ vehicle_type | default 'car' }}
+    avoid_tolls: {{ avoid_tolls | default 'false' }}
+    urgency: {{ urgency | default 'normal' }}
+    route_preference: {{ route_preference | default 'fastest' }}
+  label: {{ __sid }}
+  metadata:
+    type: navigation_options
+    importance: medium
+    is_nested: true
+- name: SESSION_INFO
+  value:
+    session_id: {{ __session_id }}
+    conversion_id: {{ __conversion_id }}
+    timestamp: {{ __timestamp }}
+    protocol: {{ __source_protocol }}_to_{{ __target_protocol }}
+  label: {{ __sid }}
+  metadata:
+    type: session
+    importance: low
+    auto_generated: true

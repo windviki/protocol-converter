@@ -1,0 +1,162 @@
+conversion_timestamp: '2025-10-24T17:43:27.322758'
+conversion_version: '1.0'
+family: C
+jinja_placeholders:
+  __JINJA_PLACEHOLDER_10__:
+    location: slots[3].value.vehicle
+    original_content: '{{ vehicle_type | default ''car'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_11__:
+    location: slots[3].value.avoid_tolls
+    original_content: '{{ avoid_tolls | default ''false'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_12__:
+    location: slots[3].value.urgency
+    original_content: '{{ urgency | default ''normal'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_13__:
+    location: slots[3].value.route_preference
+    original_content: '{{ route_preference | default ''fastest'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_14__:
+    location: slots[3].label
+    original_content: '{{ __sid }}'
+    type: variable
+  __JINJA_PLACEHOLDER_15__:
+    location: slots[4].value.session_id
+    original_content: '{{ __session_id }}'
+    type: variable
+  __JINJA_PLACEHOLDER_16__:
+    location: slots[4].value.conversion_id
+    original_content: '{{ __conversion_id }}'
+    type: variable
+  __JINJA_PLACEHOLDER_17__:
+    location: slots[4].value.timestamp
+    original_content: '{{ __timestamp }}'
+    type: variable
+  __JINJA_PLACEHOLDER_18__:
+    location: slots[4].value.protocol
+    original_content: '{{ __target_protocol }}'
+    type: variable
+  __JINJA_PLACEHOLDER_19__:
+    location: slots[4].value.protocol
+    original_content: '{{ __source_protocol }}'
+    type: variable
+  __JINJA_PLACEHOLDER_1__:
+    location: slots[0].value
+    original_content: '{{ primary_road }}'
+    type: variable
+  __JINJA_PLACEHOLDER_20__:
+    location: slots[4].label
+    original_content: '{{ __sid }}'
+    type: variable
+  __JINJA_PLACEHOLDER_2__:
+    location: slots[0].label
+    original_content: '{{ __sid }}'
+    type: variable
+  __JINJA_PLACEHOLDER_3__:
+    location: slots[1].value
+    original_content: '{{ secondary_road }}'
+    type: variable
+  __JINJA_PLACEHOLDER_4__:
+    location: slots[1].label
+    original_content: '{{ __sid }}'
+    type: variable
+  __JINJA_PLACEHOLDER_5__:
+    location: slots[2].value.city
+    original_content: '{{ city | default ''上海'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_6__:
+    location: slots[2].value.district
+    original_content: '{{ district | default ''长宁区'' }}'
+    type: variable
+  __JINJA_PLACEHOLDER_7__:
+    location: slots[2].value.coordinates.lat
+    original_content: '{{ latitude }}'
+    type: variable
+  __JINJA_PLACEHOLDER_8__:
+    location: slots[2].value.coordinates.lng
+    original_content: '{{ longitude }}'
+    type: variable
+  __JINJA_PLACEHOLDER_9__:
+    location: slots[2].label
+    original_content: '{{ __sid }}'
+    type: variable
+original_filename: C-4.json
+protocol_id: C-4
+schema:
+  $schema: http://json-schema.org/draft-07/schema#
+  additionalProperties: true
+  description: Auto-generated schema from YAML data
+  properties:
+    slots:
+      items:
+        required:
+        - name
+        - value
+        - label
+        - metadata
+        type: object
+      minItems: 5
+      type: array
+    tao:
+      enum:
+      - navigation.route.to_intersection
+      maxLength: 32
+      minLength: 1
+      type: string
+  required:
+  - tao
+  - slots
+  title: YAML Data Schema
+  type: object
+variable_mapping:
+  regular_variables:
+  - '{{ district'
+  - '{{ latitude }}'
+  - '{{ route_preference'
+  - '{{ primary_road }}'
+  - '{{ __session_id }}'
+  - '{{ vehicle_type'
+  - '{{ urgency'
+  - '{{ __timestamp }}'
+  - '{{ __sid }}'
+  - '{{ city'
+  - '{{ longitude }}'
+  - '{{ secondary_road }}'
+  - '{{ avoid_tolls'
+  - '{{ __conversion_id }}'
+  special_variables: []
+  variable_paths:
+    '{{ __conversion_id }}':
+    - slots[4].value.conversion_id
+    '{{ __session_id }}':
+    - slots[4].value.session_id
+    '{{ __sid }}':
+    - slots[0].label
+    - slots[1].label
+    - slots[2].label
+    - slots[3].label
+    - slots[4].label
+    '{{ __timestamp }}':
+    - slots[4].value.timestamp
+    '{{ avoid_tolls':
+    - slots[3].value.avoid_tolls
+    '{{ city':
+    - slots[2].value.city
+    '{{ district':
+    - slots[2].value.district
+    '{{ latitude }}':
+    - slots[2].value.coordinates.lat
+    '{{ longitude }}':
+    - slots[2].value.coordinates.lng
+    '{{ primary_road }}':
+    - slots[0].value
+    '{{ route_preference':
+    - slots[3].value.route_preference
+    '{{ secondary_road }}':
+    - slots[1].value
+    '{{ urgency':
+    - slots[3].value.urgency
+    '{{ vehicle_type':
+    - slots[3].value.vehicle
