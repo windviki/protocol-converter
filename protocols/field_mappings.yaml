@@ -1,0 +1,99 @@
+# Field Mapping Configuration
+# 定义协议间的字段映射关系和处理规则
+
+mappings:
+  # A-4 <-> B-4 导航协议映射
+  A-4 <-> B-4:
+    destination_to_intersection:
+      from: destination
+      to: [intersection.primary_road, intersection.secondary_road]
+      processor: split_intersection
+      description: "将目的地字符串分割为主路和次路"
+    intersection_to_destination:
+      from: [intersection.primary_road, intersection.secondary_road]
+      to: destination
+      processor: combine_intersection
+      description: "将主路和次路合并为目的地字符串"
+
+  # A-4 <-> C-4 导航协议映射
+  A-4 <-> C-4:
+    destination_to_slots:
+      from: destination
+      to: [PRIMARY_ROAD.value, SECONDARY_ROAD.value]
+      processor: split_intersection
+      description: "将目的地分割为主路和次路"
+    slots_to_destination:
+      from: [PRIMARY_ROAD.value, SECONDARY_ROAD.value]
+      to: destination
+      processor: combine_intersection
+      description: "将主路和次路合并为目的地"
+
+  # B-4 <-> C-4 导航协议映射
+  B-4 <-> C-4:
+    primary_road_mapping:
+      from: intersection.primary_road
+      to: PRIMARY_ROAD.value
+      processor: direct_mapping
+      description: "主路字段直接映射"
+    secondary_road_mapping:
+      from: intersection.secondary_road
+      to: SECONDARY_ROAD.value
+      processor: direct_mapping
+      description: "次路字段直接映射"
+
+# 处理器定义
+processors:
+  split_intersection:
+    description: "分割交叉口字符串为主路和次路"
+    implementation: |
+      def split_intersection(value):
+          if isinstance(value, str):
+              # 尝试多种分割模式
+              patterns = [
+                  r'与|和|及',
+                  r'[与和及]',
+                  r'[\-\-]',
+                  r'\s+和\s+',
+                  r'\s+与\s+',
+              ]
+              for pattern in patterns:
+                  parts = re.split(pattern, value)
+                  if len(parts) >= 2:
+                      return [parts[0].strip(), parts[1].strip()]
+              return [value, '']
+          return [value, '']
+
+  combine_intersection:
+    description: "将主路和次路合并为交叉口字符串"
+    implementation: |
+      def combine_intersection(primary, secondary):
+          if primary and secondary:
+              return f"{primary}与{secondary}"
+          elif primary:
+              return primary
+          elif secondary:
+              return secondary
+          else:
+              return ''
+
+  direct_mapping:
+    description: "直接字段值映射"
+    implementation: |
+      def direct_mapping(value):
+          return value
+
+# 默认值配置
+defaults:
+  B-4:
+    city: "上海"
+    district: "长宁区"
+    vehicle_type: "car"
+    avoid_tolls: false
+    urgency: normal
+  C-4:
+    city: "上海"
+    district: "长宁区"
+    vehicle_type: "car"
+    avoid_tolls: false
+    urgency: normal
+    route_preference: fastest

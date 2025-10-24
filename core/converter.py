@@ -8,11 +8,13 @@ from typing import Dict, List, Any, Optional
 from jinja2 import meta
 
 from models.types import ProtocolTemplate, ConversionResult
+from utils.variable_mapper import VariableMapper
 
 logger = logging.getLogger(__name__)
 from .matcher import ProtocolMatcher
 from .extractor import VariableExtractor, ArrayMarkerParser
 from .renderer import TemplateRenderer
+from .field_mapper import create_field_mapper
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +27,8 @@ class ProtocolConverter:
         self.extractor = VariableExtractor()
         self.converter_functions = converter_functions or {}
         self.renderer = TemplateRenderer(self.converter_functions)
+        self.field_mapper = create_field_mapper()
+        self.variable_mapper = VariableMapper()
 
     def load_protocol(self, protocol_id: str, protocol_family: str,
                    template_content: Dict[str, Any] = None, template: ProtocolTemplate = None):
@@ -93,6 +97,32 @@ class ProtocolConverter:
                 source_json,
                 source_protocol_template.array_markers
             )
+
+            # 3.5 处理mapping变量
+            if source_protocol_template.jinja_placeholders:
+                # 重新分析变量映射以识别mapping变量
+                mapping_result = self.variable_mapper.map_variables(
+                    source_template_restored,
+                    source_protocol_template.jinja_placeholders
+                )
+
+                if mapping_result.mapping_variables:
+                    # 提取mapping变量的值
+                    mapping_vars = {}
+                    for var_name in mapping_result.mapping_variables:
+                        if var_name in variables:
+                            mapping_vars[var_name] = variables[var_name]
+
+                    # 处理mapping变量
+                    mapped_vars = self.variable_mapper.process_mapping_variables(
+                        mapping_vars,
+                        matched_protocol_id,
+                        target_protocol_template.protocol_id,
+                        source_json
+                    )
+
+                    # 更新变量字典
+                    variables.update(mapped_vars)
 
             # 4. 查找目标协议模板
             target_protocol_template = self._find_target_protocol(target_protocol, matched_protocol_id)

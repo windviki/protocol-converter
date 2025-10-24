@@ -1,14 +1,14 @@
 tao: navigation.route.to_intersection
 slots:
 - name: PRIMARY_ROAD
-  value: {{ primary_road }}
+  value: ${{primary_road}}
   label: {{ __sid }}
   metadata:
     type: road
     importance: high
     source_field: primary_road
 - name: SECONDARY_ROAD
-  value: {{ secondary_road }}
+  value: ${{secondary_road}}
   label: {{ __sid }}
   metadata:
     type: road

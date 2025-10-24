@@ -27,6 +27,7 @@ class YamlProcessor:
     def __init__(self):
         # Jinja2语法模式
         self.variable_pattern = re.compile(r'\{\{\s*([^{}]+?)\s*\}\}')
+        self.mapping_variable_pattern = re.compile(r'\$\{\{\s*([^{}]+?)\s*\}\}')
         self.statement_pattern = re.compile(r'\{\%\s*([^%]*?)\s*\%\}')
         self.comment_pattern = re.compile(r'\{\#\s*([^#]*?)\s*\#\}')
 
@@ -239,16 +240,36 @@ class YamlProcessor:
         lines = yaml_content.split('\n')
 
         for line_num, line in enumerate(lines, 1):
-            # 在YAML行中查找Jinja2语法
-            for match in self.variable_pattern.finditer(line):
+            # 在YAML行中查找mapping变量语法 (优先级更高)
+            for match in self.mapping_variable_pattern.finditer(line):
                 placeholder_id = f"__JINJA_PLACEHOLDER_{len(placeholder_map) + 1}__"
                 placeholder_map[placeholder_id] = Jinja2Placeholder(
                     id=placeholder_id,
                     original_content=match.group(0),
                     placeholder=placeholder_id,
-                    type='variable',
+                    type='mapping',  # 新的mapping类型
                     location=f"line:{line_num}"
                 )
+
+            # 在YAML行中查找普通Jinja2变量语法
+            for match in self.variable_pattern.finditer(line):
+                # 确保不是mapping变量的一部分
+                is_mapping_var = False
+                for mapping_match in self.mapping_variable_pattern.finditer(line):
+                    if (match.start() >= mapping_match.start() and
+                        match.end() <= mapping_match.end()):
+                        is_mapping_var = True
+                        break
+
+                if not is_mapping_var:
+                    placeholder_id = f"__JINJA_PLACEHOLDER_{len(placeholder_map) + 1}__"
+                    placeholder_map[placeholder_id] = Jinja2Placeholder(
+                        id=placeholder_id,
+                        original_content=match.group(0),
+                        placeholder=placeholder_id,
+                        type='variable',
+                        location=f"line:{line_num}"
+                    )
 
             for match in self.statement_pattern.finditer(line):
                 placeholder_id = f"__JINJA_PLACEHOLDER_{len(placeholder_map) + 1}__"

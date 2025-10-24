@@ -10,6 +10,7 @@ import logging
 
 from .yaml_path import YamlPath, PathError
 from .yaml_processor import YamlProcessor, Jinja2Placeholder
+from core.field_mapper import create_field_mapper
 
 logger = logging.getLogger(__name__)
 
@@ -18,11 +19,12 @@ class VariableInfo:
     """变量信息"""
     name: str
     yaml_paths: List[str]  # 可能的多个路径
-    variable_type: str  # 'regular' or 'special'
+    variable_type: str  # 'regular', 'special', or 'mapping'
     filters: List[str]  # 使用的过滤器
     default_value: Optional[str] = None
     context_required: bool = False  # 是否需要转换上下文
     jinja_expression: str = ""  # 原始Jinja2表达式
+    is_mapping: bool = False  # 是否需要field mapping
 
 @dataclass
 class VariableMappingResult:
@@ -30,17 +32,20 @@ class VariableMappingResult:
     variable_map: Dict[str, VariableInfo]
     regular_variables: Set[str]
     special_variables: Set[str]
-    path_statistics: Dict[str, int]  # 路径使用统计
-    mapping_report: str
+    mapping_variables: Set[str] = None  # 需要field mapping的变量
+    path_statistics: Dict[str, int] = None  # 路径使用统计
+    mapping_report: str = ""
 
 class VariableMapper:
     """变量路径映射器"""
 
     def __init__(self):
         self.yaml_processor = YamlProcessor()
+        self.field_mapper = create_field_mapper()
 
         # Jinja2模式
         self.variable_pattern = re.compile(r'\{\{\s*([^}]+)\s*\}\}')
+        self.mapping_variable_pattern = re.compile(r'\$\{\{\s*([^}]+)\s*\}\}')
         self.filter_pattern = re.compile(r'([^|]+(?:\([^)]*\))?)\s*\|\s*([^}]+)')
         self.function_pattern = re.compile(r'(\w+)\s*\(')
         self.array_marker_pattern = re.compile(r'\{\#\s*array_dynamic:\s*true\s*\#\}')
@@ -75,19 +80,23 @@ class VariableMapper:
                            if info.variable_type == 'regular'}
         special_variables = {name for name, info in variable_map.items()
                            if info.variable_type == 'special'}
+        mapping_variables = {name for name, info in variable_map.items()
+                           if info.variable_type == 'mapping'}
 
         # 生成映射报告
         mapping_report = self._generate_mapping_report(
-            variable_map, regular_variables, special_variables,
+            variable_map, regular_variables, special_variables, mapping_variables,
             path_statistics, array_markers
         )
 
         logger.info(f"Mapped {len(variable_map)} variables to {len(path_statistics)} paths")
+        logger.info(f"Regular: {len(regular_variables)}, Special: {len(special_variables)}, Mapping: {len(mapping_variables)}")
 
         return VariableMappingResult(
             variable_map=variable_map,
             regular_variables=regular_variables,
             special_variables=special_variables,
+            mapping_variables=mapping_variables,
             path_statistics=path_statistics,
             mapping_report=mapping_report
         )
@@ -144,13 +153,47 @@ class VariableMapper:
             # 查找对应的占位符
             placeholder_info = self._find_placeholder_info(node, jinja_placeholders)
             if placeholder_info:
-                variable_infos = self._parse_variable_expression(placeholder_info.original_content)
-                for var_info in variable_infos:
+                # 获取原始内容
+                original_content = placeholder_info.original_content
+                # 检查占位符类型
+                if placeholder_info.type == 'mapping':
+                    # 这是mapping变量占位符
+                    expr = original_content[3:-2]  # 去掉 ${{ 和 }}
+                    var_info = VariableInfo(
+                        name=expr.strip(),
+                        yaml_paths=[current_path],
+                        variable_type='mapping',
+                        filters=[],
+                        is_mapping=True,
+                        jinja_expression=original_content
+                    )
                     self._add_variable_mapping(
                         var_info, current_path, variable_map, path_statistics
                     )
+                else:
+                    # 普通变量占位符
+                    variable_infos = self._parse_variable_expression(original_content)
+                    for var_info in variable_infos:
+                        self._add_variable_mapping(
+                            var_info, current_path, variable_map, path_statistics
+                        )
             else:
-                # 检查字符串中是否包含Jinja2表达式
+                # 检查字符串中是否包含mapping变量表达式 ${{...}}
+                mapping_expressions = self.mapping_variable_pattern.findall(node)
+                for expr in mapping_expressions:
+                    var_info = VariableInfo(
+                        name=expr.strip(),
+                        yaml_paths=[current_path],
+                        variable_type='mapping',
+                        filters=[],
+                        is_mapping=True,
+                        jinja_expression="${{{" + expr.strip() + "}}}"
+                    )
+                    self._add_variable_mapping(
+                        var_info, current_path, variable_map, path_statistics
+                    )
+
+                # 检查字符串中是否包含普通Jinja2表达式 {{...}}
                 expressions = self.variable_pattern.findall(node)
                 for expr in expressions:
                     variable_infos = self._parse_variable_expression(expr)
@@ -170,7 +213,11 @@ class VariableMapper:
                              jinja_placeholders: Dict[str, Jinja2Placeholder]) -> Optional[Jinja2Placeholder]:
         """找到文本对应的占位符信息"""
         for placeholder_info in jinja_placeholders.values():
+            # 直接匹配
             if text == placeholder_info.placeholder:
+                return placeholder_info
+            # 处理带$前缀的情况
+            if text == '$' + placeholder_info.placeholder:
                 return placeholder_info
         return None
 
@@ -180,6 +227,10 @@ class VariableMapper:
 
         # 清理表达式
         expr = expression.strip()
+
+        # 移除Jinja2变量标记 {{ 和 }}
+        if expr.startswith('{{') and expr.endswith('}}'):
+            expr = expr[2:-2].strip()
 
         # 处理复杂表达式（包含函数调用、过滤等）
         if '|' in expr:
@@ -200,7 +251,7 @@ class VariableMapper:
                         variable_type='special' if var_name.startswith('__') else 'regular',
                         filters=filters,
                         context_required=var_name.startswith('__'),
-                        jinja_expression=expr
+                        jinja_expression=expression
                     )
                     variable_infos.append(var_info)
 
@@ -215,7 +266,7 @@ class VariableMapper:
                     variable_type='special' if var_name.startswith('__') else 'regular',
                     filters=[],
                     context_required=var_name.startswith('__'),
-                    jinja_expression=expr
+                    jinja_expression=expression
                 )
                 variable_infos.append(var_info)
 
@@ -295,8 +346,9 @@ class VariableMapper:
     def _generate_mapping_report(self, variable_map: Dict[str, VariableInfo],
                                regular_variables: Set[str],
                                special_variables: Set[str],
-                               path_statistics: Dict[str, int],
-                               array_markers: Set[str]) -> str:
+                               mapping_variables: Set[str] = None,
+                               path_statistics: Dict[str, int] = None,
+                               array_markers: Set[str] = None) -> str:
         """生成变量映射报告"""
         lines = []
         lines.append("Variable Path Mapping Report")
@@ -352,6 +404,28 @@ class VariableMapper:
                 lines.append(f"  {marker}")
 
         return "\n".join(lines)
+
+    def process_mapping_variables(self, mapping_vars: Dict[str, Any],
+                                source_protocol: str, target_protocol: str,
+                                source_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        使用field mapper处理mapping变量
+
+        Args:
+            mapping_vars: 需要映射的变量字典
+            source_protocol: 源协议ID
+            target_protocol: 目标协议ID
+            source_data: 源数据
+
+        Returns:
+            映射后的变量字典
+        """
+        if not mapping_vars:
+            return {}
+
+        return self.field_mapper.process_mapping(
+            mapping_vars, source_protocol, target_protocol, source_data
+        )
 
     def extract_variables_from_template(self, template_content: str) -> Tuple[Set[str], Set[str]]:
         """

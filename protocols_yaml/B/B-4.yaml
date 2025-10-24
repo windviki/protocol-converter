@@ -2,8 +2,8 @@ domain: navigation
 action: NAVIGATE_TO_INTERSECTION
 slots:
   intersection:
-    primary_road: {{ joined_roads += _; joined_roads | split_poi | first }}
-    secondary_road: {{ joined_roads += _; joined_roads | split_poi | second }}
+    primary_road: ${{primary_road}}
+    secondary_road: ${{secondary_road}}
     city: {{ city | default '上海' }}
     district: {{ district | default '长宁区' }}
     coordinates:
