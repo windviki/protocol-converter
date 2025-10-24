@@ -156,6 +156,10 @@ class ProtocolMatcher:
 class VariableExtractor:
     """变量提取器"""
 
+    def __init__(self):
+        # 配置Jinja2环境用于解析变量
+        self.env = Environment()
+
     def extract_variables(self, template: Dict[str, Any], data: Dict[str, Any],
                          array_markers: List[ArrayMarker] = None) -> Dict[str, Any]:
         """
@@ -231,8 +235,12 @@ class VariableExtractor:
                 # 检查是否是Jinja2变量
                 var_name = self._extract_variable_name(template_value)
                 if var_name:
-                    # 对于模板变量提取，data可能为空字典，所以我们只提取变量名
-                    variables[var_name] = var_name  # 使用变量名作为占位符
+                    # 从数据的相同键位置提取值
+                    if key in data:
+                        variables[var_name] = data[key]
+                    else:
+                        # 如果对应键不存在，设为None
+                        variables[var_name] = None
             elif isinstance(template_value, dict):
                 # 递归提取嵌套字典中的变量
                 self._extract_from_dict(template_value, data.get(key, {}), variables)
@@ -244,6 +252,30 @@ class VariableExtractor:
         if len(template) > 0 and len(data) > 0:
             if isinstance(template[0], dict) and isinstance(data[0], dict):
                 self._extract_from_dict(template[0], data[0], variables)
+
+    def _find_value_in_data(self, var_name: str, data: Dict[str, Any]) -> Any:
+        """在数据结构中查找变量值"""
+        # 如果是直接的键
+        if var_name in data:
+            return data[var_name]
+
+        # 在嵌套结构中查找
+        if isinstance(data, dict):
+            for key, value in data.items():
+                if isinstance(value, dict):
+                    result = self._find_value_in_data(var_name, value)
+                    if result is not None:
+                        return result
+                elif isinstance(value, list):
+                    for item in value:
+                        if isinstance(item, dict):
+                            result = self._find_value_in_data(var_name, item)
+                            if result is not None:
+                                return result
+
+        # 如果找不到，返回变量名本身（这可能是测试失败的原因）
+        # 但更好的做法是返回None，让调用者处理
+        return None
     
     def _extract_variable_name(self, template_str: str) -> Optional[str]:
         """从模板字符串中提取变量名"""
