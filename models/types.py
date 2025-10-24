@@ -23,6 +23,7 @@ class ProtocolTemplate:
     variables: List[str]
     special_variables: List[str]
     array_markers: List[ArrayMarker]  # 数组处理标记列表
+    jinja_placeholders: Dict[str, Any] = None  # Jinja2占位符映射
 
 
 @dataclass

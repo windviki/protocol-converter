@@ -322,7 +322,8 @@ class YamlProtocolLoader:
                 template_content=template.template_data,  # 使用解析后的数据
                 variables=variables,
                 special_variables=special_variables,
-                array_markers=array_markers
+                array_markers=array_markers,
+                jinja_placeholders=template.jinja_placeholders
             )
 
             # 加载到转换器

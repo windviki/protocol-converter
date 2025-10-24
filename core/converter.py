@@ -50,7 +50,8 @@ class ProtocolConverter:
                 template_content=template_content,
                 variables=variables,
                 special_variables=special_variables,
-                array_markers=array_markers
+                array_markers=array_markers,
+                jinja_placeholders={}  # 传统加载方式没有占位符
             )
 
         self.matcher.add_protocol(protocol)
@@ -79,9 +80,16 @@ class ProtocolConverter:
             # 2. 获取源协议模板
             source_protocol_template = self.matcher.protocols[matched_protocol_id]
 
-            # 3. 提取变量
+            # 3. 恢复占位符并提取变量
+            source_template_restored = source_protocol_template.template_content
+            if source_protocol_template.jinja_placeholders:
+                source_template_restored = self.renderer._restore_jinja_placeholders(
+                    source_template_restored,
+                    source_protocol_template.jinja_placeholders
+                )
+
             variables = self.extractor.extract_variables(
-                source_protocol_template.template_content,
+                source_template_restored,
                 source_json,
                 source_protocol_template.array_markers
             )
@@ -103,7 +111,8 @@ class ProtocolConverter:
                 source_json,
                 target_protocol_template.array_markers,
                 source_protocol_id=matched_protocol_id,
-                target_protocol_id=target_protocol_template.protocol_id
+                target_protocol_id=target_protocol_template.protocol_id,
+                jinja_placeholders=target_protocol_template.jinja_placeholders
             )
 
             return ConversionResult(

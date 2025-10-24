@@ -59,7 +59,8 @@ class TemplateRenderer:
     def render(self, template: Dict[str, Any], variables: Dict[str, Any],
                source_protocol: str, target_protocol: str, source_json: Dict[str, Any],
                array_markers: List[ArrayMarker] = None,
-               source_protocol_id: str = None, target_protocol_id: str = None) -> Dict[str, Any]:
+               source_protocol_id: str = None, target_protocol_id: str = None,
+               jinja_placeholders: Dict[str, Any] = None) -> Dict[str, Any]:
         """
         渲染模板
         Args:
@@ -71,6 +72,7 @@ class TemplateRenderer:
             array_markers: 数组标记列表
             source_protocol_id: 源协议ID
             target_protocol_id: 目标协议ID
+            jinja_placeholders: Jinja2占位符映射
         Returns:
             渲染后的JSON数据
         """
@@ -86,6 +88,10 @@ class TemplateRenderer:
 
         # 深拷贝模板以避免修改原始模板
         result = json.loads(json.dumps(template))
+
+        # 如果有占位符映射，先恢复Jinja2语法
+        if jinja_placeholders:
+            result = self._restore_jinja_placeholders(result, jinja_placeholders)
 
         # 处理动态数组
         if array_markers:
@@ -405,3 +411,36 @@ class TemplateRenderer:
             logger.debug(f"Preprocessed template: {original_str} -> {template_str}")
 
         return template_str
+
+    def _restore_jinja_placeholders(self, data: Any, jinja_placeholders: Dict[str, Any]) -> Any:
+        """
+        递归恢复Jinja2占位符为原始语法
+
+        Args:
+            data: 包含占位符的数据结构
+            jinja_placeholders: 占位符映射字典
+
+        Returns:
+            恢复了Jinja2语法的数据结构
+        """
+        if isinstance(data, dict):
+            restored = {}
+            for key, value in data.items():
+                restored[key] = self._restore_jinja_placeholders(value, jinja_placeholders)
+            return restored
+
+        elif isinstance(data, list):
+            restored = []
+            for item in data:
+                restored.append(self._restore_jinja_placeholders(item, jinja_placeholders))
+            return restored
+
+        elif isinstance(data, str):
+            # 检查是否是占位符
+            if data in jinja_placeholders:
+                placeholder_info = jinja_placeholders[data]
+                return placeholder_info.original_content
+            else:
+                return data
+        else:
+            return data
