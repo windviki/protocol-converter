@@ -119,19 +119,100 @@ def extract_variables_from_json(schema: Dict[str, Any], data: Dict[str, Any]) ->
     return variables
 
 
+def preprocess_json_content(content: str) -> str:
+    """
+    预处理JSON内容，处理单引号等兼容性问题
+
+    Args:
+        content: 原始JSON内容
+
+    Returns:
+        str: 处理后的JSON内容
+    """
+    processed_content = content
+
+    # 1. 首先保护Jinja2模板语法，防止误处理
+    jinja2_patterns = [
+        (r'\{\{[^}]*\}\}', 'JINJA2_EXPR'),
+        (r'\{%[^%]*%\}', 'JINJA2_STMT'),
+        (r'\{#[^#]*#\}', 'JINJA2_COMMENT')
+    ]
+
+    # 存储被保护的Jinja2语法
+    protected_parts = []
+    for pattern, placeholder in jinja2_patterns:
+        def protect_func(match):
+            protected_parts.append(match.group(0))
+            return f'__PROTECTED_{len(protected_parts)-1}__'
+        processed_content = re.sub(pattern, protect_func, processed_content, flags=re.DOTALL)
+
+    # 2. 处理JSON中的单引号字符串值
+    # 匹配 : 'value' 和 , 'value' 模式
+    processed_content = re.sub(r'([:,\[\{]\s*)\'([^\']*?)\'(?=\s*[,}\]\}])', r'\1"\2"', processed_content)
+
+    # 3. 恢复被保护的Jinja2语法并处理其中的单引号
+    def restore_and_process(match):
+        index = int(match.group(1))
+        original = protected_parts[index]
+
+        # 处理Jinja2语法中的单引号
+        # 处理 | default 'value'
+        original = re.sub(r"(\|\s*default\s+)'([^']*)'", r'\1"\2"', original)
+
+        # 处理过滤器参数 | filter='value'
+        original = re.sub(r"(\|\s*\w+\s*=)'([^']*)'", r'\1"\2"', original)
+
+        # 处理条件语句 {% if var == 'value' %}
+        original = re.sub(r"(\{%[^}]*)'([^']*)'([^}]*%\})", r'\1"\2"\3', original)
+
+        # 处理循环 {% for item in ['a', 'b'] %}
+        original = re.sub(r"(\{%[^}]*)\[([^\]]*)\]([^}]*%\})", lambda m:
+                         m.group(1) + '[' + re.sub(r"'([^']*)'", r'"\1"', m.group(2)) + ']' + m.group(3), original)
+
+        return original
+
+    processed_content = re.sub(r'__PROTECTED_(\d+)__', restore_and_process, processed_content)
+
+    # 4. 处理特殊的default值
+    processed_content = re.sub(r"(\|\s*default\s+)\{\}", r'\1"{}"', processed_content)
+    processed_content = re.sub(r"(\|\s*default\s+)\[\]", r'\1"[]"', processed_content)
+
+    return processed_content
+
+
 def load_json_file(file_path: str) -> Dict[str, Any]:
     """
-    加载JSON文件
-    
+    加载JSON文件，支持Jinja2模板语法中的单引号
+
     Args:
         file_path: JSON文件路径
-        
+
     Returns:
         Dict[str, Any]: JSON数据
     """
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            content = f.read()
+
+        # 预处理内容
+        processed_content = preprocess_json_content(content)
+
+        # 尝试标准JSON解析
+        try:
+            return json.loads(processed_content)
+        except json.JSONDecodeError as e:
+            # 如果还是失败，尝试更激进的修复
+            # 替换所有非JSON标准的单引号（但要小心不要破坏Jinja2语法）
+            fixed_content = processed_content
+            # 只替换明显不是语法部分的单引号
+            fixed_content = re.sub(r":\s*'([^']*)'", r': "\1"', fixed_content)
+            fixed_content = re.sub(r",\s*'([^']*)'", r', "\1"', fixed_content)
+
+            try:
+                return json.loads(fixed_content)
+            except json.JSONDecodeError as e2:
+                raise Exception(f"JSON解析失败 {file_path}: 原始错误 {e}, 修复后错误 {e2}")
+
     except Exception as e:
         raise Exception(f"加载JSON文件失败 {file_path}: {e}")
 

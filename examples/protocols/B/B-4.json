@@ -1,0 +1,19 @@
+{
+  "domain": "navigation",
+  "action": "NAVIGATE_TO_INTERSECTION",
+  "slots": {
+    "intersection": {
+      "primary_road": "{{ primary_road }}",
+      "secondary_road": "{{ secondary_road }}",
+      "city": "{{ city | default '上海' }}",
+      "district": "{{ district | default '长宁区' }}",
+      "coordinates": {
+        "latitude": "{{ latitude }}",
+        "longitude": "{{ longitude }}"
+      }
+    },
+    "vehicle_type": "{{ vehicle_type | default 'car' }}",
+    "avoid_tolls": "{{ avoid_tolls | default 'false' }}",
+    "urgency": "{{ urgency | default 'normal' }}"
+  }
+}

@@ -95,7 +95,7 @@ def load_protocols(protocol_manager, examples_dir):
         protocols = protocol_manager.get_protocols_by_family(family)
         logger.info(f"协议族 {family}: {protocols}")
 
-    return True
+    return True, protocol_manager
 
 
 def load_input_data(examples_dir):
@@ -245,9 +245,27 @@ def run_comprehensive_tests():
 
     try:
         # 加载协议
-        if not load_protocols(protocol_manager, examples_dir):
+        load_result, protocol_manager = load_protocols(protocol_manager, examples_dir)
+        if not load_result:
             logger.error("协议加载失败，退出测试")
             return False
+
+        # 将加载的协议模板加载到转换器中
+        families = protocol_manager.list_all_families()
+        for family in families:
+            protocols = protocol_manager.get_protocols_by_family(family)
+            for protocol_id in protocols:
+                try:
+                    protocol_data = protocol_manager.get_protocol_by_id(protocol_id)
+                    if protocol_data:
+                        converter.load_protocol(
+                            protocol_id=protocol_id,
+                            protocol_family=family,
+                            template_content=protocol_data['template_content']
+                        )
+                        logger.info(f"转换器加载协议: {protocol_id}")
+                except Exception as e:
+                    logger.error(f"转换器加载协议失败 {protocol_id}: {e}")
 
         # 加载输入数据
         input_data = load_input_data(examples_dir)

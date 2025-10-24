@@ -1,0 +1,51 @@
+{
+  "domain": "navigation",
+  "action": "NAVIGATE_TO_ROUTES",
+  "slots": {
+    "routes": [
+      "{# array_dynamic: true #}",
+      {
+        "road_name": "{{ road_name }}",
+        "road_type": "{% if loop.index == 1 %}primary{% else %}secondary{% endif %}",
+        "sequence": "{{ __array_index }}",
+        "total_segments": "{{ __array_total }}",
+        "address_info": {
+          "full_name": "{{ road_name }}{{ district | default '' }}{{ city | default '' }}",
+          "admin_level": "{% if district %}district{% else %}city{% endif %}",
+          "is_main_road": "{% if road_name in main_roads %}true{% else %}false{% endif %}"
+        },
+        "location": {
+          "coordinates": "{{ coordinates | default {} }}",
+          "landmark": "{{ nearest_landmark | default '未知地点' }}"
+        },
+        "traffic_info": {
+          "congestion_level": "{{ traffic_level | default 'unknown' }}",
+          "estimated_time": "{{ estimated_time | default '未知' }}",
+          "distance": "{{ distance | default '未知' }}"
+        },
+        "metadata": {
+          "processing_id": "{{ __session_id }}",
+          "processing_progress": "{{ __progress }}",
+          "conversion_id": "{{ __conversion_id }}",
+          "protocol_path": "{{ __current_path }}",
+          "is_final_segment": "{{ __is_last_item }}"
+        }
+      }
+    ],
+    "navigation_options": {
+      "vehicle": "{{ vehicle_type | default 'car' }}",
+      "avoid_tolls": "{{ avoid_tolls | default false }}",
+      "route_preference": "{{ route_preference | default 'fastest' }}",
+      "urgency": "{{ urgency | default 'normal' }}"
+    },
+    "context": {
+      "operation": "intersection_navigation",
+      "source_format": "B-5",
+      "target_protocols": ["A-4", "A-5", "C-4", "C-5"],
+      "session_info": {
+        "session_id": "{{ __session_id }}",
+        "conversion_timestamp": "{{ __timestamp }}"
+      }
+    }
+  }
+}
