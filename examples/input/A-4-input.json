@@ -1,0 +1,16 @@
+{
+  "domain": "navigation",
+  "action": "ROUTE_TO",
+  "slots": {
+    "destination": "天山西路仙霞路交叉口",
+    "poi_type": "intersection",
+    "vehicle_type": "car",
+    "urgency": "normal",
+    "route_type": "fastest",
+    "coordinates": {
+      "latitude": "31.2204",
+      "longitude": "121.4256"
+    },
+    "full_address": "上海市长宁区天山西路仙霞路交叉口"
+  }
+}

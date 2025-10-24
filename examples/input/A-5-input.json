@@ -1,0 +1,44 @@
+{
+  "domain": "navigation",
+  "action": "MULTI_WAYPOINT",
+  "slots": {
+    "origin": "上海虹桥国际机场",
+    "waypoints": [
+      {
+        "point_name": "天山西路仙霞路交叉口",
+        "poi_type": "intersection",
+        "urgency": "high",
+        "estimated_time": "25分钟",
+        "distance": "12.5公里",
+        "coordinates": {
+          "latitude": 31.2204,
+          "longitude": 121.4256
+        }
+      },
+      {
+        "point_name": "中山公园地铁站",
+        "poi_type": "subway_station",
+        "urgency": "normal",
+        "estimated_time": "15分钟",
+        "distance": "8.3公里",
+        "coordinates": {
+          "latitude": 31.2218,
+          "longitude": 121.4176
+        }
+      },
+      {
+        "point_name": "静安寺",
+        "poi_type": "temple",
+        "urgency": "low",
+        "estimated_time": "20分钟",
+        "distance": "10.7公里",
+        "coordinates": {
+          "latitude": 31.2236,
+          "longitude": 121.4452
+        }
+      }
+    ],
+    "avoid_tolls": true,
+    "route_preference": "fastest"
+  }
+}

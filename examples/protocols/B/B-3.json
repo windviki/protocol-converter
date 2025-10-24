@@ -1,6 +1,6 @@
 {
-  "operation": "transform",
-  "items": [
+  "name": "transform",
+  "values": [
     {
       "title": "{{ name | capitalize }}",
       "amount": "{{ value }}",

@@ -1,0 +1,16 @@
+{
+  "domain": "navigation",
+  "action": "ROUTE_TO_INTERSECTION",
+  "slots": {
+    "primary_road": "天山西路",
+    "secondary_road": "仙霞路",
+    "city": "上海市",
+    "district": "长宁区",
+    "latitude": "31.2204",
+    "longitude": "121.4256",
+    "vehicle_type": "car",
+    "avoid_tolls": false,
+    "urgency": "normal",
+    "route_preference": "fastest"
+  }
+}

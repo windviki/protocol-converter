@@ -10,7 +10,7 @@ import tempfile
 import shutil
 
 # 添加项目路径
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from database.connection import init_database
 from protocol_manager.manager import ProtocolManager

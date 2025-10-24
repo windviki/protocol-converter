@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 永远用中文回复我
 - 每次重要修改需要在本地提交git
 - python版本3.11
-- 尊重工程的文件夹结构规范，不要随意放置文件
+- 尊重工程的文件夹结构规范，不要随意放置文件：所有测试放置到tests/目录下
 
 ## Project Overview
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-测试统一的ConversionContext方案
+测试动态数组上下文功能的脚本
 """
 
 import sys
@@ -10,7 +10,7 @@ import tempfile
 import shutil
 
 # 添加项目路径
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from database.connection import init_database
 from protocol_manager.manager import ProtocolManager
@@ -18,11 +18,11 @@ from core.converter import ProtocolConverter
 from converters.functions import CONVERTER_FUNCTIONS
 
 
-def test_unified_context():
-    """测试统一的ConversionContext功能"""
-    print("=" * 70)
-    print("统一ConversionContext功能测试")
-    print("=" * 70)
+def test_array_context():
+    """测试动态数组上下文功能"""
+    print("=" * 60)
+    print("动态数组上下文功能测试")
+    print("=" * 60)
 
     # 创建临时目录
     temp_dir = tempfile.mkdtemp()
@@ -57,12 +57,12 @@ def test_unified_context():
         with open(os.path.join(test_a_dir, "TestA-1.json"), "w", encoding="utf-8") as f:
             json.dump(test_a_content, f, ensure_ascii=False, indent=2)
 
-        # 复制增强的TestC协议
+        # 复制我们创建的TestC协议
         test_c_dir = os.path.join(temp_dir, "TestC")
         os.makedirs(test_c_dir)
 
-        # 读取TestC-enhanced-context.json并保存到临时目录
-        source_file = os.path.join(os.path.dirname(__file__), "examples", "protocols", "TestC", "TestC-enhanced-context.json")
+        # 读取TestC-array-context.json并保存到临时目录
+        source_file = os.path.join(os.path.dirname(__file__), "examples", "protocols", "TestC", "TestC-array-context.json")
         with open(source_file, "r", encoding="utf-8") as src:
             content = json.load(src)
 
@@ -87,8 +87,14 @@ def test_unified_context():
         families = manager.list_all_families()
         print(f"可用协议族: {families}")
 
-        # 5. 测试协议转换
-        print("\n5. 测试协议转换...")
+        # 5. 列出协议
+        print("\n5. 列出协议...")
+        for family in families:
+            protocols = manager.get_protocols_by_family(family)
+            print(f"协议族 {family}: {protocols}")
+
+        # 6. 测试协议转换
+        print("\n6. 测试协议转换...")
 
         # 创建转换器
         converter = ProtocolConverter(CONVERTER_FUNCTIONS)
@@ -143,84 +149,48 @@ def test_unified_context():
             print(f"转换结果:")
             print(json.dumps(result.result, ensure_ascii=False, indent=2))
 
-            # 6. 验证增强的上下文功能
-            print("\n6. 验证增强的上下文功能...")
+            # 7. 验证数组上下文功能
+            print("\n7. 验证数组上下文功能...")
 
             items = result.result.get("items", [])
             if len(items) == 3:
                 print("✓ 数组元素数量正确")
 
                 for i, item in enumerate(items):
-                    enhanced_metadata = item.get("enhanced_metadata", {})
+                    array_info = item.get("array_info", {})
+                    index = array_info.get("index")
+                    total = array_info.get("total")
+                    session_id = array_info.get("session_id")
+                    session_id_v2 = array_info.get("session_id_v2")
 
-                    print(f"\n  元素 {i}:")
+                    print(f"  元素 {i}:")
+                    print(f"    索引: {index}")
+                    print(f"    总数: {total}")
+                    print(f"    Session ID: {session_id}")
+                    print(f"    Session ID v2: {session_id_v2}")
 
-                    # 验证数组信息
-                    array_info = enhanced_metadata.get("array_info", {})
-                    print(f"    数组信息:")
-                    print(f"      索引: {array_info.get('index')}")
-                    print(f"      总数: {array_info.get('total')}")
-                    print(f"      进度: {array_info.get('progress')}")
-                    print(f"      是否最后: {array_info.get('is_last')}")
-
-                    # 验证转换信息
-                    conversion_info = enhanced_metadata.get("conversion_info", {})
-                    print(f"    转换信息:")
-                    print(f"      转换ID: {conversion_info.get('conversion_id')}")
-                    print(f"      Session ID: {conversion_info.get('session_id')}")
-                    print(f"      Session ID v2: {conversion_info.get('session_id_v2')}")
-                    print(f"      当前路径: {conversion_info.get('current_path')}")
-
-                    # 验证协议信息
-                    protocol_info = enhanced_metadata.get("protocol_info", {})
-                    print(f"    协议信息:")
-                    print(f"      源协议: {protocol_info.get('source_protocol')}")
-                    print(f"      目标协议: {protocol_info.get('target_protocol')}")
-
-                    # 验证调试信息
-                    debug_info = enhanced_metadata.get("debug_info", {})
-                    print(f"    调试信息:")
-                    print(f"      渲染深度: {debug_info.get('render_depth')}")
-                    print(f"      父级路径: {debug_info.get('parent_path')}")
-
-                    # 具体验证
-                    if str(i) == array_info.get('index'):
-                        print(f"    ✓ 索引 {array_info.get('index')} 正确")
+                    # 验证索引是否正确
+                    if str(i) == index:
+                        print(f"    ✓ 索引 {index} 正确")
                     else:
-                        print(f"    ✗ 索引错误，期望 {i}，实际 {array_info.get('index')}")
+                        print(f"    ✗ 索引错误，期望 {i}，实际 {index}")
                         return False
 
-                    expected_progress = f"{i+1}/3 ({((i+1)/3)*100:.1f}%)"
-                    if expected_progress == array_info.get('progress'):
-                        print(f"    ✓ 进度 {array_info.get('progress')} 正确")
+                    # 验证总数是否正确
+                    if "3" == total:
+                        print(f"    ✓ 总数 {total} 正确")
                     else:
-                        print(f"    ✗ 进度错误，期望 {expected_progress}，实际 {array_info.get('progress')}")
+                        print(f"    ✗ 总数错误，期望 3，实际 {total}")
                         return False
 
-                    expected_is_last = "true" if i == 2 else "false"
-                    if expected_is_last == array_info.get('is_last'):
-                        print(f"    ✓ 是否最后项目 {array_info.get('is_last')} 正确")
+                    # 验证session_id是否包含索引信息
+                    if f"array_item_{i}" in session_id:
+                        print(f"    ✓ Session ID包含索引信息")
                     else:
-                        print(f"    ✗ 是否最后项目错误，期望 {expected_is_last}，实际 {array_info.get('is_last')}")
+                        print(f"    ✗ Session ID不包含索引信息")
                         return False
 
-                    # 验证协议信息
-                    if protocol_info.get('source_protocol') == 'TestA' and protocol_info.get('target_protocol') == 'TestC':
-                        print(f"    ✓ 协议信息正确")
-                    else:
-                        print(f"    ✗ 协议信息错误")
-                        return False
-
-                    # 验证Session ID包含转换ID
-                    session_id = conversion_info.get('session_id', '')
-                    conversion_id = conversion_info.get('conversion_id', '')
-                    if conversion_id[:8] in session_id:
-                        print(f"    ✓ Session ID包含转换ID信息")
-                    else:
-                        print(f"    ✗ Session ID不包含转换ID信息")
-                        return False
-
-                print("\n✓ 所有增强上下文功能验证通过")
+                print("✓ 所有数组上下文功能验证通过")
             else:
                 print(f"✗ 数组元素数量错误，期望3，实际{len(items)}")
                 return False
@@ -229,16 +199,14 @@ def test_unified_context():
             print(f"✗ 转换失败: {result.error}")
             return False
 
-        print("\n" + "=" * 70)
+        print("\n" + "=" * 60)
         print("所有测试通过! ✓")
-        print("=" * 70)
+        print("=" * 60)
         print("\n总结:")
-        print("✓ 统一的ConversionContext方案工作正常")
-        print("✓ 所有转换函数都已更新为单一参数的context签名")
-        print("✓ 丰富的上下文信息被正确填充和传递")
-        print("✓ 数组元素能够获取到详细的处理信息")
-        print("✓ 转换ID、进度信息、路径信息等都被正确记录")
-        print("✓ 新方案保持了良好的向后兼容性")
+        print("- 动态数组中的每个元素都能获取到正确的索引")
+        print("- 转换函数能够访问数组总长度信息")
+        print("- Session ID现在可以基于索引生成不同的值")
+        print("- 新的上下文机制向后兼容，不影响现有功能")
 
         return True
 
@@ -255,5 +223,5 @@ def test_unified_context():
 
 
 if __name__ == "__main__":
-    success = test_unified_context()
+    success = test_array_context()
     sys.exit(0 if success else 1)

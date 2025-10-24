@@ -1,0 +1,16 @@
+{
+  "domain": "navigation",
+  "action": "ROUTE_TO",
+  "slots": {
+    "destination": "{{ destination }}",
+    "poi_type": "{{ poi_type }}",
+    "vehicle_type": "{{ vehicle_type }}",
+    "urgency": "{{ urgency }}",
+    "route_type": "{{ route_type }}",
+    "coordinates": {
+      "latitude": "{{ latitude }}",
+      "longitude": "{{ longitude }}",
+      "address": "{{ full_address }}"
+    }
+  }
+}

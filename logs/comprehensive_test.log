@@ -1,0 +1,162 @@
+2025-10-24 14:26:56,838 | INFO     | test_comprehensive_navigation:<module>:52 - 使用标准logging日志系统
+2025-10-24 14:26:56,840 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:243 - 项目根目录: C:\work\gw\protocol_converter
+2025-10-24 14:26:56,840 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:244 - Examples目录: C:\work\gw\protocol_converter\examples
+2025-10-24 14:26:56,840 | INFO     | test_comprehensive_navigation:setup_test_environment:57 - === 开始综合导航协议测试 ===
+2025-10-24 14:26:56,843 | INFO     | test_comprehensive_navigation:setup_test_environment:61 - 使用临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_g3v673mw
+2025-10-24 14:26:56,860 | INFO     | test_comprehensive_navigation:setup_test_environment:66 - ✓ 数据库初始化成功
+2025-10-24 14:28:04,885 | INFO     | test_comprehensive_navigation:<module>:52 - 使用标准logging日志系统
+2025-10-24 14:28:04,893 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:240 - 项目根目录: C:\work\gw\protocol_converter
+2025-10-24 14:28:04,893 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:241 - Examples目录: C:\work\gw\protocol_converter\examples
+2025-10-24 14:28:04,893 | INFO     | test_comprehensive_navigation:setup_test_environment:57 - === 开始综合导航协议测试 ===
+2025-10-24 14:28:04,897 | INFO     | test_comprehensive_navigation:setup_test_environment:61 - 使用临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_10n64430
+2025-10-24 14:28:04,919 | INFO     | test_comprehensive_navigation:setup_test_environment:66 - ✓ 数据库初始化成功
+2025-10-24 14:28:04,920 | INFO     | test_comprehensive_navigation:load_protocols:80 - 加载协议目录: C:\work\gw\protocol_converter\examples\protocols
+2025-10-24 14:28:05,222 | INFO     | test_comprehensive_navigation:load_protocols:88 - 加载结果: {'total_files': 15, 'loaded_files': 10, 'failed_files': 5, 'errors': ["加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-5.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-4.json: expected token 'end of print statement', got 'string'", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-5.json: expected token 'end of print statement', got 'string'"]}
+2025-10-24 14:28:05,227 | INFO     | test_comprehensive_navigation:load_protocols:92 - 可用协议族: ['A', 'B', 'C', 'TestA', 'TestC']
+2025-10-24 14:28:05,232 | INFO     | test_comprehensive_navigation:load_protocols:96 - 协议族 A: ['A-1', 'A-2', 'A-3', 'A-4']
+2025-10-24 14:28:05,232 | INFO     | test_comprehensive_navigation:load_protocols:96 - 协议族 B: ['B-1', 'B-2', 'B-3']
+2025-10-24 14:28:05,235 | INFO     | test_comprehensive_navigation:load_protocols:96 - 协议族 C: ['C-1', 'C-2', 'C-3']
+2025-10-24 14:28:05,235 | INFO     | test_comprehensive_navigation:load_protocols:96 - 协议族 TestA: ['TestA-1', 'TestA-1-bidirectional', 'TestA-array']
+2025-10-24 14:28:05,244 | INFO     | test_comprehensive_navigation:load_protocols:96 - 协议族 TestC: ['TestC-1', 'TestC-1-bidirectional', 'TestC-1-single', 'TestC-array-context']
+2025-10-24 14:28:05,245 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: A-1
+2025-10-24 14:28:05,246 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: A-2
+2025-10-24 14:28:05,247 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: A-3
+2025-10-24 14:28:05,248 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: A-4
+2025-10-24 14:28:05,248 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: A-5
+2025-10-24 14:28:05,249 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: B-4
+2025-10-24 14:28:05,249 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: B-5
+2025-10-24 14:28:05,250 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: C-3
+2025-10-24 14:28:05,250 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: C-4
+2025-10-24 14:28:05,251 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: C-5
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:254 - 加载了 10 个输入数据文件
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 A -> B 转换 ---
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: A -> B (A-4)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: A-4 - No matching protocol found for A
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: A -> B (A-5)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: A-5 - No matching protocol found for A
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 A -> C 转换 ---
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: A -> C (A-4)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: A-4 - No matching protocol found for A
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: A -> C (A-5)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: A-5 - No matching protocol found for A
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 B -> A 转换 ---
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: B -> A (B-4)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: B-4 - No matching protocol found for B
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: B -> A (B-5)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: B-5 - No matching protocol found for B
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 B -> C 转换 ---
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: B -> C (B-4)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: B-4 - No matching protocol found for B
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: B -> C (B-5)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: B-5 - No matching protocol found for B
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 C -> A 转换 ---
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: C -> A (C-4)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: C-4 - No matching protocol found for C
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: C -> A (C-5)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: C-5 - No matching protocol found for C
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 C -> B 转换 ---
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: C -> B (C-4)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: C-4 - No matching protocol found for C
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: C -> B (C-5)
+2025-10-24 14:28:05,252 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: C-5 - No matching protocol found for C
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_address_splitting_merge:146 - 
+=== 测试地址拆分和合并功能 ===
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:282 - 地址拆分合并测试用例: 2
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_dynamic_arrays:185 - 
+=== 测试动态数组功能 ===
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:286 - 动态数组测试用例: 1
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:test_jinja2_features:207 - 
+=== 测试Jinja2高级特性 ===
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:290 - Jinja2特性测试用例: 3
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:293 - 
+=== 测试总结 ===
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:294 - 总测试数: 0
+2025-10-24 14:28:05,252 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:295 - 成功转换: 0
+2025-10-24 14:28:05,260 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:301 - 测试结果已保存到: C:\Users\viki\AppData\Local\Temp\comprehensive_test_10n64430\test_results.json
+2025-10-24 14:28:05,266 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:315 - 已清理临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_10n64430
+2025-10-24 14:28:05,266 | INFO     | test_comprehensive_navigation:<module>:321 - 
+=== 所有综合测试完成! ===
+2025-10-24 14:32:12,380 | INFO     | test_comprehensive_navigation:<module>:52 - 使用标准logging日志系统
+2025-10-24 14:32:12,380 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:240 - 项目根目录: C:\work\gw\protocol_converter
+2025-10-24 14:32:12,380 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:241 - Examples目录: C:\work\gw\protocol_converter\examples
+2025-10-24 14:32:12,380 | INFO     | test_comprehensive_navigation:setup_test_environment:57 - === 开始综合导航协议测试 ===
+2025-10-24 14:32:12,387 | INFO     | test_comprehensive_navigation:setup_test_environment:61 - 使用临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_xn987cro
+2025-10-24 14:32:12,402 | INFO     | test_comprehensive_navigation:setup_test_environment:66 - ✓ 数据库初始化成功
+2025-10-24 14:32:12,402 | INFO     | test_comprehensive_navigation:load_protocols:80 - 加载协议目录: C:\work\gw\protocol_converter\examples\protocols
+2025-10-24 14:32:12,601 | INFO     | test_comprehensive_navigation:load_protocols:88 - 加载结果: {'total_files': 15, 'loaded_files': 10, 'failed_files': 5, 'errors': ["加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-5.json: 加载JSON文件失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\A\\A-5.json: Expecting ',' delimiter: line 10 column 41 (char 247)", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-4.json: unexpected char '\\\\' at 228", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\B\\B-5.json: unexpected char '\\\\' at 439", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-4.json: unexpected char '\\\\' at 614", "加载失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-5.json: 加载JSON文件失败 C:\\work\\gw\\protocol_converter\\examples\\protocols\\C\\C-5.json: Expecting ',' delimiter: line 19 column 68 (char 674)"]}
+2025-10-24 14:32:12,603 | INFO     | test_comprehensive_navigation:load_protocols:92 - 可用协议族: ['A', 'B', 'C', 'TestA', 'TestC']
+2025-10-24 14:32:12,607 | INFO     | test_comprehensive_navigation:load_protocols:96 - 协议族 A: ['A-1', 'A-2', 'A-3', 'A-4']
+2025-10-24 14:32:12,609 | INFO     | test_comprehensive_navigation:load_protocols:96 - 协议族 B: ['B-1', 'B-2', 'B-3']
+2025-10-24 14:32:12,610 | INFO     | test_comprehensive_navigation:load_protocols:96 - 协议族 C: ['C-1', 'C-2', 'C-3']
+2025-10-24 14:32:12,612 | INFO     | test_comprehensive_navigation:load_protocols:96 - 协议族 TestA: ['TestA-1', 'TestA-1-bidirectional', 'TestA-array']
+2025-10-24 14:32:12,615 | INFO     | test_comprehensive_navigation:load_protocols:96 - 协议族 TestC: ['TestC-1', 'TestC-1-bidirectional', 'TestC-1-single', 'TestC-array-context']
+2025-10-24 14:32:12,616 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: A-1
+2025-10-24 14:32:12,617 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: A-2
+2025-10-24 14:32:12,617 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: A-3
+2025-10-24 14:32:12,618 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: A-4
+2025-10-24 14:32:12,618 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: A-5
+2025-10-24 14:32:12,619 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: B-4
+2025-10-24 14:32:12,620 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: B-5
+2025-10-24 14:32:12,620 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: C-3
+2025-10-24 14:32:12,620 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: C-4
+2025-10-24 14:32:12,621 | INFO     | test_comprehensive_navigation:load_input_data:116 - 加载输入数据: C-5
+2025-10-24 14:32:12,621 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:254 - 加载了 10 个输入数据文件
+2025-10-24 14:32:12,621 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 A -> B 转换 ---
+2025-10-24 14:32:12,621 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: A -> B (A-4)
+2025-10-24 14:32:12,622 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: A-4 - No matching protocol found for A
+2025-10-24 14:32:12,622 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: A -> B (A-5)
+2025-10-24 14:32:12,622 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: A-5 - No matching protocol found for A
+2025-10-24 14:32:12,622 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 A -> C 转换 ---
+2025-10-24 14:32:12,622 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: A -> C (A-4)
+2025-10-24 14:32:12,622 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: A-4 - No matching protocol found for A
+2025-10-24 14:32:12,622 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: A -> C (A-5)
+2025-10-24 14:32:12,622 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: A-5 - No matching protocol found for A
+2025-10-24 14:32:12,622 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 B -> A 转换 ---
+2025-10-24 14:32:12,623 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: B -> A (B-4)
+2025-10-24 14:32:12,623 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: B-4 - No matching protocol found for B
+2025-10-24 14:32:12,623 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: B -> A (B-5)
+2025-10-24 14:32:12,623 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: B-5 - No matching protocol found for B
+2025-10-24 14:32:12,623 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 B -> C 转换 ---
+2025-10-24 14:32:12,623 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: B -> C (B-4)
+2025-10-24 14:32:12,623 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: B-4 - No matching protocol found for B
+2025-10-24 14:32:12,624 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: B -> C (B-5)
+2025-10-24 14:32:12,624 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: B-5 - No matching protocol found for B
+2025-10-24 14:32:12,624 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 C -> A 转换 ---
+2025-10-24 14:32:12,624 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: C -> A (C-4)
+2025-10-24 14:32:12,624 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: C-4 - No matching protocol found for C
+2025-10-24 14:32:12,624 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: C -> A (C-5)
+2025-10-24 14:32:12,624 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: C-5 - No matching protocol found for C
+2025-10-24 14:32:12,624 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:265 - 
+--- 测试 C -> B 转换 ---
+2025-10-24 14:32:12,626 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: C -> B (C-4)
+2025-10-24 14:32:12,626 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: C-4 - No matching protocol found for C
+2025-10-24 14:32:12,626 | INFO     | test_comprehensive_navigation:test_conversion:123 - 测试转换: C -> B (C-5)
+2025-10-24 14:32:12,626 | ERROR    | test_comprehensive_navigation:test_conversion:136 - ✗ 转换失败: C-5 - No matching protocol found for C
+2025-10-24 14:32:12,626 | INFO     | test_comprehensive_navigation:test_address_splitting_merge:146 - 
+=== 测试地址拆分和合并功能 ===
+2025-10-24 14:32:12,626 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:282 - 地址拆分合并测试用例: 2
+2025-10-24 14:32:12,626 | INFO     | test_comprehensive_navigation:test_dynamic_arrays:185 - 
+=== 测试动态数组功能 ===
+2025-10-24 14:32:12,626 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:286 - 动态数组测试用例: 1
+2025-10-24 14:32:12,626 | INFO     | test_comprehensive_navigation:test_jinja2_features:207 - 
+=== 测试Jinja2高级特性 ===
+2025-10-24 14:32:12,627 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:290 - Jinja2特性测试用例: 3
+2025-10-24 14:32:12,627 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:293 - 
+=== 测试总结 ===
+2025-10-24 14:32:12,627 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:294 - 总测试数: 0
+2025-10-24 14:32:12,627 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:295 - 成功转换: 0
+2025-10-24 14:32:12,629 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:301 - 测试结果已保存到: C:\Users\viki\AppData\Local\Temp\comprehensive_test_xn987cro\test_results.json
+2025-10-24 14:32:12,631 | INFO     | test_comprehensive_navigation:run_comprehensive_tests:315 - 已清理临时目录: C:\Users\viki\AppData\Local\Temp\comprehensive_test_xn987cro
+2025-10-24 14:32:12,631 | INFO     | test_comprehensive_navigation:<module>:321 - 
+=== 所有综合测试完成! ===

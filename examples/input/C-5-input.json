@@ -1,0 +1,94 @@
+{
+  "domain": "navigation",
+  "action": "MULTI_ROUTE_COMPLEX",
+  "slots": {
+    "routes": [
+      {
+        "road_name": "天山西路",
+        "district": "长宁区",
+        "city": "上海市",
+        "province": "上海市",
+        "coordinates": {
+          "latitude": 31.2204,
+          "longitude": 121.4256
+        },
+        "nearest_landmark": "虹桥商务区",
+        "landmark_distance": "200米",
+        "landmark_direction": "东侧",
+        "bounds_ne": {
+          "latitude": 31.2214,
+          "longitude": 121.4266
+        },
+        "bounds_sw": {
+          "latitude": 31.2194,
+          "longitude": 121.4246
+        },
+        "traffic_level": "moderate",
+        "traffic_desc": "当前交通状况良好，部分路段有缓行",
+        "traffic_update": "2024-01-20 14:30",
+        "estimated_time": "15分钟",
+        "distance": "6.2公里",
+        "expected_delay": "2分钟",
+        "alt_fastest": "14分钟",
+        "alt_shortest": "18分钟",
+        "confidence_level": "high",
+        "source_reliability": "verified",
+        "last_verified": "2024-01-20 14:00",
+        "segment_notes": "主要商业路段，高峰期可能有拥堵",
+        "segment_warnings": ["早高峰时段拥堵", "注意行人过街"],
+        "segment_restrictions": ["货车限行时段 7:00-9:00"]
+      },
+      {
+        "road_name": "仙霞路",
+        "district": "长宁区",
+        "city": "上海市",
+        "province": "上海市",
+        "coordinates": {
+          "latitude": 31.2204,
+          "longitude": 121.4256
+        },
+        "nearest_landmark": "友谊商城",
+        "landmark_distance": "150米",
+        "landmark_direction": "西侧",
+        "bounds_ne": {
+          "latitude": 31.2214,
+          "longitude": 121.4266
+        },
+        "bounds_sw": {
+          "latitude": 31.2194,
+          "longitude": 121.4246
+        },
+        "traffic_level": "heavy",
+        "traffic_desc": "车流量大，行驶缓慢",
+        "traffic_update": "2024-01-20 14:30",
+        "estimated_time": "10分钟",
+        "distance": "4.3公里",
+        "expected_delay": "5分钟",
+        "alt_fastest": "12分钟",
+        "alt_shortest": "16分钟",
+        "confidence_level": "medium",
+        "source_reliability": "estimated",
+        "last_verified": "2024-01-20 13:45",
+        "segment_notes": "住宅区道路，注意限速",
+        "segment_warnings": ["学校区域减速", "注意非机动车"],
+        "segment_restrictions": ["限速40km/h"]
+      }
+    ],
+    "vehicle_type": "car",
+    "vehicle_size": "medium",
+    "vehicle_requirements": ["无障碍设施"],
+    "route_preference": "fastest",
+    "avoid_tolls": false,
+    "avoid_highways": false,
+    "avoid_ferries": false,
+    "max_distance": "50公里",
+    "max_time": "2小时",
+    "urgency": "normal",
+    "priority_routes": ["天山西路"],
+    "time_of_day": "14:30",
+    "day_of_week": "星期六",
+    "weather": "晴朗",
+    "season": "冬季",
+    "processing_duration": "0.15秒"
+  }
+}

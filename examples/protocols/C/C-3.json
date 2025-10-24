@@ -1,6 +1,6 @@
 {
   "operation": "transform",
-  "items": [
+  "data": [
     "{# array_dynamic: true #}",
     {
       "title": "{{ name | capitalize }}",
