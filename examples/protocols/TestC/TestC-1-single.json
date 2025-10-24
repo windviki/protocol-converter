@@ -1,0 +1,11 @@
+{
+  "operation": "transform",
+  "items": [
+    {
+      "title": "{{ name | capitalize }}",
+      "amount": "{{ value }}",
+      "category": "{% if type == 'primary' %}main{% else %}secondary{% endif %}",
+      "summary": "只处理第一个元素"
+    }
+  ]
+}

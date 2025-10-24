@@ -1,6 +1,19 @@
 {
   "operation": "transform",
-  "item_names": "{% for item in items %}{{ item.name }}{% if not loop.last %}, {% endif %}{% endfor %}",
-  "item_count": "{{ items | length }}",
-  "primary_items": "{% for item in items %}{% if item.type == 'primary' %}{{ item.name }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}"
+  "items": [
+    "{# array_dynamic: true #}",
+    {
+      "title": "{{ name | capitalize }}",
+      "amount": "{{ value }}",
+      "category": "{% if type == 'primary' %}main{% else %}secondary{% endif %}",
+      "confidence": "{{ __sid }}",
+      "processed_at": "{{ __timestamp }}",
+      "source_protocol": "{{ domain }}",
+      "metadata": {
+        "original_name": "{{ name }}",
+        "original_type": "{{ type }}",
+        "processing_id": "{{ __session_id }}"
+      }
+    }
+  ]
 }

@@ -13,6 +13,14 @@ logger = logging.getLogger(__name__)
 
 
 @dataclass
+class ArrayMarker:
+    """数组处理标记"""
+    field_path: str  # 字段路径，如 "items"
+    is_dynamic: bool  # 是否动态处理整个数组
+    template_item: Dict[str, Any]  # 数组项的模板结构
+
+
+@dataclass
 class ProtocolTemplate:
     """协议模板数据类"""
     protocol_id: str
@@ -20,6 +28,7 @@ class ProtocolTemplate:
     template_content: Dict[str, Any]
     variables: List[str]
     special_variables: List[str]
+    array_markers: List[ArrayMarker]  # 数组处理标记列表
 
 
 @dataclass
@@ -32,9 +41,56 @@ class ConversionResult:
     error: Optional[str] = None
 
 
+class ArrayMarkerParser:
+    """数组标记解析器"""
+
+    @staticmethod
+    def parse_array_markers(template: Dict[str, Any], path: str = "") -> List[ArrayMarker]:
+        """
+        解析模板中的数组处理标记
+
+        Args:
+            template: 模板内容
+            path: 当前字段路径
+
+        Returns:
+            发现的数组标记列表
+        """
+        markers = []
+
+        for key, value in template.items():
+            current_path = f"{path}.{key}" if path else key
+
+            if isinstance(value, list) and len(value) > 0:
+                # 检查是否包含动态数组标记
+                first_item = value[0]
+                second_item = value[1] if len(value) > 1 else None
+
+                if (isinstance(first_item, str) and "# array_dynamic: true" in first_item and
+                    isinstance(second_item, dict)):
+                    # 找到动态数组标记
+                    marker = ArrayMarker(
+                        field_path=current_path,
+                        is_dynamic=True,
+                        template_item=second_item
+                    )
+
+                    markers.append(marker)
+
+                elif isinstance(first_item, dict):
+                    # 递归检查嵌套结构
+                    markers.extend(ArrayMarkerParser.parse_array_markers(first_item, current_path))
+
+            elif isinstance(value, dict):
+                # 递归检查嵌套结构
+                markers.extend(ArrayMarkerParser.parse_array_markers(value, current_path))
+
+        return markers
+
+
 class ProtocolMatcher:
     """协议匹配器"""
-    
+
     def __init__(self):
         self.protocols: Dict[str, ProtocolTemplate] = {}
     
@@ -99,33 +155,89 @@ class ProtocolMatcher:
 
 class VariableExtractor:
     """变量提取器"""
-    
-    def extract_variables(self, template: Dict[str, Any], data: Dict[str, Any]) -> Dict[str, Any]:
+
+    def extract_variables(self, template: Dict[str, Any], data: Dict[str, Any],
+                         array_markers: List[ArrayMarker] = None) -> Dict[str, Any]:
         """
         从模板和数据中提取变量
         Args:
             template: 模板内容
             data: 输入数据
+            array_markers: 数组标记列表
         Returns:
             变量键值对
         """
         variables = {}
         self._extract_from_dict(template, data, variables)
+
+        # 处理动态数组
+        if array_markers:
+            for marker in array_markers:
+                if marker.is_dynamic:
+                    self._extract_dynamic_array_variables(marker, data, variables)
+
         return variables
+
+    def _extract_dynamic_array_variables(self, marker: ArrayMarker, data: Dict[str, Any], variables: Dict[str, Any]):
+        """
+        从动态数组中提取所有元素的变量
+
+        Args:
+            marker: 数组标记
+            data: 输入数据
+            variables: 变量字典
+        """
+        # 获取数组数据
+        array_data = self._get_nested_value(data, marker.field_path.split('.'))
+        if not isinstance(array_data, list):
+            return
+
+        # 从模板项中提取变量名
+        template_vars = self._extract_template_variables(marker.template_item)
+
+        # 为每个数组元素提取变量
+        for i, item_data in enumerate(array_data):
+            if isinstance(item_data, dict):
+                for var_name in template_vars:
+                    if var_name in item_data:
+                        # 为每个元素添加索引变量
+                        indexed_var_name = f"{var_name}_{i}"
+                        variables[indexed_var_name] = item_data[var_name]
+
+    def _get_nested_value(self, data: Dict[str, Any], path_parts: List[str]) -> Any:
+        """获取嵌套字典中的值"""
+        current = data
+        for part in path_parts:
+            if isinstance(current, dict) and part in current:
+                current = current[part]
+            else:
+                return None
+        return current
+
+    def _extract_template_variables(self, template: Dict[str, Any]) -> List[str]:
+        """从模板中提取变量名"""
+        # 创建一个临时的variables字典来收集变量
+        temp_variables = {}
+        self._extract_from_dict(template, {}, temp_variables)
+
+        # 将字典的键转换为set
+        variables = set(temp_variables.keys())
+        return [v for v in variables if not v.startswith('__')]
     
     def _extract_from_dict(self, template: Dict[str, Any], data: Dict[str, Any], variables: Dict[str, Any]):
         """从字典中提取变量"""
         for key, template_value in template.items():
-            if key in data:
-                if isinstance(template_value, str):
-                    # 检查是否是Jinja2变量
-                    var_name = self._extract_variable_name(template_value)
-                    if var_name:
-                        variables[var_name] = data[key]
-                elif isinstance(template_value, dict) and isinstance(data[key], dict):
-                    self._extract_from_dict(template_value, data[key], variables)
-                elif isinstance(template_value, list) and isinstance(data[key], list):
-                    self._extract_from_list(template_value, data[key], variables)
+            if isinstance(template_value, str):
+                # 检查是否是Jinja2变量
+                var_name = self._extract_variable_name(template_value)
+                if var_name:
+                    # 对于模板变量提取，data可能为空字典，所以我们只提取变量名
+                    variables[var_name] = var_name  # 使用变量名作为占位符
+            elif isinstance(template_value, dict):
+                # 递归提取嵌套字典中的变量
+                self._extract_from_dict(template_value, data.get(key, {}), variables)
+            elif isinstance(template_value, list) and isinstance(data.get(key, []), list):
+                self._extract_from_list(template_value, data.get(key, []), variables)
     
     def _extract_from_list(self, template: List[Any], data: List[Any], variables: Dict[str, Any]):
         """从列表中提取变量"""
@@ -167,8 +279,9 @@ class TemplateRenderer:
         self.env.filters['length'] = lambda x: len(x) if hasattr(x, '__len__') else 0
         self.env.filters['sum'] = lambda x, attribute=None: sum(getattr(item, attribute, item) for item in x) if attribute else sum(x)
     
-    def render(self, template: Dict[str, Any], variables: Dict[str, Any], 
-               source_protocol: str, target_protocol: str, source_json: Dict[str, Any]) -> Dict[str, Any]:
+    def render(self, template: Dict[str, Any], variables: Dict[str, Any],
+               source_protocol: str, target_protocol: str, source_json: Dict[str, Any],
+               array_markers: List[ArrayMarker] = None) -> Dict[str, Any]:
         """
         渲染模板
         Args:
@@ -177,13 +290,79 @@ class TemplateRenderer:
             source_protocol: 源协议
             target_protocol: 目标协议
             source_json: 源JSON数据
+            array_markers: 数组标记列表
         Returns:
             渲染后的JSON数据
         """
         # 深拷贝模板以避免修改原始模板
         result = json.loads(json.dumps(template))
+
+        # 处理动态数组
+        if array_markers:
+            for marker in array_markers:
+                if marker.is_dynamic:
+                    self._render_dynamic_array(result, marker, variables, source_protocol, target_protocol, source_json)
+
+        # 常规渲染
         self._render_dict(result, variables, source_protocol, target_protocol, source_json)
         return result
+
+    def _render_dynamic_array(self, result: Dict[str, Any], marker: ArrayMarker,
+                             variables: Dict[str, Any], source_protocol: str,
+                             target_protocol: str, source_json: Dict[str, Any]):
+        """
+        渲染动态数组
+
+        Args:
+            result: 渲染结果
+            marker: 数组标记
+            variables: 变量键值对
+            source_protocol: 源协议
+            target_protocol: 目标协议
+            source_json: 源JSON数据
+        """
+        # 获取数组数据
+        array_data = self._get_nested_value(source_json, marker.field_path.split('.'))
+        if not isinstance(array_data, list):
+            return
+
+        # 为每个数组元素生成渲染结果
+        rendered_items = []
+        for i, item_data in enumerate(array_data):
+            # 创建该元素的变量集合
+            item_variables = {}
+            for var_name in variables:
+                if var_name.endswith(f"_{i}"):
+                    # 提取基础变量名（去掉索引）
+                    base_var_name = var_name[:-len(f"_{i}")]
+                    item_variables[base_var_name] = variables[var_name]
+
+            # 渲染该元素
+            rendered_item = json.loads(json.dumps(marker.template_item))
+            self._render_dict(rendered_item, item_variables, source_protocol, target_protocol, source_json)
+            rendered_items.append(rendered_item)
+
+        # 将结果设置回输出
+        self._set_nested_value(result, marker.field_path.split('.'), rendered_items)
+
+    def _set_nested_value(self, data: Dict[str, Any], path_parts: List[str], value: Any):
+        """在嵌套字典中设置值"""
+        current = data
+        for part in path_parts[:-1]:
+            if part not in current:
+                current[part] = {}
+            current = current[part]
+        current[path_parts[-1]] = value
+
+    def _get_nested_value(self, data: Dict[str, Any], path_parts: List[str]) -> Any:
+        """获取嵌套字典中的值"""
+        current = data
+        for part in path_parts:
+            if isinstance(current, dict) and part in current:
+                current = current[part]
+            else:
+                return None
+        return current
     
     def _render_dict(self, data: Dict[str, Any], variables: Dict[str, Any], 
                      source_protocol: str, target_protocol: str, source_json: Dict[str, Any]):
@@ -243,17 +422,21 @@ class ProtocolConverter:
         # 提取模板中的变量
         variables = self._extract_template_variables(template_content)
         special_variables = self._extract_special_variables(template_content)
-        
+
+        # 解析数组标记
+        array_markers = ArrayMarkerParser.parse_array_markers(template_content)
+
         protocol = ProtocolTemplate(
             protocol_id=protocol_id,
             protocol_family=protocol_family,
             template_content=template_content,
             variables=variables,
-            special_variables=special_variables
+            special_variables=special_variables,
+            array_markers=array_markers
         )
-        
+
         self.matcher.add_protocol(protocol)
-        logger.info(f"Loaded protocol: {protocol_id}")
+        logger.info(f"Loaded protocol: {protocol_id} with {len(array_markers)} array markers")
     
     def convert(self, source_protocol: str, target_protocol: str, 
                 source_json: Dict[str, Any]) -> ConversionResult:
@@ -280,8 +463,9 @@ class ProtocolConverter:
             
             # 3. 提取变量
             variables = self.extractor.extract_variables(
-                source_protocol_template.template_content, 
-                source_json
+                source_protocol_template.template_content,
+                source_json,
+                source_protocol_template.array_markers
             )
             
             # 4. 查找目标协议模板
@@ -298,7 +482,8 @@ class ProtocolConverter:
                 variables,
                 source_protocol,
                 target_protocol,
-                source_json
+                source_json,
+                target_protocol_template.array_markers
             )
             
             return ConversionResult(

@@ -1,5 +1,14 @@
 {
   "domain": "test",
   "action": "PROCESS",
-  "items": "{{ items }}"
+  "items": [
+    "{# array_dynamic: true #}",
+    {
+      "name": "{{ name }}",
+      "value": "{{ value }}",
+      "type": "{{ type }}",
+      "priority": "{{ __priority }}",
+      "created_time": "{{ __timestamp }}"
+    }
+  ]
 }

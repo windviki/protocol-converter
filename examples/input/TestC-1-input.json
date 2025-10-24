@@ -1,0 +1,33 @@
+{
+  "operation": "transform",
+  "items": [
+    {
+      "title": "Item1",
+      "amount": 100,
+      "category": "main",
+      "original_name": "item1",
+      "original_type": "primary",
+      "original_value": 100
+    },
+    {
+      "title": "Item2",
+      "amount": 200,
+      "category": "secondary",
+      "original_name": "item2",
+      "original_type": "secondary",
+      "original_value": 200
+    },
+    {
+      "title": "Item3",
+      "amount": 150,
+      "category": "main",
+      "original_name": "item3",
+      "original_type": "primary",
+      "original_value": 150
+    }
+  ],
+  "summary": {
+    "total_items": "3",
+    "item_list": "item1, item2, item3"
+  }
+}

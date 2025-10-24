@@ -12,11 +12,11 @@ from typing import Dict, Any
 # 添加项目根目录到Python路径
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from protocol_converter.protocols.loader import ProtocolLoader
-from protocol_converter.core.converter import ProtocolConverter
-from protocol_converter.converters.functions import CONVERTER_FUNCTIONS
-from protocol_converter.protocol_manager.manager import ProtocolManager
-from protocol_converter.database.connection import init_database
+from protocols.loader import ProtocolLoader
+from core.converter import ProtocolConverter
+from converters.functions import CONVERTER_FUNCTIONS
+from protocol_manager.manager import ProtocolManager
+from database.connection import init_database
 
 
 def setup_argument_parser() -> argparse.ArgumentParser:
