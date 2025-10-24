@@ -89,24 +89,29 @@ def test_jinja2_features():
             print(json.dumps(result.result, ensure_ascii=False, indent=2))
 
             # 验证结果
-            expected_keys = ["operation", "data"]
+            expected_keys = ["operation", "item_names", "item_count", "primary_items"]
             if all(key in result.result for key in expected_keys):
                 print("[OK] 结果结构正确")
 
-                # 检查filters是否正常工作
-                data = result.result["data"][0]
-
-                # 检查capitalize filter
-                if data["title"] == "Item1":
-                    print("[OK] capitalize filter 工作正常")
+                # 检查length filter
+                if result.result["item_count"] == "3":
+                    print("[OK] length filter工作正常")
                 else:
-                    print("[ERROR] capitalize filter 工作异常")
+                    print("[ERROR] length filter工作异常")
 
-                # 检查if控制语句
-                if data["category"] == "main":
-                    print("[OK] if控制语句工作正常")
+                # 检查for循环和if语句
+                expected_item_names = "item1, item2, item3"
+                if result.result["item_names"] == expected_item_names:
+                    print("[OK] for循环和if not loop.last工作正常")
                 else:
-                    print("[ERROR] if控制语句工作异常")
+                    print("[ERROR] for循环或if not loop.last工作异常")
+
+                # 检查for循环中的条件语句
+                expected_primary_items = "item1, item3"
+                if result.result["primary_items"] == expected_primary_items:
+                    print("[OK] for循环中的条件语句工作正常")
+                else:
+                    print("[ERROR] for循环中的条件语句工作异常")
 
                 return True
             else:
