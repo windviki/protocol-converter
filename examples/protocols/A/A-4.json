@@ -2,7 +2,7 @@
   "domain": "navigation",
   "action": "ROUTE_TO",
   "slots": {
-    "destination": "{{ destination }}",
+    "destination": "{{ joined_roads }}",
     "poi_type": "{{ poi_type }}",
     "vehicle_type": "{{ vehicle_type }}",
     "urgency": "{{ urgency }}",
