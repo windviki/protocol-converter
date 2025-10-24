@@ -1,0 +1,9 @@
+{
+	"domain": "telephone",
+	"action": "ANSWER",
+	"slots": {
+		"category": "座机",
+		"name": "李四",
+		"duration": "120"
+	}
+}

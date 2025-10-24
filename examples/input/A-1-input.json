@@ -1,0 +1,9 @@
+{
+	"domain": "telephone",
+	"action": "DIAL",
+	"slots": {
+		"category": "手机",
+		"name": "张三",
+		"raw_name": "张三"
+	}
+}

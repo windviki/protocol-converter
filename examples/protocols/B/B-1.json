@@ -1,0 +1,15 @@
+{
+	"name": "Phone_Call",
+	"slots": [
+		{
+			"name": "PERSON",
+			"value": "{{ person }}",
+			"label": "O"
+		},
+		{
+			"name": "PHONE_TYPE",
+			"value": "{{ phone_type }}",
+			"label": "{{ __sid }}"
+		}
+	]
+}

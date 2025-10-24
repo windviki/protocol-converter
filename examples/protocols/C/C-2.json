@@ -1,0 +1,20 @@
+{
+	"tao": "phone.contact.answer",
+	"slots": [
+		{
+			"name": "PERSON",
+			"value": "{{ person }}",
+			"label": "O"
+		},
+		{
+			"name": "PHONE_TYPE",
+			"value": "{{ phone_type }}",
+			"label": "{{ __sid }}"
+		},
+		{
+			"name": "DURATION",
+			"value": "{{ call_duration }}",
+			"label": "{{ __priority }}"
+		}
+	]
+}

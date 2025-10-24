@@ -1,0 +1,9 @@
+{
+	"domain": "telephone",
+	"action": "ANSWER",
+	"slots": {
+		"category": "{{ phone_type }}",
+		"name": "{{ person }}",
+		"duration": "{{ call_duration }}"
+	}
+}
