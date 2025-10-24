@@ -94,12 +94,12 @@ class VariableExtractor:
                 # 检查是否是Jinja2变量
                 var_name = self._extract_variable_name(template_value)
                 if var_name:
-                    # 从data中提取实际的变量值
-                    if var_name in data:
-                        variables[var_name] = data[var_name]
+                    # 从data的相同键位置提取值
+                    if key in data:
+                        variables[var_name] = data[key]
                     else:
-                        # 如果直接键不存在，尝试在嵌套结构中查找
-                        variables[var_name] = self._find_value_in_data(var_name, data)
+                        # 如果对应键不存在，设为None
+                        variables[var_name] = None
             elif isinstance(template_value, dict):
                 # 递归提取嵌套字典中的变量
                 self._extract_from_dict(template_value, data.get(key, {}), variables)
